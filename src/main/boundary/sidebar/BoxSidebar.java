@@ -1,7 +1,5 @@
 package src.main.boundary.sidebar;
 
-import src.main.boundary.GUIConfig;
-
 import javax.swing.*;
 import java.awt.*;
 

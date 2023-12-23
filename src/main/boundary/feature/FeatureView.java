@@ -4,18 +4,8 @@ import src.main.boundary.GUIConfig;
 
 import javax.swing.*;
 
-public abstract class FeatureView extends JPanel {
-    ImageIcon icon;
-
+public class FeatureView extends JPanel {
     public FeatureView() {
         setBackground(GUIConfig.FeatureViewColor);
-    }
-
-    public void setIcon(ImageIcon icon) {
-        this.icon = icon;
-    }
-
-    public ImageIcon getIcon() {
-        return icon;
     }
 }

@@ -1,22 +1,21 @@
 package src.test.boundary;
 
 import com.formdev.flatlaf.FlatIntelliJLaf;
-import src.main.boundary.app.DefaultAppController;
-import src.main.boundary.feature.FeatureView;
-import src.main.boundary.model.DefaultAppModel;
+import src.main.MenuBarDeleteButton;
 
 import javax.swing.*;
 import java.awt.*;
-import java.util.Objects;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
-public class DefaultAppTemplate {
+public class MenuBarDeleteButtonTest {
     public static void main(String[] args) {
         try {
             UIManager.setLookAndFeel(new FlatIntelliJLaf());
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
-        UIManager.put("Component.borderColor", new  Color(210, 210, 210));
+        UIManager.put("Component.borderColor", new Color(210, 210, 210));
         UIManager.put("TextComponent.arc", 10);
         UIManager.put("Button.arc", 10);
         UIManager.put("List.selectionArc", 10);
@@ -24,13 +23,16 @@ public class DefaultAppTemplate {
 
         JFrame frame = new JFrame();
 
-        DefaultAppModel model = new DefaultAppModel();
+        JPanel panel = new JPanel();
 
-        // Your code here
+        panel.add(new MenuBarDeleteButton(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                System.out.println("Hello");
+            }
+        }));
 
-        DefaultAppController controller = new DefaultAppController(model);
-
-        frame.setContentPane(controller.getView());
+        frame.setContentPane(panel);
         frame.setTitle("._.");
         frame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
         frame.setSize(1024, 768);

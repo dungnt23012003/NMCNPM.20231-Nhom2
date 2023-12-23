@@ -1,5 +1,6 @@
 package src.main.boundary.app;
 
+import src.main.boundary.feature.Feature;
 import src.main.boundary.feature.FeatureView;
 import src.main.boundary.GUIConfig;
 import src.main.boundary.listener.FeatureListListener;
@@ -8,6 +9,7 @@ import src.main.boundary.sidebar.BoxSidebar;
 import src.main.boundary.model.AppModel;
 import src.main.boundary.sidebar.Sidebar;
 import src.main.boundary.utility.ColorUtility;
+import src.main.boundary.utility.ComponentFactory;
 
 import javax.swing.*;
 import javax.swing.border.*;
@@ -36,14 +38,12 @@ public class AppView extends JPanel implements FeatureListener, FeatureListListe
         setLayout(new BoxLayout(this, BoxLayout.LINE_AXIS));
 
         sidebar = new BoxSidebar();
-        Border margin = new EmptyBorder(2, 2, 2, 2);
+        Border margin = new EmptyBorder(3, 3, 3, 3);
         Border border = new MatteBorder(0, 0, 0, 1, Color.LIGHT_GRAY);
         sidebar.setBorder(new CompoundBorder(border, margin));
         sidebar.setPreferredSize(new Dimension(37, -1));
         populateSideBar();
-
         highlightedButton = buttonList.get(0);
-        highlightButton(highlightedButton);
 
         featureView = new JPanel(new CardLayout());
         populateFeatureView();
@@ -55,15 +55,14 @@ public class AppView extends JPanel implements FeatureListener, FeatureListListe
     private void populateSideBar() {
         buttonList.clear();
 
-        ArrayList<FeatureView> featureViews = model.getFeatureViews();
-        for (int i = 0; i < model.getFeatureViews().size(); i++) {
-            FeatureView view = featureViews.get(i);
+        ArrayList<Feature> featureList = model.getFeatureList();
+        for (int i = 0; i < model.getFeatureList().size(); i++) {
+            Feature feature = featureList.get(i);
 
             JButton button = new JButton();
             button.setMargin(new Insets(5, 5, 5, 5));
-//            button.setBorder(new EmptyBorder(5, 5, 5, 5));
             button.setBorderPainted(false);
-            button.setIcon(view.getIcon());
+            button.setIcon(feature.getIcon());
             button.setFocusable(false);
             button.setBackground(GUIConfig.SideBarColor);
             button.setActionCommand(String.valueOf(i));
@@ -73,14 +72,17 @@ public class AppView extends JPanel implements FeatureListener, FeatureListListe
             buttonList.add(button);
         }
         sidebar.add(Box.createVerticalGlue());
+
+        highlightedButton = buttonList.get(Integer.parseInt(model.getCurrentFeatureName()));
+        highlightButton(highlightedButton);
     }
 
     private void populateFeatureView() {
-        ArrayList<FeatureView> featureViews = model.getFeatureViews();
-        for (int i = 0; i < featureViews.size(); i++) {
-            FeatureView view = featureViews.get(i);
+        ArrayList<Feature> featureList = model.getFeatureList();
+        for (int i = 0; i < featureList.size(); i++) {
+            Feature feature = featureList.get(i);
 
-            featureView.add(view, String.valueOf(i));
+            featureView.add(feature.getView(), String.valueOf(i));
         }
     }
 
@@ -108,6 +110,6 @@ public class AppView extends JPanel implements FeatureListener, FeatureListListe
     @Override
     public void featureChanged() {
         CardLayout layout = (CardLayout) featureView.getLayout();
-        layout.show(featureView, model.getCurrentFeatureViewName());
+        layout.show(featureView, model.getCurrentFeatureName());
     }
 }

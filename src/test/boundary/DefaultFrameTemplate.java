@@ -3,6 +3,7 @@ package src.test.boundary;
 import com.formdev.flatlaf.FlatIntelliJLaf;
 
 import javax.swing.*;
+import java.awt.*;
 
 public class DefaultFrameTemplate {
     public static void main(String[] args) {
@@ -11,6 +12,11 @@ public class DefaultFrameTemplate {
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
+        UIManager.put("Component.borderColor", new Color(210, 210, 210));
+        UIManager.put("TextComponent.arc", 10);
+        UIManager.put("Button.arc", 10);
+        UIManager.put("List.selectionArc", 10);
+        UIManager.put("TextField.margin", new Insets(5, 10, 5, 0));
 
         JFrame frame = new JFrame();
 

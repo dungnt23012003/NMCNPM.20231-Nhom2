@@ -1,22 +1,23 @@
 package src.test.boundary;
 
 import com.formdev.flatlaf.FlatIntelliJLaf;
-import src.main.boundary.app.DefaultAppController;
-import src.main.boundary.feature.FeatureView;
-import src.main.boundary.model.DefaultAppModel;
+import src.main.boundary.hokhau.HoKhauController;
+import src.main.boundary.hokhau.HoKhauModel;
+import src.main.control.HoKhauControl;
+import src.main.entity.HoKhau;
+import src.test.control.HoKhauControlTestValue;
 
 import javax.swing.*;
 import java.awt.*;
-import java.util.Objects;
 
-public class DefaultAppTemplate {
+public class HoKhauTest {
     public static void main(String[] args) {
         try {
             UIManager.setLookAndFeel(new FlatIntelliJLaf());
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
-        UIManager.put("Component.borderColor", new  Color(210, 210, 210));
+        UIManager.put("Component.borderColor", new Color(210, 210, 210));
         UIManager.put("TextComponent.arc", 10);
         UIManager.put("Button.arc", 10);
         UIManager.put("List.selectionArc", 10);
@@ -24,13 +25,16 @@ public class DefaultAppTemplate {
 
         JFrame frame = new JFrame();
 
-        DefaultAppModel model = new DefaultAppModel();
+        JPanel panel = new JPanel();
+        panel.setLayout(new BoxLayout(panel, BoxLayout.PAGE_AXIS));
 
-        // Your code here
+        HoKhauControl control = new HoKhauControlTestValue();
+        HoKhauModel model = new HoKhauModel(control);
+        HoKhauController controller = new HoKhauController(model);
+        panel.add(controller.getView());
 
-        DefaultAppController controller = new DefaultAppController(model);
 
-        frame.setContentPane(controller.getView());
+        frame.setContentPane(panel);
         frame.setTitle("._.");
         frame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
         frame.setSize(1024, 768);

@@ -1,22 +1,19 @@
 package src.test.boundary;
 
 import com.formdev.flatlaf.FlatIntelliJLaf;
-import src.main.boundary.app.DefaultAppController;
-import src.main.boundary.feature.FeatureView;
-import src.main.boundary.model.DefaultAppModel;
+import src.main.boundary.dialog.ConfirmDeleteDialog;
 
 import javax.swing.*;
 import java.awt.*;
-import java.util.Objects;
 
-public class DefaultAppTemplate {
+public class ConfirmDeleteDialogTest {
     public static void main(String[] args) {
         try {
             UIManager.setLookAndFeel(new FlatIntelliJLaf());
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
-        UIManager.put("Component.borderColor", new  Color(210, 210, 210));
+        UIManager.put("Component.borderColor", new Color(210, 210, 210));
         UIManager.put("TextComponent.arc", 10);
         UIManager.put("Button.arc", 10);
         UIManager.put("List.selectionArc", 10);
@@ -24,13 +21,17 @@ public class DefaultAppTemplate {
 
         JFrame frame = new JFrame();
 
-        DefaultAppModel model = new DefaultAppModel();
+        JPanel panel = new JPanel();
+        panel.setLayout(new BoxLayout(panel, BoxLayout.PAGE_AXIS));
 
-        // Your code here
+        JButton button = new JButton("Click me.");
+        button.addActionListener(e -> new ConfirmDeleteDialog(frame, e1 -> {
+            System.out.println("Deleted");
+        }));
 
-        DefaultAppController controller = new DefaultAppController(model);
+        panel.add(button);
 
-        frame.setContentPane(controller.getView());
+        frame.setContentPane(panel);
         frame.setTitle("._.");
         frame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
         frame.setSize(1024, 768);
