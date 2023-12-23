@@ -1,30 +1,30 @@
 package src.main.boundary.model;
 
+import src.main.boundary.feature.Feature;
 import src.main.boundary.listener.FeatureListListener;
 import src.main.boundary.listener.FeatureListener;
-import src.main.boundary.feature.FeatureView;
 
 import java.util.ArrayList;
 
 public class DefaultAppModel implements AppModel {
     ArrayList<FeatureListener> featureListeners = new ArrayList<>();
     ArrayList<FeatureListListener> featureListListeners = new ArrayList<>();
-    ArrayList<FeatureView> featureViews = new ArrayList<>();
+    ArrayList<Feature> featureList = new ArrayList<>();
     String currentFeatureViewName = "0";
 
-    public void addFeatureView(FeatureView view) {
-        featureViews.add(view);
+    public void addFeature(Feature feature) {
+        featureList.add(feature);
         fireFeatureListChanged();
     }
 
     @Override
-    public String getCurrentFeatureViewName() {
+    public String getCurrentFeatureName() {
         return currentFeatureViewName;
     }
 
     @Override
-    public ArrayList<FeatureView> getFeatureViews() {
-        return featureViews;
+    public ArrayList<Feature> getFeatureList() {
+        return featureList;
     }
 
     @Override

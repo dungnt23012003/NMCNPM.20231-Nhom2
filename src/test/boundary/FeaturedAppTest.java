@@ -2,21 +2,19 @@ package src.test.boundary;
 
 import com.formdev.flatlaf.FlatIntelliJLaf;
 import src.main.boundary.app.DefaultAppController;
-import src.main.boundary.feature.FeatureView;
 import src.main.boundary.model.DefaultAppModel;
 
 import javax.swing.*;
 import java.awt.*;
-import java.util.Objects;
 
-public class DefaultAppTemplate {
+public class FeaturedAppTest {
     public static void main(String[] args) {
         try {
             UIManager.setLookAndFeel(new FlatIntelliJLaf());
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
-        UIManager.put("Component.borderColor", new  Color(210, 210, 210));
+        UIManager.put("Component.borderColor", new Color(210, 210, 210));
         UIManager.put("TextComponent.arc", 10);
         UIManager.put("Button.arc", 10);
         UIManager.put("List.selectionArc", 10);
@@ -27,6 +25,7 @@ public class DefaultAppTemplate {
         DefaultAppModel model = new DefaultAppModel();
 
         // Your code here
+        model.addFeature(new HoKhauFeatureTest());
 
         DefaultAppController controller = new DefaultAppController(model);
 

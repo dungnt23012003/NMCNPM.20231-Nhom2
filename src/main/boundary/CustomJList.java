@@ -12,6 +12,6 @@ public class CustomJList<E> extends JList<E> {
 
         setSelectionForeground(Color.WHITE);
         setFont(GUIConfig.DefaultFont);
-        setFocusable(false);
+        setFocusable(true);
     }
 }

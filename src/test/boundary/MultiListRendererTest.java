@@ -126,7 +126,7 @@ public class MultiListRendererTest {
         };
 
         panel.add(renderer.getRenderedComponent(multiList));
-        panel.setBorder(new EmptyBorder(10, 10, 10, 10));
+//        panel.setBorder(new EmptyBorder(10, 10, 10, 10));
 
         frame.setContentPane(panel);
         frame.setTitle("._.");

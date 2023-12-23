@@ -1,9 +1,9 @@
 package src.test.boundary;
 
 import com.formdev.flatlaf.FlatIntelliJLaf;
-import src.main.boundary.ListItemizable;
+import src.main.boundary.*;
 import src.main.boundary.app.DefaultAppController;
-import src.main.boundary.feature.ListSideFeatureView;
+import src.main.boundary.feature.*;
 import src.main.boundary.model.DefaultAppModel;
 
 import javax.swing.*;
@@ -28,31 +28,36 @@ public class ListSideFeatureViewTest {
         DefaultAppModel model = new DefaultAppModel();
 
         // Custom code here
-        DefaultListModel<ListItemizable> listModel = new DefaultListModel<>();
-        listModel.addElement(new ListItemizable() {
+        DefaultListModel<GalleryItem> listModel = new DefaultListModel<>();
+        listModel.addElement(new GalleryItem() {
             @Override
             public String toString() {
                 return "HK00001";
             }
         });
-        listModel.addElement(new ListItemizable() {
+        listModel.addElement(new GalleryItem() {
             @Override
             public String toString() {
                 return "HK00002";
             }
         });
-        listModel.addElement(new ListItemizable() {
+        listModel.addElement(new GalleryItem() {
             @Override
             public String toString() {
                 return "HK00003";
             }
         });
 
+        ListSideGalleryModel listSideGalleryModel = new ListSideGalleryModel(listModel);
 
-        ListSideFeatureView featureView = new ListSideFeatureView(listModel);
-        featureView.setIcon(new ImageIcon("/Users/hoanmai/NMCNPM.20231-Nhom2/src/test/resources/icons/create.png"));
+        ListSideGalleryController listSideGalleryController = new ListSideGalleryController(listSideGalleryModel);
+        ListSideGalleryView featureView = listSideGalleryController.getView();
 
-        model.addFeatureView(featureView);
+        Feature testFeature = new Feature();
+        testFeature.setView(featureView);
+        testFeature.setIcon(new ImageIcon("/Users/hoanmai/NMCNPM.20231-Nhom2/src/test/resources/icons/create.png"));
+
+        model.addFeature(testFeature);
 
         DefaultAppController controller = new DefaultAppController(model);
 
