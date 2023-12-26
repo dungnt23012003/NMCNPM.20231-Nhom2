@@ -86,7 +86,7 @@ public class HoKhauEditor extends EditorComponent implements MultiListRenderable
         DefaultRenderableList thongTinChungList = new DefaultRenderableList();
         thongTinChungList.setTitle("Thông tin chung");
 
-        soHoKhauEditor = EditorComponentFactory.createEditFormComponent("Số hộ khẩu", String.valueOf(item.hoKhau.soHoKhau));
+        soHoKhauEditor = EditorComponentFactory.createEditFormComponent("Số hộ khẩu", String.valueOf(item.hoKhau.maHoKhau));
         khuVucEditor = EditorComponentFactory.createEditFormComponent("Khu vực", String.valueOf(item.hoKhau.khuVuc));
         diaChiEditor = EditorComponentFactory.createEditFormComponent("Địa chỉ", String.valueOf(item.hoKhau.diaChi));
         ngayLapEditor = EditorComponentFactory.createEditFormComponent("Ngày lập", String.valueOf(item.hoKhau.ngayLap));
@@ -115,7 +115,7 @@ public class HoKhauEditor extends EditorComponent implements MultiListRenderable
     @Override
     public HoKhauAdapter getValue() {
         HoKhau value = new HoKhau();
-        value.soHoKhau = Integer.parseInt((String) soHoKhauEditor.getValue());
+        value.maHoKhau = (String) soHoKhauEditor.getValue();
         value.khuVuc = (String) khuVucEditor.getValue();
         value.diaChi = (String) diaChiEditor.getValue();
         value.ngayLap = new SimpleDateFormat((String) ngayLapEditor.getValue()).get2DigitYearStart();

@@ -58,7 +58,7 @@ public class EditorComponentFactory {
 
         editorComponent.setLayout(new BoxLayout(editorComponent, BoxLayout.LINE_AXIS));
 
-        JLabel label = ComponentFactory.createLabel(item.ten);
+        JLabel label = ComponentFactory.createLabel(item.hoTen);
         label.setMaximumSize(new Dimension(Integer.MAX_VALUE, GUIConfig.ListLabelHeight));
 
         editorComponent.add(label);

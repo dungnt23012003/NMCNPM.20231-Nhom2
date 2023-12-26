@@ -30,7 +30,7 @@ public class HoKhauAdapter implements GalleryItem, MultiListRenderable {
     }
 
     public void resetString() {
-        string = String.valueOf(hoKhau.soHoKhau);
+        string = String.valueOf(hoKhau.maHoKhau);
     }
 
     public HoKhau getHoKhau() {
@@ -49,7 +49,7 @@ public class HoKhauAdapter implements GalleryItem, MultiListRenderable {
         DefaultRenderableList thongTinChungList = new DefaultRenderableList();
         thongTinChungList.setTitle("Thông tin chung");
 
-        thongTinChungList.addComponent(ComponentFactory.createFormComponent("Số hộ khẩu", String.valueOf(hoKhau.soHoKhau)));
+        thongTinChungList.addComponent(ComponentFactory.createFormComponent("Số hộ khẩu", String.valueOf(hoKhau.maHoKhau)));
         thongTinChungList.addComponent(ComponentFactory.createFormComponent("Khu vực", String.valueOf(hoKhau.khuVuc)));
         thongTinChungList.addComponent(ComponentFactory.createFormComponent("Địa chỉ", String.valueOf(hoKhau.diaChi)));
         thongTinChungList.addComponent(ComponentFactory.createFormComponent("Ngày lập", String.valueOf(hoKhau.ngayLap)));
@@ -57,7 +57,7 @@ public class HoKhauAdapter implements GalleryItem, MultiListRenderable {
         DefaultRenderableList nhanKhauList = new DefaultRenderableList();
         nhanKhauList.setTitle("Danh sách nhân khẩu");
 
-        nhanKhauList.addComponent(ComponentFactory.createFormComponent(hoKhau.chuHo.ten, ""));
+        nhanKhauList.addComponent(ComponentFactory.createFormComponent(hoKhau.chuHo.hoTen, ""));
 
         list.add(thongTinChungList);
         list.add(nhanKhauList);
