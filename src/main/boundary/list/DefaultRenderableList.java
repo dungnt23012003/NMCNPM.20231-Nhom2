@@ -1,4 +1,4 @@
-package src.main.boundary;
+package src.main.boundary.list;
 
 import java.awt.*;
 import java.util.ArrayList;

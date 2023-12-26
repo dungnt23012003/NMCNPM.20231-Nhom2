@@ -2,11 +2,10 @@ package src.main.boundary.renderer;
 
 import com.formdev.flatlaf.ui.FlatLineBorder;
 import src.main.boundary.GUIConfig;
-import src.main.boundary.ListRenderable;
-import src.main.boundary.ListSeparator;
+import src.main.boundary.list.ListRenderable;
+import src.main.boundary.list.ListSeparator;
 
 import javax.swing.*;
-import javax.swing.border.LineBorder;
 import java.awt.*;
 import java.util.ArrayList;
 
@@ -34,7 +33,7 @@ public class ListRenderer {
 
     public Component getRenderedComponent(ListRenderable list) {
         JPanel component = new JPanel();
-
+        component.setBackground(GUIConfig.FeatureViewColor);
         component.setLayout(new BoxLayout(component, BoxLayout.PAGE_AXIS));
 
         JLabel titleLabel = new JLabel(list.getTitle());
@@ -52,6 +51,7 @@ public class ListRenderer {
         listPanel.add(Box.createHorizontalGlue());
 
         ArrayList<Component> componentList = list.getComponentList();
+
         for (int i = 0; i < componentList.size() - 1; i++) {
             Component listItem = componentList.get(i);
 

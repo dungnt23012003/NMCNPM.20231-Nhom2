@@ -1,7 +1,7 @@
 package src.test.boundary;
 
 import com.formdev.flatlaf.FlatIntelliJLaf;
-import src.main.boundary.ListRenderable;
+import src.main.boundary.list.ListRenderable;
 import src.main.boundary.renderer.ListRenderer;
 
 import javax.swing.*;

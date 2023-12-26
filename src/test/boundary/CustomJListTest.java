@@ -1,7 +1,7 @@
 package src.test.boundary;
 
 import com.formdev.flatlaf.FlatIntelliJLaf;
-import src.main.boundary.CustomJList;
+import src.main.boundary.list.CustomJList;
 
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;

@@ -1,4 +1,4 @@
-package src.main;
+package src.main.boundary.menubar;
 
 import src.main.boundary.GUIConfig;
 import src.main.boundary.dialog.ConfirmDeleteDialog;

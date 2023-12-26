@@ -1,4 +1,6 @@
-package src.main.boundary;
+package src.main.boundary.list;
+
+import src.main.boundary.GUIConfig;
 
 import javax.swing.*;
 import java.awt.*;
@@ -9,7 +11,6 @@ public class CustomJList<E> extends JList<E> {
 
         setFixedCellHeight(30);
         setSelectionBackground(GUIConfig.ListSelectionBackground);
-
         setSelectionForeground(Color.WHITE);
         setFont(GUIConfig.DefaultFont);
         setFocusable(true);

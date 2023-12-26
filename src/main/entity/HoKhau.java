@@ -7,5 +7,5 @@ public class HoKhau {
     public String khuVuc;
     public String diaChi;
     public Date ngayLap;
-    public NhanKhau chuHo;
+    public NhanKhau chuHo = new NhanKhau();
 }

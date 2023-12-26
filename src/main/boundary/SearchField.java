@@ -14,5 +14,6 @@ public class SearchField extends JTextField {
         putClientProperty("JTextField.leadingIcon", new ImageIcon(Objects.requireNonNull(Main.class.getResource("resources/icons/search.png"))));
         putClientProperty("JTextField.placeholderText", "Search...");
         putClientProperty("JTextField.padding", new Insets(0, 2, 0, 0));
+        setMargin(new Insets(5, 10, 5, 0));
     }
 }

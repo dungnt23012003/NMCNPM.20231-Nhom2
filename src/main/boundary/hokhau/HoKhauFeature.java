@@ -7,6 +7,7 @@ import src.main.control.HoKhauControl;
 public class HoKhauFeature extends Feature {
     public HoKhauFeature() {
         icon = GUIConfig.HoKhauIcon;
+        name = "Quản lý hộ khẩu";
 
         HoKhauModel model = new HoKhauModel(new HoKhauControl());
         HoKhauController controller = new HoKhauController(model);

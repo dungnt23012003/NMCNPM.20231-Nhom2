@@ -5,6 +5,15 @@ import javax.swing.*;
 public class Feature {
     protected FeatureView view = new FeatureView();
     protected ImageIcon icon;
+    protected String name;
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
 
     public FeatureView getView() {
         return view;

@@ -1,19 +1,36 @@
 package src.main.boundary.hokhau;
 
-import src.main.boundary.DefaultRenderableList;
-import src.main.boundary.ListRenderable;
-import src.main.boundary.MultiListRenderable;
-import src.main.boundary.GalleryItem;
+import src.main.boundary.GUIConfig;
+import src.main.boundary.list.DefaultRenderableList;
+import src.main.boundary.list.ListItemizable;
+import src.main.boundary.list.ListRenderable;
+import src.main.boundary.list.MultiListRenderable;
+import src.main.boundary.gallery.GalleryItem;
+import src.main.boundary.renderer.ListRenderer;
 import src.main.boundary.utility.ComponentFactory;
 import src.main.entity.HoKhau;
 
+import javax.swing.*;
+import java.awt.*;
 import java.util.ArrayList;
 
 public class HoKhauAdapter implements GalleryItem, MultiListRenderable {
     HoKhau hoKhau;
+    boolean isNew = false;
+    String string;
 
     public HoKhauAdapter(HoKhau hoKhau) {
         this.hoKhau = hoKhau;
+        resetString();
+    }
+
+    public HoKhauAdapter(HoKhau hoKhau, boolean isNew) {
+        this.hoKhau = hoKhau;
+        this.isNew = isNew;
+    }
+
+    public void resetString() {
+        string = String.valueOf(hoKhau.soHoKhau);
     }
 
     public HoKhau getHoKhau() {
@@ -22,11 +39,11 @@ public class HoKhauAdapter implements GalleryItem, MultiListRenderable {
 
     @Override
     public String toString() {
-        return String.valueOf(hoKhau.soHoKhau);
+        return string;
     }
 
     @Override
-    public ArrayList<ListRenderable> getLists() {
+    public ArrayList<ListRenderable> getRenderableLists() {
         ArrayList<ListRenderable> list = new ArrayList<>();
 
         DefaultRenderableList thongTinChungList = new DefaultRenderableList();
@@ -40,7 +57,7 @@ public class HoKhauAdapter implements GalleryItem, MultiListRenderable {
         DefaultRenderableList nhanKhauList = new DefaultRenderableList();
         nhanKhauList.setTitle("Danh sách nhân khẩu");
 
-        nhanKhauList.addComponent(ComponentFactory.createLabel(hoKhau.chuHo.ten));
+        nhanKhauList.addComponent(ComponentFactory.createFormComponent(hoKhau.chuHo.ten, ""));
 
         list.add(thongTinChungList);
         list.add(nhanKhauList);

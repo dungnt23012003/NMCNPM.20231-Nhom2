@@ -1,11 +1,16 @@
 package src.main.control;
 
 import src.main.entity.HoKhau;
+import src.main.entity.NhanKhau;
 
 import java.util.ArrayList;
 
 public class HoKhauControl {
     public ArrayList<HoKhau> getList() {
+        return null;
+    }
+
+    public ArrayList<NhanKhau> getNhanKhauList() {
         return null;
     }
 

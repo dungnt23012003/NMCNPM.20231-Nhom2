@@ -1,4 +1,6 @@
-package src.main.boundary;
+package src.main.boundary.list;
+
+import src.main.boundary.GUIConfig;
 
 import javax.swing.*;
 import java.awt.*;

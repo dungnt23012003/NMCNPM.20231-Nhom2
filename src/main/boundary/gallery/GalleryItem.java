@@ -1,6 +1,6 @@
-package src.main.boundary;
+package src.main.boundary.gallery;
 
-import src.main.boundary.ListItemizable;
+import src.main.boundary.list.ListItemizable;
 import src.main.boundary.renderer.Renderable;
 
 public interface GalleryItem extends ListItemizable, Renderable {

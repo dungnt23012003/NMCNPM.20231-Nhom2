@@ -1,5 +1,6 @@
 package src.main.boundary.app;
 
+import com.formdev.flatlaf.ui.FlatLineBorder;
 import src.main.boundary.feature.Feature;
 import src.main.boundary.feature.FeatureView;
 import src.main.boundary.GUIConfig;
@@ -13,9 +14,11 @@ import src.main.boundary.utility.ComponentFactory;
 
 import javax.swing.*;
 import javax.swing.border.*;
+import javax.swing.plaf.ToolTipUI;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.MouseEvent;
 import java.util.ArrayList;
 
 public class AppView extends JPanel implements FeatureListener, FeatureListListener, ActionListener {
@@ -59,7 +62,12 @@ public class AppView extends JPanel implements FeatureListener, FeatureListListe
         for (int i = 0; i < model.getFeatureList().size(); i++) {
             Feature feature = featureList.get(i);
 
-            JButton button = new JButton();
+            JButton button = new JButton() {
+                @Override
+                public Point getToolTipLocation(MouseEvent event) {
+                    return new Point(getWidth() + 3, 6);
+                }
+            };
             button.setMargin(new Insets(5, 5, 5, 5));
             button.setBorderPainted(false);
             button.setIcon(feature.getIcon());
@@ -67,6 +75,7 @@ public class AppView extends JPanel implements FeatureListener, FeatureListListe
             button.setBackground(GUIConfig.SideBarColor);
             button.setActionCommand(String.valueOf(i));
             button.addActionListener(this);
+            button.setToolTipText(feature.getName());
 
             sidebar.add(button);
             buttonList.add(button);

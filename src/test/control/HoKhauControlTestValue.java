@@ -196,4 +196,9 @@ public class HoKhauControlTestValue extends HoKhauControl {
 
         return hoKhauList;
     }
+
+    @Override
+    public void delete(HoKhau entity) {
+        System.out.println("Deleted " + entity.soHoKhau);
+    }
 }

@@ -1,7 +1,7 @@
 package src.test.boundary;
 
 import com.formdev.flatlaf.FlatIntelliJLaf;
-import src.main.MenuBarDeleteButton;
+import src.main.boundary.menubar.MenuBarDeleteButton;
 
 import javax.swing.*;
 import java.awt.*;

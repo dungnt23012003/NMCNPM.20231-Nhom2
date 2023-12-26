@@ -1,7 +1,8 @@
 package src.main.boundary.hokhau;
 
-import src.main.boundary.GalleryItem;
-import src.main.boundary.ListSideGalleryModel;
+import src.main.boundary.gallery.GalleryItem;
+import src.main.boundary.gallery.ListSideGalleryController;
+import src.main.boundary.gallery.ListSideGalleryModel;
 import src.main.control.HoKhauControl;
 import src.main.entity.HoKhau;
 
@@ -10,11 +11,13 @@ import javax.swing.*;
 public class HoKhauModel {
     HoKhauControl control;
     ListSideGalleryModel galleryModel;
+    ListSideGalleryController galleryController;
 
     public HoKhauModel(HoKhauControl control) {
         this.control = control;
 
         setupGalleryModel();
+        galleryController = new ListSideGalleryController(getGalleryModel());
     }
 
     public void setupGalleryModel() {

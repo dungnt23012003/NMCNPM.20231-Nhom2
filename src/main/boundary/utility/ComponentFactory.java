@@ -1,6 +1,9 @@
 package src.main.boundary.utility;
 
+import com.formdev.flatlaf.ui.FlatLineBorder;
+import src.main.boundary.editor.FormEditorComponent;
 import src.main.boundary.GUIConfig;
+import src.main.boundary.editor.EditorComponent;
 
 import javax.swing.*;
 import java.awt.*;
@@ -23,14 +26,47 @@ public class ComponentFactory {
         valueLabel.setFont(GUIConfig.DefaultFont);
         component.add(valueLabel);
 
+        component.setMaximumSize(new Dimension(Integer.MAX_VALUE, 30));
+
         return component;
     }
 
-    public static Component createLabel(String text) {
+    public static JLabel createLabel(String text) {
         JLabel label = new JLabel(text);
 
         label.setFont(GUIConfig.DefaultFont);
 
         return label;
+    }
+
+    public static JButton createDefaultButton() {
+        JButton button = new JButton();
+        button.setFont(GUIConfig.DefaultFont);
+        button.setFocusable(false);
+
+        return button;
+    }
+
+    public static JButton createMenuBarButton() {
+        JButton button = new JButton();
+        button.setMargin(new Insets(5, 5, 5, 5));
+        button.setBorderPainted(false);
+        button.setFocusable(false);
+        button.setBackground(GUIConfig.MenuBarBackground);
+
+        return button;
+    }
+
+    public static JButton createStickyMenuBarButton() {
+        JButton button = createMenuBarButton();
+        button.addActionListener(e -> {
+            Color highlightColor = ColorUtility.darken(GUIConfig.MenuBarBackground, 10);
+            if (button.getBackground().equals(highlightColor))
+                button.setBackground(GUIConfig.MenuBarBackground);
+            else
+                button.setBackground(highlightColor);
+        });
+
+        return button;
     }
 }

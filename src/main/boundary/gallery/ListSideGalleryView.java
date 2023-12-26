@@ -1,6 +1,10 @@
-package src.main.boundary;
+package src.main.boundary.gallery;
 
+import src.main.boundary.list.CustomJList;
+import src.main.boundary.GUIConfig;
+import src.main.boundary.SearchField;
 import src.main.boundary.feature.FeatureView;
+import src.main.boundary.list.CustomListCellRenderer;
 import src.main.boundary.renderer.DefaultEntityRenderer;
 import src.main.boundary.renderer.EntityRenderer;
 import src.main.boundary.sidebar.BoxSidebar;
@@ -49,6 +53,7 @@ public class ListSideGalleryView extends FeatureView implements ListSelectionLis
         sideList.setBackground(GUIConfig.SideBarColor);
         sideList.setSelectedIndex(0);
         sideList.addListSelectionListener(this);
+        sideList.setCellRenderer(new CustomListCellRenderer<>());
 
         JScrollPane scrollPane = new JScrollPane(sideList);
         scrollPane.setBorder(null);
@@ -70,6 +75,26 @@ public class ListSideGalleryView extends FeatureView implements ListSelectionLis
     public void setRenderer(EntityRenderer renderer) {
         this.renderer = renderer;
         controller.setSelectedValue(sideList.getSelectedValue());
+    }
+
+    public EntityRenderer getRenderer() {
+        return renderer;
+    }
+
+    public void clearSelection() {
+        sideList.setSelectedIndex(-1);
+    }
+
+    public int getSelectedIndex() {
+        return sideList.getSelectedIndex();
+    }
+
+    public void setSelectedIndex(int index) {
+        sideList.setSelectedIndex(index);
+    }
+
+    public CustomJList<GalleryItem> getSideList() {
+        return sideList;
     }
 
     @Override

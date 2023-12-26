@@ -11,6 +11,7 @@ import src.test.control.HoKhauControlTestValue;
 public class HoKhauFeatureTest extends Feature {
     public HoKhauFeatureTest() {
         icon = GUIConfig.HoKhauIcon;
+        name = "Quản lý hộ khẩu";
 
         HoKhauModel model = new HoKhauModel(new HoKhauControlTestValue());
         HoKhauController controller = new HoKhauController(model);

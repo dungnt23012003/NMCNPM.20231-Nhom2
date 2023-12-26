@@ -2,12 +2,11 @@ package src.test.boundary;
 
 import com.formdev.flatlaf.FlatIntelliJLaf;
 import src.main.boundary.GUIConfig;
-import src.main.boundary.ListRenderable;
-import src.main.boundary.MultiListRenderable;
+import src.main.boundary.list.ListRenderable;
+import src.main.boundary.list.MultiListRenderable;
 import src.main.boundary.renderer.MultiListRenderer;
 
 import javax.swing.*;
-import javax.swing.border.EmptyBorder;
 import java.awt.*;
 import java.util.ArrayList;
 
@@ -28,7 +27,7 @@ public class MultiListRendererTest {
 
         MultiListRenderable multiList = new MultiListRenderable() {
             @Override
-            public ArrayList<ListRenderable> getLists() {
+            public ArrayList<ListRenderable> getRenderableLists() {
                 ArrayList<ListRenderable> lists = new ArrayList<>();
 
                 lists.add(new ListRenderable() {
