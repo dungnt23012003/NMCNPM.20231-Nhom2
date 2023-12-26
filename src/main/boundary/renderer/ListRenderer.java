@@ -60,7 +60,7 @@ public class ListRenderer {
             listPanel.add(new ListSeparator());
             listPanel.add(Box.createVerticalStrut(listComponentSpacing));
         }
-        listPanel.add(componentList.getLast());
+        listPanel.add(componentList.get(componentList.size() - 1));
 
         component.add(listPanel);
 
