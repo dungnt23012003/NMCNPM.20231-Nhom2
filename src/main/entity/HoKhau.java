@@ -9,6 +9,6 @@ public class HoKhau {
     public NhanKhau chuHo;
     public String khuVuc;
     public String diaChi;
-    public Date ngayLap;
+    public String ngayLap;
     public ArrayList<NhanKhau> listNhanKhau;
 }

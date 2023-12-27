@@ -3,7 +3,7 @@ import java.util.Date;
 public class NhanKhau {
     public String CCCD;
     public String hoTen;
-    public Date namSinh;
+    public String namSinh;
     public String gioiTinh;
     public String nguyenQuan;
     public String danToc;
