@@ -13,9 +13,18 @@ public class NhanKhauController {
         view. setupUI();
     }
 
+    public NhanKhauController(NhanKhauModel model, NhanKhauRenderer renderer) {
+        this.model = model;
+
+        view = new NhanKhauView(this, model);
+        renderer.setController(this);
+        view.setRenderer(renderer);
+        view.setupUI();
+    }
+
     public void renderAdd() {
-        int lastListIndex = model.galleryModel.getListModel().size();
-        model.galleryModel.getListModel().add(lastListIndex, new NhanKhauAdapter(new NhanKhau(), true));
+        int lastListIndex = model.getCurrentListModel().size();
+        model.getCurrentListModel().add(lastListIndex, new NhanKhauAdapter(new NhanKhau(), true));
         model.galleryController.getView().setSelectedIndex(lastListIndex);
 
         NhanKhauRenderer renderer = (NhanKhauRenderer) model.galleryController.getView().getRenderer();
@@ -35,9 +44,9 @@ public class NhanKhauController {
         int current_index = model.galleryController.getView().getSelectedIndex();
 
         model.control.delete(nhanKhauAdapter.nhanKhau);
-        model.getGalleryModel().getListModel().removeElement(nhanKhauAdapter);
+        model.getCurrentListModel().removeElement(nhanKhauAdapter);
 
-        if (current_index == model.getGalleryModel().getListModel().size())
+        if (current_index == model.getCurrentListModel().size())
             --current_index;
 
         model.galleryController.getView().setSelectedIndex(current_index);
@@ -45,5 +54,9 @@ public class NhanKhauController {
 
     public NhanKhauView getView() {
         return view;
+    }
+
+    public NhanKhauModel getModel() {
+        return model;
     }
 }

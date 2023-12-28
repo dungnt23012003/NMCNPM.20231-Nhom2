@@ -5,9 +5,12 @@ import src.main.boundary.dialog.NhanKhauChooserDialog;
 import src.main.boundary.editor.EditorComponent;
 import src.main.boundary.editor.EditorComponentFactory;
 import src.main.boundary.editor.FormEditorComponent;
+import src.main.boundary.editor.NhanKhauEditorComponent;
 import src.main.boundary.list.DefaultRenderableList;
 import src.main.boundary.list.ListRenderable;
 import src.main.boundary.list.MultiListRenderable;
+import src.main.boundary.nhankhau.NhanKhauAdapter;
+import src.main.boundary.nhankhau.NhanKhauEditor;
 import src.main.boundary.renderer.MultiListRenderer;
 import src.main.boundary.utility.ComponentFactory;
 import src.main.entity.HoKhau;
@@ -17,7 +20,6 @@ import javax.swing.*;
 import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
 import java.awt.*;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 
 public class HoKhauEditor extends EditorComponent implements MultiListRenderable, DocumentListener {
@@ -30,12 +32,17 @@ public class HoKhauEditor extends EditorComponent implements MultiListRenderable
     EditorComponent diaChiEditor;
     EditorComponent ngayLapEditor;
     ArrayList<EditorComponent> nhanKhauEditors = new ArrayList<>();
+    NhanKhauEditorComponent currentChuHoEditor;
 
     public HoKhauEditor(HoKhauAdapter item, HoKhauController controller, JButton clickWhenCanceled) {
         this.controller = controller;
         this.item = item;
         this.clickWhenCanceled = clickWhenCanceled;
 
+        for (NhanKhau nhanKhau : item.hoKhau.listNhanKhau) {
+            EditorComponent currentNhanKhauEditor = EditorComponentFactory.createNhanKhauEditorComponent(new NhanKhauAdapter(nhanKhau), this);
+            nhanKhauEditors.add(currentNhanKhauEditor);
+        }
         setupUI();
     }
 
@@ -66,7 +73,7 @@ public class HoKhauEditor extends EditorComponent implements MultiListRenderable
         buttonPanel.setAlignmentX(0.0f);
 
         JButton themNhanKhauButton = ComponentFactory.createMenuBarButton();
-        themNhanKhauButton.addActionListener(e -> {addNhanKhau();});
+        themNhanKhauButton.addActionListener(e -> addNhanKhau());
         themNhanKhauButton.setIcon(GUIConfig.AddNhanKhauIcon);
 
         add(renderer.getRenderedComponent(this));
@@ -83,6 +90,7 @@ public class HoKhauEditor extends EditorComponent implements MultiListRenderable
         thongTinChungList.setTitle("Thông tin chung");
 
         soHoKhauEditor = EditorComponentFactory.createEditFormComponent("Số hộ khẩu", String.valueOf(item.hoKhau.maHoKhau));
+        soHoKhauEditor.setEnabled(item.isNew);
         khuVucEditor = EditorComponentFactory.createEditFormComponent("Khu vực", String.valueOf(item.hoKhau.khuVuc));
         diaChiEditor = EditorComponentFactory.createEditFormComponent("Địa chỉ", String.valueOf(item.hoKhau.diaChi));
         ngayLapEditor = EditorComponentFactory.createEditFormComponent("Ngày lập", String.valueOf(item.hoKhau.ngayLap));
@@ -95,10 +103,8 @@ public class HoKhauEditor extends EditorComponent implements MultiListRenderable
         DefaultRenderableList nhanKhauList = new DefaultRenderableList();
         nhanKhauList.setTitle("Danh sách nhân khẩu");
 
-        for (NhanKhau nhanKhau : item.hoKhau.listNhanKhau) {
-            EditorComponent currentNhanKhauEditor = EditorComponentFactory.createTestNhanKhauEditComponent(nhanKhau);
-            nhanKhauEditors.add(currentNhanKhauEditor);
-            nhanKhauList.addComponent(currentNhanKhauEditor);
+        for (EditorComponent component : nhanKhauEditors) {
+            nhanKhauList.addComponent(component);
         }
 
         listRenderables.add(thongTinChungList);
@@ -117,7 +123,11 @@ public class HoKhauEditor extends EditorComponent implements MultiListRenderable
         value.khuVuc = (String) khuVucEditor.getValue();
         value.diaChi = (String) diaChiEditor.getValue();
         value.ngayLap = (String) ngayLapEditor.getValue();
-        value.chuHo = new NhanKhau();
+        value.chuHo = ((NhanKhauAdapter) currentChuHoEditor.getValue()).getNhanKhau();
+
+        for (EditorComponent component : nhanKhauEditors) {
+            value.listNhanKhau.add(((NhanKhauAdapter) component.getValue()).getNhanKhau());
+        }
 
         return new HoKhauAdapter(value);
     }
@@ -147,6 +157,51 @@ public class HoKhauEditor extends EditorComponent implements MultiListRenderable
     }
 
     public void addNhanKhau() {
-        NhanKhauChooserDialog dialog = new NhanKhauChooserDialog(controller.model.control, getRootPane());
+        ArrayList<NhanKhauAdapter> list = new ArrayList<>();
+        for (EditorComponent editorComponent : nhanKhauEditors) {
+            list.add((NhanKhauAdapter) editorComponent.getValue());
+        }
+
+        NhanKhauChooserDialog dialog = new NhanKhauChooserDialog(list, controller.model.control, getRootPane());
+        nhanKhauEditors.clear();
+        for (NhanKhauAdapter adapter : dialog.getValues()) {
+            nhanKhauEditors.add(EditorComponentFactory.createNhanKhauEditorComponent(adapter, this));
+        }
+        updateAll();
+
+        dialog.dispose();
+    }
+
+    public void removeNhanKhau(NhanKhauAdapter item) {
+        for (EditorComponent component : nhanKhauEditors) {
+            if (component.getValue().equals(item)) {
+                nhanKhauEditors.remove(component);
+                break;
+            }
+        }
+        updateAll();
+    }
+
+    public void updateAll() {
+        removeAll();
+        setupUI();
+        revalidate();
+        repaint();
+    }
+
+    public void setChuHo(NhanKhauEditorComponent item) {
+        int previous_chu_ho_index = nhanKhauEditors.indexOf(currentChuHoEditor);
+        if (previous_chu_ho_index != -1) {
+            NhanKhauAdapter adapter = (NhanKhauAdapter) currentChuHoEditor.getValue();
+            adapter.setChuHo(false);
+            nhanKhauEditors.set(previous_chu_ho_index, EditorComponentFactory.createNhanKhauEditorComponent(adapter, this));
+        }
+
+        NhanKhauAdapter adapter = (NhanKhauAdapter) item.getValue();
+        adapter.setChuHo(true);
+        int chuHoIndexInEditorList = nhanKhauEditors.indexOf(item);
+        nhanKhauEditors.set(chuHoIndexInEditorList, EditorComponentFactory.createNhanKhauEditorComponent(adapter, this));
+        currentChuHoEditor = (NhanKhauEditorComponent) nhanKhauEditors.get(chuHoIndexInEditorList);
+        updateAll();
     }
 }

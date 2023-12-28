@@ -20,14 +20,14 @@ import java.awt.*;
 // TODO
 public class ListSideGalleryView extends FeatureView implements ListSelectionListener {
     ListSideGalleryController controller;
-    ListSideGalleryModel model;
+    GalleryModel model;
     EntityRenderer renderer = new DefaultEntityRenderer();
 
     Sidebar sidebar;
     JPanel mainView;
     CustomJList<GalleryItem> sideList;
 
-    public ListSideGalleryView(ListSideGalleryController controller, ListSideGalleryModel model) {
+    public ListSideGalleryView(ListSideGalleryController controller, GalleryModel model) {
         this.controller = controller;
         this.model = model;
     }
@@ -49,7 +49,7 @@ public class ListSideGalleryView extends FeatureView implements ListSelectionLis
 
         sidebar.add(textField);
 
-        sideList = new CustomJList<>(model.getListModel());
+        sideList = new CustomJList<>(model.getNewListModel());
         sideList.setBackground(GUIConfig.SideBarColor);
         sideList.setSelectedIndex(0);
         sideList.addListSelectionListener(this);
@@ -95,6 +95,10 @@ public class ListSideGalleryView extends FeatureView implements ListSelectionLis
 
     public CustomJList<GalleryItem> getSideList() {
         return sideList;
+    }
+
+    public void refreshSideBar() {
+        sideList.setModel(model.getNewListModel());
     }
 
     @Override

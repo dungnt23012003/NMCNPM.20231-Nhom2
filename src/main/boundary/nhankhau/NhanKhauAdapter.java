@@ -1,21 +1,19 @@
 package src.main.boundary.nhankhau;
 
-import src.main.boundary.GUIConfig;
 import src.main.boundary.gallery.GalleryItem;
 import src.main.boundary.list.DefaultRenderableList;
 import src.main.boundary.list.ListRenderable;
 import src.main.boundary.list.MultiListRenderable;
 import src.main.boundary.utility.ComponentFactory;
-import src.main.entity.HoKhau;
 import src.main.entity.NhanKhau;
 
 import java.util.ArrayList;
-import java.util.Date;
 
 public class NhanKhauAdapter implements GalleryItem, MultiListRenderable {
     NhanKhau nhanKhau;
     boolean isNew = false;
     String string;
+    boolean isChuHo = false;
 
 
     public NhanKhauAdapter(NhanKhau nhanKhau) {
@@ -61,5 +59,31 @@ public class NhanKhauAdapter implements GalleryItem, MultiListRenderable {
         list.add(thongTinChungList);
 
         return list;
+    }
+
+    public boolean isNew() {
+        return isNew;
+    }
+
+    public boolean isChuHo() {
+        return isChuHo;
+    }
+
+    public void setChuHo(boolean chuHo) {
+        isChuHo = chuHo;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (obj instanceof NhanKhauAdapter casted) {
+            if (this.isNew && casted.isNew()) return true;
+            if (this.isNew || casted.isNew()) return false;
+            return this.nhanKhau.CCCD.equals(casted.nhanKhau.CCCD);
+        }
+        return super.equals(obj);
+    }
+
+    public void setString(String string) {
+        this.string = string;
     }
 }

@@ -3,10 +3,7 @@ package src.test.boundary;
 import com.formdev.flatlaf.FlatIntelliJLaf;
 import src.main.boundary.app.DefaultAppController;
 import src.main.boundary.feature.*;
-import src.main.boundary.gallery.GalleryItem;
-import src.main.boundary.gallery.ListSideGalleryController;
-import src.main.boundary.gallery.ListSideGalleryModel;
-import src.main.boundary.gallery.ListSideGalleryView;
+import src.main.boundary.gallery.*;
 import src.main.boundary.model.DefaultAppModel;
 
 import javax.swing.*;
@@ -53,7 +50,17 @@ public class ListSideFeatureViewTest {
 
         ListSideGalleryModel listSideGalleryModel = new ListSideGalleryModel(listModel);
 
-        ListSideGalleryController listSideGalleryController = new ListSideGalleryController(listSideGalleryModel);
+        ListSideGalleryController listSideGalleryController = new ListSideGalleryController(new GalleryModel() {
+            @Override
+            public DefaultListModel<GalleryItem> getNewListModel() {
+                return new DefaultListModel<>();
+            }
+
+            @Override
+            public DefaultListModel<GalleryItem> getCurrentListModel() {
+                return new DefaultListModel<>();
+            }
+        });
         ListSideGalleryView featureView = listSideGalleryController.getView();
 
         Feature testFeature = new Feature();

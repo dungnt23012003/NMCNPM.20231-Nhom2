@@ -17,16 +17,23 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 public class NhanKhauRenderer implements EntityRenderer, ActionListener, ListSelectionListener {
-    NhanKhauController controller;
+    protected NhanKhauController controller;
     JPanel subPanel;
     MultiListRenderer renderer;
     NhanKhauEditor editor;
     boolean isEditing;
     NhanKhauAdapter currentItem;
     JButton settingButton;
-    MenuBar menuBar;
+    protected JButton deleteButton;
+    protected MenuBar menuBar;
+
+    public NhanKhauRenderer() {}
 
     public NhanKhauRenderer(NhanKhauController controller) {
+        this.controller = controller;
+    }
+
+    public void setController(NhanKhauController controller) {
         this.controller = controller;
     }
 
@@ -51,7 +58,9 @@ public class NhanKhauRenderer implements EntityRenderer, ActionListener, ListSel
             settingButton.setIcon(GUIConfig.settingIcon);
             settingButton.addActionListener(this);
             menuBar.add(settingButton);
-            menuBar.add(new MenuBarDeleteButton(e -> controller.delete(castedItem)));
+
+            deleteButton = new MenuBarDeleteButton(e -> controller.delete(castedItem));
+            menuBar.add(deleteButton);
 
             subPanel = new JPanel(new CardLayout());
             subPanel.setAlignmentX(0.0f);
@@ -84,7 +93,7 @@ public class NhanKhauRenderer implements EntityRenderer, ActionListener, ListSel
             currentItem.resetString();
             controller.model.galleryController.getView().repaint();
             if (currentItem.isNew) {
-                controller.model.galleryModel.getListModel().removeElement(currentItem);
+                controller.model.getCurrentListModel().removeElement(currentItem);
                 return;
             }
             subPanel.add(renderer.getRenderedComponent(currentItem));

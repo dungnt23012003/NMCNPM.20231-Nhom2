@@ -54,7 +54,8 @@ public class HoKhauAdapter implements GalleryItem, MultiListRenderable {
         nhanKhauList.setTitle("Danh sách nhân khẩu");
 
         for (NhanKhau nhanKhau : hoKhau.listNhanKhau) {
-            nhanKhauList.addComponent(ComponentFactory.createFormComponent(nhanKhau.hoTen, ""));
+            boolean isChuHo = nhanKhau.CCCD.equals(hoKhau.chuHo.CCCD);
+            nhanKhauList.addComponent(ComponentFactory.createFormComponent(nhanKhau.hoTen + (isChuHo ? " Chủ hộ" : ""), ""));
         }
 
         list.add(thongTinChungList);

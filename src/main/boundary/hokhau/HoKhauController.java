@@ -14,8 +14,8 @@ public class HoKhauController {
     }
 
     public void add() {
-        int lastListIndex = model.galleryModel.getListModel().size();
-        model.galleryModel.getListModel().add(lastListIndex, new HoKhauAdapter(new HoKhau(), true));
+        int lastListIndex = model.getCurrentListModel().size();
+        model.getCurrentListModel().add(lastListIndex, new HoKhauAdapter(new HoKhau(), true));
         model.galleryController.getView().setSelectedIndex(lastListIndex);
 
         HoKhauRenderer renderer = (HoKhauRenderer) model.galleryController.getView().getRenderer();
@@ -31,9 +31,9 @@ public class HoKhauController {
         int current_index = model.galleryController.getView().getSelectedIndex();
 
         model.control.delete(hoKhauAdapter.hoKhau);
-        model.getGalleryModel().getListModel().removeElement(hoKhauAdapter);
+        model.getCurrentListModel().removeElement(hoKhauAdapter);
 
-        if (current_index == model.getGalleryModel().getListModel().size())
+        if (current_index == model.getCurrentListModel().size())
             --current_index;
 
         model.galleryController.getView().setSelectedIndex(current_index);

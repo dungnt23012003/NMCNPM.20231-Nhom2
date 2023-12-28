@@ -79,7 +79,7 @@ public class HoKhauRenderer implements EntityRenderer, ActionListener, ListSelec
             currentItem.resetString();
             controller.model.galleryController.getView().repaint();
             if (currentItem.isNew) {
-                controller.model.galleryModel.getListModel().removeElement(currentItem);
+                controller.model.getCurrentListModel().removeElement(currentItem);
                 return;
             }
             subPanel.add(renderer.getRenderedComponent(currentItem));

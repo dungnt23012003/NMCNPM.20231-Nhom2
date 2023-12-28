@@ -26,6 +26,7 @@ public class FeaturedAppTest {
         UIManager.put("TextComponent.arc", 10);
         UIManager.put("Button.arc", 10);
         UIManager.put("List.selectionArc", 10);
+        UIManager.put("Button.disabledBackground", GUIConfig.MenuBarBackground);
 
         // New UI Key
         UIManager.put("ToolTip.background", GUIConfig.FeatureViewColor);

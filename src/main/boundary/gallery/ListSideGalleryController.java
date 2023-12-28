@@ -2,10 +2,10 @@ package src.main.boundary.gallery;
 
 // TODO
 public class ListSideGalleryController {
-    ListSideGalleryModel model;
+    GalleryModel model;
     ListSideGalleryView view;
 
-    public ListSideGalleryController(ListSideGalleryModel model) {
+    public ListSideGalleryController(GalleryModel model) {
         this.model = model;
 
         view = new ListSideGalleryView(this, model);
