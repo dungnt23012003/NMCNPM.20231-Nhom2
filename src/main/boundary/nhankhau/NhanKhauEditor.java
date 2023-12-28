@@ -64,7 +64,12 @@ public class NhanKhauEditor extends EditorComponent implements MultiListRenderab
 
         JButton saveButton = ComponentFactory.createDefaultButton();
         saveButton.addActionListener(e -> {
-            controller.model.control.update(item.nhanKhau, getValue().nhanKhau);
+            if (item.isNew) {
+                controller.model.control.add(getValue().nhanKhau);
+            }
+            else {
+                controller.model.control.update(item.nhanKhau, getValue().nhanKhau);
+            }
             clickWhenCanceled.doClick();
         });
         saveButton.setText("Lưu");
@@ -114,11 +119,16 @@ public class NhanKhauEditor extends EditorComponent implements MultiListRenderab
     @Override
     public NhanKhauAdapter getValue() {
         NhanKhau value = new NhanKhau();
-//        value.maHoKhau = (String) soHoKhauEditor.getValue();
-//        value.khuVuc = (String) khuVucEditor.getValue();
-//        value.diaChi = (String) diaChiEditor.getValue();
-//        value.ngayLap = new SimpleDateFormat((String) ngayLapEditor.getValue()).get2DigitYearStart();
-//        value.chuHo = new NhanKhau();
+
+        value.CCCD = (String) cccdEditor.getValue();
+        value.hoTen = (String) hotenEditor.getValue();
+        value.namSinh = (String) namSinhEditor.getValue();
+        value.gioiTinh = (String) gioiTinhEditor.getValue();
+        value.nguyenQuan = (String) nguyenQuanEditor.getValue();
+        value.danToc = (String) danTocEditor.getValue();
+        value.tonGiao = (String) tonGiaoEditor.getValue();
+        value.quocTich = (String) quocTichEditor.getValue();
+        value.noiThuongTru = (String) noiThuongTruEditor.getValue();
 
         return new NhanKhauAdapter(value);
     }

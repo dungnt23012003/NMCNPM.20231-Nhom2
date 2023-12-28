@@ -2,9 +2,6 @@ package src.main.boundary.nhankhau;
 
 import src.main.boundary.GUIConfig;
 import src.main.boundary.feature.FeatureView;
-import src.main.boundary.hokhau.HoKhauAdapter;
-import src.main.boundary.hokhau.HoKhauController;
-import src.main.boundary.hokhau.HoKhauEditor;
 import src.main.boundary.menubar.MenuBar;
 import src.main.boundary.menubar.MenuBarDeleteButton;
 import src.main.boundary.renderer.EntityRenderer;
@@ -27,6 +24,7 @@ public class NhanKhauRenderer implements EntityRenderer, ActionListener, ListSel
     boolean isEditing;
     NhanKhauAdapter currentItem;
     JButton settingButton;
+    MenuBar menuBar;
 
     public NhanKhauRenderer(NhanKhauController controller) {
         this.controller = controller;
@@ -39,12 +37,12 @@ public class NhanKhauRenderer implements EntityRenderer, ActionListener, ListSel
         FeatureView renderedComponent = new FeatureView();
         renderedComponent.setLayout(new BoxLayout(renderedComponent, BoxLayout.PAGE_AXIS));
 
-        src.main.boundary.menubar.MenuBar menuBar = new MenuBar();
+        menuBar = new MenuBar();
         menuBar.setAlignmentX(0.0f);
         renderedComponent.add(menuBar);
         renderedComponent.add(Box.createVerticalStrut(10));
 
-        menuBar.addButton(GUIConfig.AddIcon, e -> controller.add());
+        menuBar.addButton(GUIConfig.AddIcon, e -> controller.renderAdd());
 
         if (item instanceof NhanKhauAdapter castedItem) {
             currentItem = castedItem;
@@ -68,6 +66,10 @@ public class NhanKhauRenderer implements EntityRenderer, ActionListener, ListSel
         }
 
         return renderedComponent;
+    }
+
+    public MenuBar getMenuBar() {
+        return menuBar;
     }
 
     @Override

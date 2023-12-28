@@ -47,6 +47,7 @@ public class FeaturedAppTest {
         frame.setTitle("._.");
         frame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
         frame.setSize(1024, 768);
+        frame.setLocationRelativeTo(null);
         frame.setVisible(true);
     }
 }

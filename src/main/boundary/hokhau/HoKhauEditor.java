@@ -147,6 +147,6 @@ public class HoKhauEditor extends EditorComponent implements MultiListRenderable
     }
 
     public void addNhanKhau() {
-        NhanKhauChooserDialog dialog = new NhanKhauChooserDialog(getRootPane());
+        NhanKhauChooserDialog dialog = new NhanKhauChooserDialog(controller.model.control, getRootPane());
     }
 }

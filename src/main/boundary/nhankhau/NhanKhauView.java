@@ -8,6 +8,7 @@ import javax.swing.*;
 public class NhanKhauView extends FeatureView {
     NhanKhauModel model;
     NhanKhauController controller;
+    NhanKhauRenderer renderer;
 
     public NhanKhauView(NhanKhauController controller, NhanKhauModel model) {
         this.controller = controller;
@@ -17,7 +18,12 @@ public class NhanKhauView extends FeatureView {
     public void setupUI() {
         setLayout(new BoxLayout(this, BoxLayout.PAGE_AXIS));
 
-        model.galleryController.getView().setRenderer(new NhanKhauRenderer(controller));
+        renderer = new NhanKhauRenderer(controller);
+        model.galleryController.getView().setRenderer(renderer);
         add(model.galleryController.getView());
+    }
+
+    public NhanKhauRenderer getRenderer() {
+        return renderer;
     }
 }
