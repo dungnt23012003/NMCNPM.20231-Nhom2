@@ -5,30 +5,165 @@ import src.main.entity.NhanKhau;
 
 import javax.swing.*;
 import java.awt.*;
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.SQLException;
-import java.sql.Statement;
+import java.sql.*;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 
 public class HoKhauControl {
-    public static Statement statement_connect_to_sql_server() throws SQLException, ClassNotFoundException {
-            Class.forName("com.microsoft.sqlserver.jdbc.SQLServerDriver");
-            String url = "jdbc:sqlserver://LAPTOP-OBVO3M5Q\\CSDL:1433;databaseName=QUAN_LY_NHAN_KHAU;integratedSecurity=true;encrypt=true;trustServerCertificate=true";
-            String username = "nmcnpm_user";
-            String password = "nmcnpm2023";
-            Connection connection = DriverManager.getConnection(url, username, password);
-            return connection.createStatement();
+    public static Connection connect_to_sql_server() throws SQLException, ClassNotFoundException {
+        Class.forName("com.microsoft.sqlserver.jdbc.SQLServerDriver");
+        String url = "jdbc:sqlserver://LAPTOP-OBVO3M5Q\\CSDL:1433;databaseName=QUAN_LY_NHAN_KHAU;integratedSecurity=true;encrypt=true;trustServerCertificate=true";
+        String username = "nmcnpm_user";
+        String password = "nmcnpm2023";
+        Connection connection = DriverManager.getConnection(url, username, password);
+        return connection;
     }
     public ArrayList<HoKhau> getList() {
-        return null;
+        ArrayList<HoKhau> dsHoKhau = new ArrayList<HoKhau>();
+        try{
+            String sql = "select * from ho_khau;";
+            System.out.println(sql);
+
+            Connection connection = connect_to_sql_server();
+            Statement statement = connection.createStatement();
+            ResultSet dsHK = statement.executeQuery(sql);
+
+            while(dsHK.next()){
+                //Tạo ra hộ khẩu tạm thời
+                HoKhau hoKhauTmp = new HoKhau();
+                //Lấy mã hộ khẩu
+                hoKhauTmp.maHoKhau = dsHK.getString(1);
+                //Tìm chủ hộ trong danh sách nhân khẩu
+                String timChuHo = "select * from nhan_khau where cccd = ";
+                timChuHo = timChuHo + dsHK.getString(2) + ";";
+                System.out.println(timChuHo);
+                hoKhauTmp.khuVuc = dsHK.getString(3);
+                hoKhauTmp.diaChi = dsHK.getString(4);
+                hoKhauTmp.ngayLap = dsHK.getString(5);
+                if (hoKhauTmp.ngayLap!=null){
+                    String year = hoKhauTmp.ngayLap.substring(0,4);
+                    String month = hoKhauTmp.ngayLap.substring(5,7);
+                    String day = hoKhauTmp.ngayLap.substring(8,10);
+                    hoKhauTmp.ngayLap = day + "-" + month + "-" + year;
+                }
+                else{
+                    hoKhauTmp.ngayLap = "";
+                }
+                Statement statement1 = connection.createStatement();
+                ResultSet chuHo = statement1.executeQuery(timChuHo);
+                //Lưu thông tin chủ hộ vào nhân khẩu tạm thời
+
+                chuHo.next();
+
+                NhanKhau nhanKhauTmp = new NhanKhau();
+                nhanKhauTmp.CCCD = chuHo.getString(1);
+                nhanKhauTmp.hoTen = chuHo.getString(2);
+                nhanKhauTmp.namSinh = chuHo.getString(3);
+                if (nhanKhauTmp.namSinh!=null){
+                    String year = nhanKhauTmp.namSinh.substring(0,4);
+                    String month = nhanKhauTmp.namSinh.substring(5,7);
+                    String day = nhanKhauTmp.namSinh.substring(8,10);
+                    nhanKhauTmp.namSinh = day + "-" + month + "-" + year;
+                }
+                else{
+                    nhanKhauTmp.namSinh = "";
+                }
+                nhanKhauTmp.gioiTinh = chuHo.getString(4);
+                nhanKhauTmp.nguyenQuan = chuHo.getString(5);
+                nhanKhauTmp.danToc = chuHo.getString(6);
+                nhanKhauTmp.tonGiao = chuHo.getString(7);
+                nhanKhauTmp.quocTich = chuHo.getString(8);
+                nhanKhauTmp.noiThuongTru = chuHo.getString(9);
+
+                //lưu chủ hộ của hộ khẩu tạm thời
+                hoKhauTmp.chuHo = nhanKhauTmp;
+                //tìm danh sách nhân khẩu trong hộ khẩu
+                String timNhanKhauTrongHoKhau = "select * from nhan_khau inner join hk_nk on nhan_khau.cccd = hk_nk.cccd_nhan_khau where  hk_nk.ma_ho_khau = ";
+                timNhanKhauTrongHoKhau = timNhanKhauTrongHoKhau + hoKhauTmp.maHoKhau + ";";
+                System.out.println(timNhanKhauTrongHoKhau);
+                Statement statement2 = connection.createStatement();
+                ResultSet dsNK = statement2.executeQuery(timNhanKhauTrongHoKhau);
+
+                //đẩy các nhân khẩu vào trong hộ khẩu
+                while(dsNK.next()){
+                    nhanKhauTmp.CCCD = dsNK.getString(1);
+                    nhanKhauTmp.hoTen = dsNK.getString(2);
+                    nhanKhauTmp.namSinh = dsNK.getString(3);
+                    if (nhanKhauTmp.namSinh!=null){
+                        String year = nhanKhauTmp.namSinh.substring(0,4);
+                        String month = nhanKhauTmp.namSinh.substring(5,7);
+                        String day = nhanKhauTmp.namSinh.substring(8,10);
+                        nhanKhauTmp.namSinh = day + "-" + month + "-" + year;
+                    }
+                    else{
+                        nhanKhauTmp.namSinh = "";
+                    }
+                    nhanKhauTmp.gioiTinh = dsNK.getString(4);
+                    nhanKhauTmp.nguyenQuan = dsNK.getString(5);
+                    nhanKhauTmp.danToc = dsNK.getString(6);
+                    nhanKhauTmp.tonGiao = dsNK.getString(7);
+                    nhanKhauTmp.quocTich = dsNK.getString(8);
+                    nhanKhauTmp.noiThuongTru = dsNK.getString(9);
+                    nhanKhauTmp.quanHeVoiChuHo = dsNK.getString(12);
+                    hoKhauTmp.listNhanKhau.add(nhanKhauTmp);
+                }
+
+
+
+                //đẩy hoKhauTmp vào dsHoKhau
+
+                dsHoKhau.add(hoKhauTmp);
+            }
+
+        }
+        catch (Exception e){
+            e.printStackTrace();
+        }
+
+        return dsHoKhau;
     }
 
     public ArrayList<NhanKhau> getNhanKhauVoGiaCuList() {
-        return null;
+        ArrayList<NhanKhau> dsNhanKhau = new ArrayList<NhanKhau>();
+        try{
+            String sql = "select * from nhan_khau where cccd not in (select cccd_nhan_khau from hn_nk)";
+            System.out.println(sql);
+            Connection connection = connect_to_sql_server();
+            ResultSet rs = connection.createStatement().executeQuery(sql);
+
+            while(rs.next()){
+                NhanKhau nhanKhauTmp = new NhanKhau();
+                nhanKhauTmp.CCCD = rs.getString(1);
+                nhanKhauTmp.hoTen = rs.getString(2);
+                nhanKhauTmp.namSinh = rs.getString(3);
+                if (nhanKhauTmp.namSinh!=null){
+                    String year = nhanKhauTmp.namSinh.substring(0,4);
+                    String month = nhanKhauTmp.namSinh.substring(5,7);
+                    String day = nhanKhauTmp.namSinh.substring(8,10);
+                    nhanKhauTmp.namSinh = day + "-" + month + "-" + year;
+                }
+                else{
+                    nhanKhauTmp.namSinh = "";
+                }
+                nhanKhauTmp.gioiTinh = rs.getString(4);
+                nhanKhauTmp.nguyenQuan = rs.getString(5);
+                nhanKhauTmp.danToc = rs.getString(6);
+                nhanKhauTmp.tonGiao = rs.getString(7);
+                nhanKhauTmp.quocTich = rs.getString(8);
+                nhanKhauTmp.noiThuongTru = rs.getString(9);
+                nhanKhauTmp.quanHeVoiChuHo = "";
+                dsNhanKhau.add(nhanKhauTmp);
+            }
+            connection.close();
+
+        }
+        catch (Exception e){
+            System.out.println(e.getMessage());
+        }
+
+        return dsNhanKhau;
     }
 
 
@@ -44,7 +179,18 @@ public class HoKhauControl {
             String year = entity.ngayLap.substring(6,10);
             sql = sql + "'" + year + "-" + month + "-" + day + "'" + ");";
             System.out.println(sql);
-            statement_connect_to_sql_server().execute(sql);
+            Connection connection = connect_to_sql_server();
+            Statement statement = connection.createStatement();
+
+            for(NhanKhau x: entity.listNhanKhau){
+                sql = "insert into hk_nk values(";
+                sql = sql + "'" + entity.maHoKhau + "'" + ", ";
+                sql = sql + "'" + x.CCCD + "'" + ", ";
+                sql = sql + "'" + x.quanHeVoiChuHo + "'" + ");";
+                System.out.println(sql);
+                statement.execute(sql);
+            }
+            connection.close();
         }
         catch (Exception e){
             System.out.println(e.getMessage());
@@ -53,24 +199,59 @@ public class HoKhauControl {
     }
 
     public void delete(HoKhau entity) {
+        try{
+            String sql = "delete from hk_nk where ma_ho_khau = ";
+            sql = sql + entity.maHoKhau;
+            System.out.println(sql);
+            Connection connection = connect_to_sql_server();
+            connection.createStatement().execute(sql);
+            sql = "delete from ho_khau where ma_ho_khau = ";
+            sql = sql + entity.maHoKhau;
+            connection.createStatement().execute(sql);
+            connection.close();
+        }
+        catch (Exception e){
+            System.out.println(e.getMessage());
+        }
 
     }
 
     public void update(HoKhau old_entity, HoKhau new_entity) {
+        try{
+            Connection connection = connect_to_sql_server();
+            Statement statement = connection.createStatement();
+
+            String sql = "delete from hk_nk where ma_ho_khau = ";
+            sql = sql + old_entity.maHoKhau + ";";
+            System.out.println(sql);
+            statement.execute(sql);
+
+            sql = "update ho_khau set ";
+            sql = sql + "cccd_chu_ho = " + "'" + new_entity.chuHo.CCCD + "'" + ", ";
+            sql = sql + "khu_vuc = " + "'" + new_entity.khuVuc + "'" + ", ";
+            sql = sql + "dia_chi = " + "'" + new_entity.diaChi + "'" + ", ";
+            String day = new_entity.ngayLap.substring(0,2);
+            String month = new_entity.ngayLap.substring(3,5);
+            String year = new_entity.ngayLap.substring(6,10);
+            sql = sql + "ngay_lap = " + "'" + year + "-" + month + "-" + day + "'";
+            sql = sql + " where ma_ho_khau = " + old_entity.maHoKhau + ";";
+            System.out.println(sql);
+            statement.execute(sql);
+
+            for(NhanKhau x: new_entity.listNhanKhau){
+                sql = "insert into hk_nk values(";
+                sql = sql + "'" + new_entity.maHoKhau + "'" + ", ";
+                sql = sql + "'" + x.CCCD + "'" + ", ";
+                sql = sql + "'" + x.quanHeVoiChuHo + "'" + ");";
+                System.out.println(sql);
+                statement.execute(sql);
+            }
+            connection.close();
+        }
+        catch (Exception e){
+            System.out.println(e.getMessage());
+        }
 
     }
 
-    public static void main(String[] args) {
-        HoKhau hoKhau1 = new HoKhau();
-        hoKhau1.maHoKhau = "1";
-        hoKhau1.khuVuc = "HN001";
-        hoKhau1.diaChi = "Dia chi 1";
-        hoKhau1.ngayLap = "27-12-2023";
-
-
-        hoKhau1.chuHo.CCCD = "1";
-
-        HoKhauControl control = new HoKhauControl();control.add(hoKhau1);
-
-    }
 }
