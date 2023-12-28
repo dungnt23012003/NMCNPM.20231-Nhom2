@@ -22,7 +22,7 @@ public class HoKhauControlTestValue extends HoKhauControl {
         hoKhau1.maHoKhau = "1";
         hoKhau1.khuVuc = "HN001";
         hoKhau1.diaChi = "Dia chi 1";
-        hoKhau1.ngayLap = new SimpleDateFormat("22122023").get2DigitYearStart();
+        hoKhau1.ngayLap = "27-12-2023";
 
         hoKhau1.chuHo = new NhanKhau();
         hoKhau1.chuHo.hoTen = "Nguyễn Văn A";
@@ -33,7 +33,7 @@ public class HoKhauControlTestValue extends HoKhauControl {
         hoKhau2.maHoKhau = "2";
         hoKhau2.khuVuc = "HN002";
         hoKhau2.diaChi = "Dia chi gi day";
-        hoKhau2.ngayLap = new SimpleDateFormat("231211").get2DigitYearStart();
+        hoKhau2.ngayLap = "27-12-2023";
 
         hoKhau2.chuHo = new NhanKhau();
         hoKhau2.chuHo.hoTen = "Trần Văn B";
@@ -44,7 +44,7 @@ public class HoKhauControlTestValue extends HoKhauControl {
         hoKhau3.maHoKhau = "3";
         hoKhau3.khuVuc = "HN003";
         hoKhau3.diaChi = "Dia chi 3";
-        hoKhau3.ngayLap = new SimpleDateFormat("44344043").get2DigitYearStart();
+        hoKhau3.ngayLap = "27-12-2023";
 
         hoKhau3.chuHo = new NhanKhau();
         hoKhau3.chuHo.hoTen = "Nguyễn Văn A";
@@ -55,7 +55,7 @@ public class HoKhauControlTestValue extends HoKhauControl {
         hoKhau4.maHoKhau = "4";
         hoKhau4.khuVuc = "HN004";
         hoKhau4.diaChi = "Dia chi gi day";
-        hoKhau4.ngayLap = new SimpleDateFormat("433433").get2DigitYearStart();
+        hoKhau4.ngayLap = "27-12-2023";
 
         hoKhau4.chuHo = new NhanKhau();
         hoKhau4.chuHo.hoTen = "Trần Văn B";
@@ -66,7 +66,7 @@ public class HoKhauControlTestValue extends HoKhauControl {
         hoKhau5.maHoKhau = "5";
         hoKhau5.khuVuc = "HN005";
         hoKhau5.diaChi = "Dia chi 5";
-        hoKhau5.ngayLap = new SimpleDateFormat("66566067").get2DigitYearStart();
+        hoKhau5.ngayLap = "27-12-2023";
 
         hoKhau5.chuHo = new NhanKhau();
         hoKhau5.chuHo.hoTen = "Nguyễn Văn A";
@@ -77,7 +77,7 @@ public class HoKhauControlTestValue extends HoKhauControl {
         hoKhau6.maHoKhau = "6";
         hoKhau6.khuVuc = "HN006";
         hoKhau6.diaChi = "Dia chi gi day";
-        hoKhau6.ngayLap = new SimpleDateFormat("675655").get2DigitYearStart();
+        hoKhau6.ngayLap = "27-12-2023";
 
         hoKhau6.chuHo = new NhanKhau();
         hoKhau6.chuHo.hoTen = "Trần Văn B";
@@ -88,7 +88,7 @@ public class HoKhauControlTestValue extends HoKhauControl {
         hoKhau7.maHoKhau = "7";
         hoKhau7.khuVuc = "HN007";
         hoKhau7.diaChi = "Dia chi 7";
-        hoKhau7.ngayLap = new SimpleDateFormat("88788087").get2DigitYearStart();
+        hoKhau7.ngayLap = "27-12-2023";
 
         hoKhau7.chuHo = new NhanKhau();
         hoKhau7.chuHo.hoTen = "Nguyễn Văn A";
@@ -99,7 +99,7 @@ public class HoKhauControlTestValue extends HoKhauControl {
         hoKhau8.maHoKhau = "8";
         hoKhau8.khuVuc = "HN008";
         hoKhau8.diaChi = "Dia chi gi day";
-        hoKhau8.ngayLap = new SimpleDateFormat("877877").get2DigitYearStart();
+        hoKhau8.ngayLap = "27-12-2023";
 
         hoKhau8.chuHo = new NhanKhau();
         hoKhau8.chuHo.hoTen = "Trần Văn B";
@@ -110,7 +110,7 @@ public class HoKhauControlTestValue extends HoKhauControl {
         hoKhau9.maHoKhau = "9";
         hoKhau9.khuVuc = "HN009";
         hoKhau9.diaChi = "Dia chi 9";
-        hoKhau9.ngayLap = new SimpleDateFormat("10109101001011").get2DigitYearStart();
+        hoKhau9.ngayLap = "27-12-2023";
 
         hoKhau9.chuHo = new NhanKhau();
         hoKhau9.chuHo.hoTen = "Nguyễn Văn A";
@@ -121,7 +121,7 @@ public class HoKhauControlTestValue extends HoKhauControl {
         hoKhau10.maHoKhau = "10";
         hoKhau10.khuVuc = "HN0010";
         hoKhau10.diaChi = "Dia chi gi day";
-        hoKhau10.ngayLap = new SimpleDateFormat("101191099").get2DigitYearStart();
+        hoKhau10.ngayLap = "27-12-2023";
 
         hoKhau10.chuHo = new NhanKhau();
         hoKhau10.chuHo.hoTen = "Trần Văn B";
@@ -132,7 +132,7 @@ public class HoKhauControlTestValue extends HoKhauControl {
         hoKhau11.maHoKhau = "11";
         hoKhau11.khuVuc = "HN0011";
         hoKhau11.diaChi = "Dia chi 11";
-        hoKhau11.ngayLap = new SimpleDateFormat("121211121201211").get2DigitYearStart();
+        hoKhau11.ngayLap = "27-12-2023";
 
         hoKhau11.chuHo = new NhanKhau();
         hoKhau11.chuHo.hoTen = "Nguyễn Văn A";
@@ -143,8 +143,7 @@ public class HoKhauControlTestValue extends HoKhauControl {
         hoKhau12.maHoKhau = "12";
         hoKhau12.khuVuc = "HN0012";
         hoKhau12.diaChi = "Dia chi gi day";
-        hoKhau12.ngayLap = new SimpleDateFormat("121111121111").get2DigitYearStart();
-
+        hoKhau12.ngayLap = "27-12-2023";
         hoKhau12.chuHo = new NhanKhau();
         hoKhau12.chuHo.hoTen = "Trần Văn B";
 
@@ -154,7 +153,7 @@ public class HoKhauControlTestValue extends HoKhauControl {
         hoKhau13.maHoKhau = "14";
         hoKhau13.khuVuc = "HN0013";
         hoKhau13.diaChi = "Dia chi 13";
-        hoKhau13.ngayLap = new SimpleDateFormat("141413141401415").get2DigitYearStart();
+        hoKhau13.ngayLap = "27-12-2023";
 
         hoKhau13.chuHo = new NhanKhau();
         hoKhau13.chuHo.hoTen = "Nguyễn Văn A";
@@ -165,7 +164,7 @@ public class HoKhauControlTestValue extends HoKhauControl {
         hoKhau14.maHoKhau = "14";
         hoKhau14.khuVuc = "HN0014";
         hoKhau14.diaChi = "Dia chi gi day";
-        hoKhau14.ngayLap = new SimpleDateFormat("141513141313").get2DigitYearStart();
+        hoKhau14.ngayLap = "27-12-2023";
 
         hoKhau14.chuHo = new NhanKhau();
         hoKhau14.chuHo.hoTen = "Trần Văn B";
@@ -176,7 +175,7 @@ public class HoKhauControlTestValue extends HoKhauControl {
         hoKhau15.maHoKhau = "15";
         hoKhau15.khuVuc = "HN0015";
         hoKhau15.diaChi = "Dia chi 15";
-        hoKhau15.ngayLap = new SimpleDateFormat("161615161601615").get2DigitYearStart();
+        hoKhau15.ngayLap = "27-12-2023";
 
         hoKhau15.chuHo = new NhanKhau();
         hoKhau15.chuHo.hoTen = "Nguyễn Văn A";
@@ -187,7 +186,7 @@ public class HoKhauControlTestValue extends HoKhauControl {
         hoKhau16.maHoKhau = "16";
         hoKhau16.khuVuc = "HN0016";
         hoKhau16.diaChi = "Dia chi gi day";
-        hoKhau16.ngayLap = new SimpleDateFormat("161515161515").get2DigitYearStart();
+        hoKhau16.ngayLap = "27-12-2023";
 
         hoKhau16.chuHo = new NhanKhau();
         hoKhau16.chuHo.hoTen = "Trần Văn B";
