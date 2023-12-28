@@ -5,6 +5,7 @@ import src.main.Main;
 import javax.swing.*;
 import java.awt.*;
 import java.sql.Connection;
+import java.text.SimpleDateFormat;
 import java.util.Objects;
 
 public interface GUIConfig {
@@ -22,7 +23,7 @@ public interface GUIConfig {
     Font ListTitleFont = new Font("JetBrains Mono", Font.BOLD, 13);
 
     int FormMinSpace = 30;
-    int ListLabelHeight = 30;
+    int ListLabelHeight = 25;
 
     ImageIcon AddIcon = new ImageIcon(Objects.requireNonNull(Main.class.getResource("resources/icons/create.png")));
     ImageIcon DeleteIcon = new ImageIcon(Objects.requireNonNull(Main.class.getResource("resources/icons/delete.png")));
@@ -32,4 +33,6 @@ public interface GUIConfig {
     ImageIcon NhanKhauIcon = new ImageIcon(Objects.requireNonNull(Main.class.getResource("resources/icons/person.png")));
     ImageIcon AddNhanKhauIcon = new ImageIcon(Objects.requireNonNull(Main.class.getResource("resources/icons/add_person.png")));
     ImageIcon CloseIcon = new ImageIcon(Objects.requireNonNull(Main.class.getResource("resources/icons/close.png")));
+
+    SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
 }

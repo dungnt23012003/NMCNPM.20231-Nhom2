@@ -55,7 +55,7 @@ public class HoKhauControl {
         hoKhau1.maHoKhau = "1";
         hoKhau1.khuVuc = "HN001";
         hoKhau1.diaChi = "Dia chi 1";
-        hoKhau1.ngayLap = new SimpleDateFormat("22122023").get2DigitYearStart();
+        hoKhau1.ngayLap = "12/08/1998";
 
         hoKhau1.chuHo = new NhanKhau();
         hoKhau1.chuHo.hoTen = "Nguyễn Văn A";

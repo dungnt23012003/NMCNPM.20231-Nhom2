@@ -12,7 +12,7 @@ public class MenuBar extends JPanel {
         setBackground(GUIConfig.MenuBarBackground);
         setLayout(new BoxLayout(this, BoxLayout.LINE_AXIS));
 
-        setBorder(new FlatLineBorder(new Insets(3, 3, 3, 3), GUIConfig.MenuBarBackground, 1, 10));
+        setBorder(new FlatLineBorder(new Insets(1, 1, 1, 1), GUIConfig.MenuBarBackground, 1, 10));
     }
 
     public void add(JComponent component) {

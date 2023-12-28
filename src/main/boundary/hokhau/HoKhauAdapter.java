@@ -1,17 +1,13 @@
 package src.main.boundary.hokhau;
 
-import src.main.boundary.GUIConfig;
+import src.main.boundary.gallery.GalleryItem;
 import src.main.boundary.list.DefaultRenderableList;
-import src.main.boundary.list.ListItemizable;
 import src.main.boundary.list.ListRenderable;
 import src.main.boundary.list.MultiListRenderable;
-import src.main.boundary.gallery.GalleryItem;
-import src.main.boundary.renderer.ListRenderer;
 import src.main.boundary.utility.ComponentFactory;
 import src.main.entity.HoKhau;
+import src.main.entity.NhanKhau;
 
-import javax.swing.*;
-import java.awt.*;
 import java.util.ArrayList;
 
 public class HoKhauAdapter implements GalleryItem, MultiListRenderable {
@@ -57,7 +53,9 @@ public class HoKhauAdapter implements GalleryItem, MultiListRenderable {
         DefaultRenderableList nhanKhauList = new DefaultRenderableList();
         nhanKhauList.setTitle("Danh sách nhân khẩu");
 
-        nhanKhauList.addComponent(ComponentFactory.createFormComponent(hoKhau.chuHo.hoTen, ""));
+        for (NhanKhau nhanKhau : hoKhau.listNhanKhau) {
+            nhanKhauList.addComponent(ComponentFactory.createFormComponent(nhanKhau.hoTen, ""));
+        }
 
         list.add(thongTinChungList);
         list.add(nhanKhauList);

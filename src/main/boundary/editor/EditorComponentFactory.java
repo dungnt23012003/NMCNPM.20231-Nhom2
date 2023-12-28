@@ -27,10 +27,10 @@ public class EditorComponentFactory {
 
         JTextField valueField = new JTextField();
         valueField.setBorder(new FlatLineBorder(new Insets(0, 0, 0, 0), GUIConfig.ListSeparatorColor, 1.25f, 10));
-        valueField.putClientProperty("JTextField.padding", new Insets(7, 7, 7, 7));
+        valueField.putClientProperty("JTextField.padding", new Insets(0, 7, 0, 0));
 
         valueField.setColumns(50);
-        valueField.setMaximumSize(new Dimension(400, 30));
+        valueField.setMaximumSize(new Dimension(400, GUIConfig.ListLabelHeight));
 
         valueField.setText(value);
 

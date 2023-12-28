@@ -1,6 +1,5 @@
 package src.main.boundary.hokhau;
 
-import com.formdev.flatlaf.ui.FlatLineBorder;
 import src.main.boundary.GUIConfig;
 import src.main.boundary.editor.EditorComponent;
 import src.main.boundary.editor.EditorComponentFactory;
@@ -14,16 +13,11 @@ import src.main.entity.HoKhau;
 import src.main.entity.NhanKhau;
 
 import javax.swing.*;
-import javax.swing.border.LineBorder;
 import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
-import javax.swing.event.ListSelectionEvent;
-import javax.swing.event.ListSelectionListener;
-import javax.swing.text.Document;
 import java.awt.*;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Date;
 
 public class HoKhauEditor extends EditorComponent implements MultiListRenderable, DocumentListener {
     HoKhauController controller;
@@ -99,9 +93,11 @@ public class HoKhauEditor extends EditorComponent implements MultiListRenderable
         DefaultRenderableList nhanKhauList = new DefaultRenderableList();
         nhanKhauList.setTitle("Danh sách nhân khẩu");
 
-        EditorComponent currentNhanKhauEditor = EditorComponentFactory.createTestNhanKhauEditComponent(item.hoKhau.chuHo);
-        nhanKhauEditors.add(currentNhanKhauEditor);
-        nhanKhauList.addComponent(currentNhanKhauEditor);
+        for (NhanKhau nhanKhau : item.hoKhau.listNhanKhau) {
+            EditorComponent currentNhanKhauEditor = EditorComponentFactory.createTestNhanKhauEditComponent(nhanKhau);
+            nhanKhauEditors.add(currentNhanKhauEditor);
+            nhanKhauList.addComponent(currentNhanKhauEditor);
+        }
 
         listRenderables.add(thongTinChungList);
         listRenderables.add(nhanKhauList);

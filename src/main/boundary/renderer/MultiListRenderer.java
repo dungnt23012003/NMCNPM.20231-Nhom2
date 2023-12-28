@@ -26,6 +26,8 @@ public class MultiListRenderer extends JPanel implements EntityRenderer {
             ListRenderer listRenderer = new ListRenderer();
 
             ArrayList<ListRenderable> renderableLists = castedMultiList.getRenderableLists();
+            if (renderableLists.isEmpty())
+                return component;
             for (int i = 0; i < renderableLists.size() - 1; i++) {
                 ListRenderable list = renderableLists.get(i);
                 Component renderedList = listRenderer.getRenderedComponent(list);

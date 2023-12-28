@@ -1,7 +1,10 @@
-package src.main.boundary.hokhau;
+package src.main.boundary.nhankhau;
 
 import src.main.boundary.GUIConfig;
 import src.main.boundary.feature.FeatureView;
+import src.main.boundary.hokhau.HoKhauAdapter;
+import src.main.boundary.hokhau.HoKhauController;
+import src.main.boundary.hokhau.HoKhauEditor;
 import src.main.boundary.menubar.MenuBar;
 import src.main.boundary.menubar.MenuBarDeleteButton;
 import src.main.boundary.renderer.EntityRenderer;
@@ -16,16 +19,16 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-public class HoKhauRenderer implements EntityRenderer, ActionListener, ListSelectionListener {
-    HoKhauController controller;
+public class NhanKhauRenderer implements EntityRenderer, ActionListener, ListSelectionListener {
+    NhanKhauController controller;
     JPanel subPanel;
     MultiListRenderer renderer;
-    HoKhauEditor editor;
+    NhanKhauEditor editor;
     boolean isEditing;
-    HoKhauAdapter currentItem;
+    NhanKhauAdapter currentItem;
     JButton settingButton;
 
-    public HoKhauRenderer(HoKhauController controller) {
+    public NhanKhauRenderer(NhanKhauController controller) {
         this.controller = controller;
     }
 
@@ -36,14 +39,14 @@ public class HoKhauRenderer implements EntityRenderer, ActionListener, ListSelec
         FeatureView renderedComponent = new FeatureView();
         renderedComponent.setLayout(new BoxLayout(renderedComponent, BoxLayout.PAGE_AXIS));
 
-        MenuBar menuBar = new MenuBar();
+        src.main.boundary.menubar.MenuBar menuBar = new MenuBar();
         menuBar.setAlignmentX(0.0f);
         renderedComponent.add(menuBar);
         renderedComponent.add(Box.createVerticalStrut(10));
 
         menuBar.addButton(GUIConfig.AddIcon, e -> controller.add());
 
-        if (item instanceof HoKhauAdapter castedItem) {
+        if (item instanceof NhanKhauAdapter castedItem) {
             currentItem = castedItem;
 
             settingButton = ComponentFactory.createStickyMenuBarButton();
@@ -61,7 +64,7 @@ public class HoKhauRenderer implements EntityRenderer, ActionListener, ListSelec
             renderedComponent.add(subPanel);
             controller.model.galleryController.getView().getSideList().addListSelectionListener(this);
         } else {
-            renderedComponent.add(ComponentFactory.createLabel("Không có hộ khẩu nào được chọn."));
+            renderedComponent.add(ComponentFactory.createLabel("Không có nhân khẩu nào được chọn."));
         }
 
         return renderedComponent;
@@ -73,7 +76,7 @@ public class HoKhauRenderer implements EntityRenderer, ActionListener, ListSelec
         subPanel.removeAll();
 
         if (isEditing) {
-            editor = new HoKhauEditor(currentItem, controller, settingButton);
+            editor = new NhanKhauEditor(currentItem, controller, settingButton);
             subPanel.add(editor);
         } else {
             currentItem.resetString();

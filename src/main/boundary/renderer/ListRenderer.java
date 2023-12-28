@@ -51,6 +51,9 @@ public class ListRenderer {
         listPanel.add(Box.createHorizontalGlue());
 
         ArrayList<Component> componentList = list.getComponentList();
+        if (componentList.isEmpty()) {
+            return component;
+        }
 
         for (int i = 0; i < componentList.size() - 1; i++) {
             Component listItem = componentList.get(i);

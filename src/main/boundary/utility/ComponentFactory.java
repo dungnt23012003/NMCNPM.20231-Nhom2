@@ -26,7 +26,7 @@ public class ComponentFactory {
         valueLabel.setFont(GUIConfig.DefaultFont);
         component.add(valueLabel);
 
-        component.setMaximumSize(new Dimension(Integer.MAX_VALUE, 30));
+        component.setMaximumSize(new Dimension(Integer.MAX_VALUE, GUIConfig.ListLabelHeight));
 
         return component;
     }

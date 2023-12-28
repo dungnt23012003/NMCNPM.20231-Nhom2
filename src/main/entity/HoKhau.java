@@ -10,5 +10,5 @@ public class HoKhau {
     public String khuVuc;
     public String diaChi;
     public String ngayLap;
-    public ArrayList<NhanKhau> listNhanKhau;
+    public ArrayList<NhanKhau> listNhanKhau = new ArrayList<>();
 }
