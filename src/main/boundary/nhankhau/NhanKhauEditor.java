@@ -85,7 +85,7 @@ public class NhanKhauEditor extends EditorComponent implements MultiListRenderab
 
         cccdEditor = EditorComponentFactory.createEditFormComponent("CMND/CCCD", String.valueOf(item.nhanKhau.CCCD));
         hotenEditor = EditorComponentFactory.createEditFormComponent("Họ và tên", String.valueOf(item.nhanKhau.hoTen));
-        namSinhEditor = EditorComponentFactory.createEditFormComponent("Năm sinh", GUIConfig.dateFormat.format(item.nhanKhau.namSinh));
+        namSinhEditor = EditorComponentFactory.createEditFormComponent("Năm sinh", item.nhanKhau.namSinh);
         gioiTinhEditor = EditorComponentFactory.createEditFormComponent("Giới tính", String.valueOf(item.nhanKhau.gioiTinh));
         nguyenQuanEditor = EditorComponentFactory.createEditFormComponent("Nguyên quán", String.valueOf(item.nhanKhau.nguyenQuan));
         danTocEditor = EditorComponentFactory.createEditFormComponent("Dân tộc", String.valueOf(item.nhanKhau.danToc));
