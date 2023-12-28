@@ -1,6 +1,7 @@
 package src.main.boundary.hokhau;
 
 import src.main.boundary.GUIConfig;
+import src.main.boundary.dialog.NhanKhauChooserDialog;
 import src.main.boundary.editor.EditorComponent;
 import src.main.boundary.editor.EditorComponentFactory;
 import src.main.boundary.editor.FormEditorComponent;
@@ -65,6 +66,7 @@ public class HoKhauEditor extends EditorComponent implements MultiListRenderable
         buttonPanel.setAlignmentX(0.0f);
 
         JButton themNhanKhauButton = ComponentFactory.createMenuBarButton();
+        themNhanKhauButton.addActionListener(e -> {addNhanKhau();});
         themNhanKhauButton.setIcon(GUIConfig.AddNhanKhauIcon);
 
         add(renderer.getRenderedComponent(this));
@@ -142,5 +144,9 @@ public class HoKhauEditor extends EditorComponent implements MultiListRenderable
 
     @Override
     public void changedUpdate(DocumentEvent e) {
+    }
+
+    public void addNhanKhau() {
+        NhanKhauChooserDialog dialog = new NhanKhauChooserDialog(getRootPane());
     }
 }
