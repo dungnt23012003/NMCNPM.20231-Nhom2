@@ -112,7 +112,7 @@ public class NhanKhauControl {
             sql = sql + "ton_giao = " + "N'" + new_entity.tonGiao  + "'" + ", ";
             sql = sql + "quoc_tich = " + "N'" + new_entity.quocTich  + "'" + ", ";
             sql = sql + "noi_thuong_tru = " + "N'" + new_entity.noiThuongTru  + "'" + " ";
-            sql = sql + "where " + new_entity.CCCD + " = " + old_entity.CCCD + ";";
+            sql = sql + "where cccd = " + old_entity.CCCD + ";";
             System.out.println(sql);
             Connection connection = connect_to_sql_server();
             connection.createStatement().execute(sql);
@@ -124,34 +124,4 @@ public class NhanKhauControl {
 
     }
 
-    public static void main(String[] args) {
-       NhanKhau nhanKhau1 = new NhanKhau();
-       nhanKhau1.CCCD = "4";
-       nhanKhau1.hoTen = "Nguyễn Văn B";
-       nhanKhau1.namSinh = "27-12-2023";
-       nhanKhau1.gioiTinh = "Nam";
-       nhanKhau1.nguyenQuan = "Bắc Giang";
-       nhanKhau1.danToc = "Kinh";
-       nhanKhau1.tonGiao = "Không";
-       nhanKhau1.quocTich = "Việt Nam";
-       nhanKhau1.noiThuongTru = "Ngõ 27 Tạ Quang Bửu";
-       nhanKhau1.quanHeVoiChuHo = "";
-
-        NhanKhau nhanKhau2 = new NhanKhau();
-        nhanKhau2.CCCD = "4";
-        nhanKhau2.hoTen = "Nguyễn Văn E";
-        nhanKhau2.namSinh = "27-12-2023";
-        nhanKhau2.gioiTinh = "Nam";
-        nhanKhau2.nguyenQuan = "Bắc Giang";
-        nhanKhau2.danToc = "Kinh";
-        nhanKhau2.tonGiao = "Không";
-        nhanKhau2.quocTich = "Việt Nam";
-        nhanKhau2.noiThuongTru = "Ngõ 27 Tạ Quang Bửu";
-        nhanKhau2.quanHeVoiChuHo = "";
-
-       NhanKhauControl nhankhaucontrol = new NhanKhauControl();
-       nhankhaucontrol.update(nhanKhau1, nhanKhau2);
-
-
-    }
 }
