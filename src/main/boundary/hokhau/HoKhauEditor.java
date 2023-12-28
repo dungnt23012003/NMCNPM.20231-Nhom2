@@ -118,7 +118,7 @@ public class HoKhauEditor extends EditorComponent implements MultiListRenderable
         value.maHoKhau = (String) soHoKhauEditor.getValue();
         value.khuVuc = (String) khuVucEditor.getValue();
         value.diaChi = (String) diaChiEditor.getValue();
-        value.ngayLap = new SimpleDateFormat((String) ngayLapEditor.getValue()).get2DigitYearStart();
+        value.ngayLap = (String) ngayLapEditor.getValue();
         value.chuHo = new NhanKhau();
 
         return new HoKhauAdapter(value);
