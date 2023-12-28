@@ -39,7 +39,7 @@ public class FeaturedAppTest {
 
         // Your code here
         model.addFeature(new HoKhauFeatureTest());
-        model.addFeature(new NhanKhauFeatureTest());
+        model.addFeature(new NhanKhauFeature());
 
         DefaultAppController controller = new DefaultAppController(model);
 
