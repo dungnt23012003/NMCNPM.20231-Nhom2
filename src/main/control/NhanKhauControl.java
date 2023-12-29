@@ -92,12 +92,12 @@ public class NhanKhauControl {
             Statement statement = connection.createStatement();
             String information = "";
 
-            String sql = "select * from hk_nk where cccd.nhan_khau like ";
+            String sql = "select * from hk_nk where cccd_nhan_khau like ";
             sql = sql + "'" + entity.CCCD + "'" + ";";
             System.out.println(sql);
             ResultSet result = statement.executeQuery(sql);
             if (result.next()){
-                information = information + "Xóa nhân khẩu " + entity.hoTen + " sẽ xóa nhân khẩu trong hộ khẩu " + result.getString(1) + ".\n";
+                information = information + "Xóa nhân khẩu " + entity.hoTen + " sẽ xóa nhân khẩu trong hộ khẩu " + result.getString(1) + ".<br/>";
             }
 
             sql = "select * from ho_khau where cccd_chu_ho like ";
@@ -105,7 +105,7 @@ public class NhanKhauControl {
             System.out.println(sql);
             result = statement.executeQuery(sql);
             if (result.next()){
-                information = information + "Xóa nhân khẩu " + entity.hoTen + " sẽ xóa hộ khẩu " + result.getString(1) + "vì nhân khẩu đang là chủ hộ" + ".\n";
+                information = information + "Xóa nhân khẩu " + entity.hoTen + " sẽ xóa hộ khẩu " + result.getString(1) + " vì nhân khẩu đang là chủ hộ" + ".<br/>";
             }
 
             sql = "select * from hoat_dong where cccd_nk_dang_ki like ";
@@ -113,15 +113,15 @@ public class NhanKhauControl {
             System.out.println(sql);
             result = statement.executeQuery(sql);
             if (result.next()){
-                information = information + "Xóa nhân khẩu " + entity.hoTen + " sẽ xóa hoạt động " + result.getString(1) + "vì nhân khẩu đang kí hoạt động này" + ".\n";
+                information = information + "Xóa nhân khẩu " + entity.hoTen + " sẽ xóa hoạt động " + result.getString(1) + " vì nhân khẩu đang kí hoạt động này" + ".<br/>";
             }
 
-            sql = "select * from tam_tru where cccd_nha_khau like ";
+            sql = "select * from tam_tru where cccd_nhan_khau like ";
             sql = sql + "'" + entity.CCCD + "'" + ";";
             System.out.println(sql);
             result = statement.executeQuery(sql);
             if (result.next()){
-                information = information + "Xóa nhân khẩu " + entity.hoTen + " sẽ xóa tạm trú " + result.getString(1) + "vì nhân khẩu đang đăng kí tạm trú" + ".\n";
+                information = information + "Xóa nhân khẩu " + entity.hoTen + " sẽ xóa tạm trú " + result.getString(1) + " vì nhân khẩu đang đăng kí tạm trú" + ".<br/>";
             }
 
             sql = "select * from tam_vang where cccd_nhan_khau like ";
@@ -129,7 +129,7 @@ public class NhanKhauControl {
             System.out.println(sql);
             result = statement.executeQuery(sql);
             if (result.next()){
-                information = information + "Xóa nhân khẩu " + entity.hoTen + " sẽ xóa giấy tạm vắng " + result.getString(1) + "vì nhân khẩu đang đăng kí tạm vắng" + ".\n";
+                information = information + "Xóa nhân khẩu " + entity.hoTen + " sẽ xóa giấy tạm vắng " + result.getString(1) + " vì nhân khẩu đang đăng kí tạm vắng" + ".<br/>";
             }
 
             sql = "select * from khai_tu where cccd_nguoi_mat like ";
@@ -138,41 +138,47 @@ public class NhanKhauControl {
             System.out.println(sql);
             result = statement.executeQuery(sql);
             if (result.next()){
-                information = information + "Xóa nhân khẩu " + entity.hoTen + " sẽ xóa giấy khai tử " + result.getString(1) + "vì nhân khẩu có trong giấy khai tử" + ".\n";
+                information = information + "Xóa nhân khẩu " + entity.hoTen + " sẽ xóa giấy khai tử " + result.getString(1) + " vì nhân khẩu có trong giấy khai tử" + ".<br/>";
+            }
+            if(!information.equals("")){
+                if(this.view.showConfirmDialog("<html>" + information + "</html>")){
+                    sql = "delete from hk_nk where cccd_nhan_khau like ";
+                    sql = sql + "'" + entity.CCCD + "'" + ";";
+                    System.out.println(sql);
+                    statement.execute(sql);
+
+                    sql = "delete from ho_khau where cccd_chu_ho like ";
+                    sql = sql + "'" + entity.CCCD + "'" + ";";
+                    System.out.println(sql);
+                    statement.execute(sql);
+
+                    sql = "delete from hoat_dong where cccd_nk_dang_ki like ";
+                    sql = sql + "'" + entity.CCCD + "'" + ";";
+                    System.out.println(sql);
+                    statement.execute(sql);
+
+                    sql = "delete from tam_tru where cccd_nhan_khau like ";
+                    sql = sql + "'" + entity.CCCD + "'" + ";";
+                    System.out.println(sql);
+                    statement.execute(sql);
+
+                    sql = "delete from tam_vang where cccd_nhan_khau like ";
+                    sql = sql + "'" + entity.CCCD + "'" + ";";
+                    System.out.println(sql);
+                    statement.execute(sql);
+
+                    sql = "delete from khai_tu where cccd_nguoi_mat like ";
+                    sql = sql + "'" + entity.CCCD + "'" + " or cccd_nguoi_khai like " ;
+                    sql = sql + "'" + entity.CCCD + "'" + ";";
+                    System.out.println(sql);
+                    statement.execute(sql);
+                }
             }
 
-            if(this.view.showConfirmDialog(information)){
-                sql = "select * from hk_nk where cccd.nhan_khau like ";
-                sql = sql + "'" + entity.CCCD + "'" + ";";
-                System.out.println(sql);
-                statement.execute(sql);
-
-                sql = "select * from ho_khau where cccd_chu_ho like ";
-                sql = sql + "'" + entity.CCCD + "'" + ";";
-                System.out.println(sql);
-                statement.execute(sql);
-
-                sql = "select * from hoat_dong where cccd_nk_dang_ki like ";
-                sql = sql + "'" + entity.CCCD + "'" + ";";
-                System.out.println(sql);
-                statement.execute(sql);
-
-                sql = "select * from tam_tru where cccd_nha_khau like ";
-                sql = sql + "'" + entity.CCCD + "'" + ";";
-                System.out.println(sql);
-                statement.execute(sql);
-
-                sql = "select * from tam_vang where cccd_nhan_khau like ";
-                sql = sql + "'" + entity.CCCD + "'" + ";";
-                System.out.println(sql);
-                statement.execute(sql);
-
-                sql = "select * from khai_tu where cccd_nguoi_mat like ";
-                sql = sql + "'" + entity.CCCD + "'" + " or cccd_nguoi_khai like " ;
-                sql = sql + "'" + entity.CCCD + "'" + ";";
-                System.out.println(sql);
-                statement.execute(sql);
-            }
+            sql = "delete from nhan_khau where cccd like ";
+            sql = sql + "'" + entity.CCCD + "'" + ";";
+            System.out.println(sql);
+            statement.execute(sql);
 
             connection.close();
         }
