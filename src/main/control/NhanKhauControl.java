@@ -1,6 +1,7 @@
 package src.main.control;
 
 //import src.main.boundary.nhankhau.NhanKhauModel;
+import src.main.boundary.nhankhau.NhanKhauView;
 import src.main.entity.HoKhau;
 import src.main.entity.NhanKhau;
 
@@ -9,6 +10,8 @@ import java.util.ArrayList;
 
 
 public class NhanKhauControl {
+    NhanKhauView view;
+
     public static Connection connect_to_sql_server() throws SQLException, ClassNotFoundException {
         Class.forName("com.microsoft.sqlserver.jdbc.SQLServerDriver");
         String url = "jdbc:sqlserver://LAPTOP-OBVO3M5Q\\CSDL:1433;databaseName=QUAN_LY_NHAN_KHAU;integratedSecurity=true;encrypt=true;trustServerCertificate=true";
@@ -122,6 +125,10 @@ public class NhanKhauControl {
             System.out.println(e.getMessage());
         }
 
+    }
+
+    public void setView(NhanKhauView view) {
+        this.view = view;
     }
 
 }

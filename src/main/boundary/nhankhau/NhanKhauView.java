@@ -31,4 +31,12 @@ public class NhanKhauView extends FeatureView {
     public void setRenderer(NhanKhauRenderer renderer) {
         this.renderer = renderer;
     }
+
+    public void showErrorMessage(String message) {
+
+    }
+
+    public boolean showConfirmDialog(String message) {
+        return true;
+    }
 }
