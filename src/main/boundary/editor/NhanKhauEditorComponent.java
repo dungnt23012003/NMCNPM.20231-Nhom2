@@ -17,4 +17,9 @@ public class NhanKhauEditorComponent extends EditorComponent {
 
     @Override
     public void clearValue() {}
+
+    @Override
+    public void setValue(Object value) {
+
+    }
 }

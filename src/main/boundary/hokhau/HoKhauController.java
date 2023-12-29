@@ -29,15 +29,15 @@ public class HoKhauController {
     }
 
     public void delete(HoKhauAdapter hoKhauAdapter) {
-        int current_index = model.galleryController.getView().getSelectedIndex();
+//        int current_index = model.galleryController.getView().getSelectedIndex();
 
         model.control.delete(hoKhauAdapter.hoKhau);
-        model.getCurrentListModel().removeElement(hoKhauAdapter);
-
-        if (current_index == model.getCurrentListModel().size())
-            --current_index;
-
-        model.galleryController.getView().setSelectedIndex(current_index);
+//        model.getCurrentListModel().removeElement(hoKhauAdapter);
+//
+//        if (current_index == model.getCurrentListModel().size())
+//            --current_index;
+//
+//        model.galleryController.getView().setSelectedIndex(current_index);
     }
 
     public HoKhauView getView() {

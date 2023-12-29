@@ -162,4 +162,9 @@ public class NhanKhauEditor extends EditorComponent implements MultiListRenderab
     @Override
     public void changedUpdate(DocumentEvent e) {
     }
+
+    @Override
+    public void setValue(Object value) {
+
+    }
 }

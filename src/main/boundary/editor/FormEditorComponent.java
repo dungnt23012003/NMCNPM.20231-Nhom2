@@ -38,5 +38,10 @@ public class FormEditorComponent extends EditorComponent {
             textField.setBorder(new EmptyBorder(textFieldBorder.getBorderInsets(textField)));
         }
     }
+
+    @Override
+    public void setValue(Object value) {
+        textField.setText((String) value);
+    }
 }
 
