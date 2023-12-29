@@ -40,6 +40,10 @@ public class HoKhauEditor extends EditorComponent implements MultiListRenderable
         this.clickWhenCanceled = clickWhenCanceled;
 
         for (NhanKhau nhanKhau : item.hoKhau.listNhanKhau) {
+            NhanKhauAdapter adapter = new NhanKhauAdapter(nhanKhau);
+            if (nhanKhau.CCCD.equals(item.hoKhau.chuHo.CCCD)) {
+                adapter.setChuHo(true);
+            }
             EditorComponent currentNhanKhauEditor = EditorComponentFactory.createNhanKhauEditorComponent(new NhanKhauAdapter(nhanKhau), this);
             nhanKhauEditors.add(currentNhanKhauEditor);
         }
