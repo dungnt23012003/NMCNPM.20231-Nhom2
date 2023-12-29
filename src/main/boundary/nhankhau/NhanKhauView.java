@@ -41,4 +41,8 @@ public class NhanKhauView extends FeatureView {
         ConfirmDialog dialog = new ConfirmDialog(message, getRootPane());
         return dialog.getValue();
     }
+
+    public void updateUI() {
+        model.galleryController.updateSideList();
+    }
 }

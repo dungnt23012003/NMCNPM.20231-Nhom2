@@ -1,5 +1,7 @@
 package src.main.boundary.gallery;
 
+import src.main.entity.NhanKhau;
+
 // TODO
 public class ListSideGalleryController {
     GalleryModel model;
@@ -23,4 +25,13 @@ public class ListSideGalleryController {
     public ListSideGalleryView getView() {
         return view;
     }
+
+    public void updateSideList() {
+        view.getSideList().setModel(model.getNewListModel());
+    }
+
+//    public void setSelectSideList(NhanKhau item) {
+//        model.getCurrentListModel().
+//        view.getSideList().setSelectedValue(true);
+//    }
 }
