@@ -180,7 +180,7 @@ public class NhanKhauControl {
             sql = sql + "'" + entity.CCCD + "'" + ";";
             System.out.println(sql);
             statement.execute(sql);
-
+            this.view.refreshUI();
             connection.close();
         }
         catch (Exception e){
@@ -206,6 +206,7 @@ public class NhanKhauControl {
             System.out.println(sql);
             Connection connection = connect_to_sql_server();
             connection.createStatement().execute(sql);
+            this.view.refreshUI();
             connection.close();
         }
         catch (Exception e){
