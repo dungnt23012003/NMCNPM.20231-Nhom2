@@ -47,7 +47,7 @@ public class HoKhauRenderer implements EntityRenderer, ActionListener, ListSelec
             currentItem = castedItem;
 
             settingButton = ComponentFactory.createStickyMenuBarButton();
-            settingButton.setIcon(GUIConfig.settingIcon);
+            settingButton.setIcon(GUIConfig.SettingIcon);
             settingButton.addActionListener(this);
             menuBar.add(settingButton);
             menuBar.add(new MenuBarDeleteButton(e -> controller.delete(castedItem)));
