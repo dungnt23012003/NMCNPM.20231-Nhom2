@@ -1,5 +1,6 @@
 package src.main.boundary.dialog;
 
+import src.main.boundary.GUIConfig;
 import src.main.boundary.nhankhau.NhanKhauAdapter;
 import src.main.boundary.nhankhau.NhanKhauController;
 import src.main.boundary.nhankhau.NhanKhauModel;
@@ -28,6 +29,7 @@ public class NhanKhauChooserDialog extends JDialog {
 
     public void setupUI(Component parent) {
         JPanel panel = new JPanel();
+        panel.setBackground(new Color(0xE7E7E7));
         panel.setLayout(new BoxLayout(panel, BoxLayout.PAGE_AXIS));
 
         NhanKhauModel model = new NhanKhauModel(new NhanKhauControl());

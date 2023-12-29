@@ -11,6 +11,7 @@ public class NhanKhauController {
 
         view = new NhanKhauView(this, model);
         view. setupUI();
+        model.control.setView(view);
     }
 
     public NhanKhauController(NhanKhauModel model, NhanKhauRenderer renderer) {
