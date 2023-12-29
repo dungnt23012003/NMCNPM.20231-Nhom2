@@ -44,7 +44,10 @@ public class HoKhauEditor extends EditorComponent implements MultiListRenderable
             if (nhanKhau.CCCD.equals(item.hoKhau.chuHo.CCCD)) {
                 adapter.setChuHo(true);
             }
-            EditorComponent currentNhanKhauEditor = EditorComponentFactory.createNhanKhauEditorComponent(adapter, this);
+            NhanKhauEditorComponent currentNhanKhauEditor = EditorComponentFactory.createNhanKhauEditorComponent(adapter, this);
+            if (nhanKhau.CCCD.equals(item.hoKhau.chuHo.CCCD)) {
+                currentChuHoEditor = currentNhanKhauEditor;
+            }
             nhanKhauEditors.add(currentNhanKhauEditor);
         }
         setupUI();
