@@ -21,7 +21,8 @@ public class NhanKhauChooserRenderer extends NhanKhauRenderer {
     @Override
     public Component getRenderedComponent(Renderable item) {
         JPanel panel = (JPanel) super.getRenderedComponent(item);
-        deleteButton.setEnabled(false);
+        if (deleteButton != null)
+            deleteButton.setEnabled(false);
 
         // Setup menu bar
         JButton selectButton = ComponentFactory.createDefaultButton();
