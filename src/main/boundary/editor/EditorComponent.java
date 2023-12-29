@@ -5,4 +5,5 @@ import javax.swing.*;
 public abstract class EditorComponent extends JPanel {
     public abstract Object getValue();
     public abstract void clearValue();
+    public abstract void setValue(Object value);
 }
