@@ -10,6 +10,7 @@ public class HoKhauController {
         this.model = model;
 
         view = new HoKhauView(this, model);
+        model.control.setView(view);
         view. setupUI();
     }
 
