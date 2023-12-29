@@ -91,26 +91,27 @@ public class HoKhauControl {
 
                 //đẩy các nhân khẩu vào trong hộ khẩu
                 while(dsNK.next()){
-                    nhanKhauTmp.CCCD = dsNK.getString(1);
-                    nhanKhauTmp.hoTen = dsNK.getString(2);
-                    nhanKhauTmp.namSinh = dsNK.getString(3);
-                    if (nhanKhauTmp.namSinh!=null){
-                        String year = nhanKhauTmp.namSinh.substring(0,4);
-                        String month = nhanKhauTmp.namSinh.substring(5,7);
-                        String day = nhanKhauTmp.namSinh.substring(8,10);
-                        nhanKhauTmp.namSinh = day + "-" + month + "-" + year;
+                    NhanKhau nhanKhauTmp1 = new NhanKhau();
+                    nhanKhauTmp1.CCCD = dsNK.getString(1);
+                    nhanKhauTmp1.hoTen = dsNK.getString(2);
+                    nhanKhauTmp1.namSinh = dsNK.getString(3);
+                    if (nhanKhauTmp1.namSinh!=null){
+                        String year = nhanKhauTmp1.namSinh.substring(0,4);
+                        String month = nhanKhauTmp1.namSinh.substring(5,7);
+                        String day = nhanKhauTmp1.namSinh.substring(8,10);
+                        nhanKhauTmp1.namSinh = day + "-" + month + "-" + year;
                     }
                     else{
-                        nhanKhauTmp.namSinh = "";
+                        nhanKhauTmp1.namSinh = "";
                     }
-                    nhanKhauTmp.gioiTinh = dsNK.getString(4);
-                    nhanKhauTmp.nguyenQuan = dsNK.getString(5);
-                    nhanKhauTmp.danToc = dsNK.getString(6);
-                    nhanKhauTmp.tonGiao = dsNK.getString(7);
-                    nhanKhauTmp.quocTich = dsNK.getString(8);
-                    nhanKhauTmp.noiThuongTru = dsNK.getString(9);
-                    nhanKhauTmp.quanHeVoiChuHo = dsNK.getString(12);
-                    hoKhauTmp.listNhanKhau.add(nhanKhauTmp);
+                    nhanKhauTmp1.gioiTinh = dsNK.getString(4);
+                    nhanKhauTmp1.nguyenQuan = dsNK.getString(5);
+                    nhanKhauTmp1.danToc = dsNK.getString(6);
+                    nhanKhauTmp1.tonGiao = dsNK.getString(7);
+                    nhanKhauTmp1.quocTich = dsNK.getString(8);
+                    nhanKhauTmp1.noiThuongTru = dsNK.getString(9);
+                    nhanKhauTmp1.quanHeVoiChuHo = dsNK.getString(12);
+                    hoKhauTmp.listNhanKhau.add(nhanKhauTmp1);
                 }
 
 
@@ -184,7 +185,7 @@ public class HoKhauControl {
             System.out.println(sql);
             Connection connection = connect_to_sql_server();
             Statement statement = connection.createStatement();
-
+            statement.execute(sql);
             for(NhanKhau x: entity.listNhanKhau){
                 sql = "insert into hk_nk values(";
                 sql = sql + "'" + entity.maHoKhau + "'" + ", ";
@@ -193,6 +194,7 @@ public class HoKhauControl {
                 System.out.println(sql);
                 statement.execute(sql);
             }
+            this.view.refreshUI();
             connection.close();
         }
         catch (Exception e){
@@ -211,6 +213,7 @@ public class HoKhauControl {
             sql = "delete from ho_khau where ma_ho_khau = ";
             sql = sql + entity.maHoKhau;
             connection.createStatement().execute(sql);
+            this.view.refreshUI();
             connection.close();
         }
         catch (Exception e){
@@ -249,6 +252,8 @@ public class HoKhauControl {
                 System.out.println(sql);
                 statement.execute(sql);
             }
+
+            this.view.refreshUI();
             connection.close();
         }
         catch (Exception e){

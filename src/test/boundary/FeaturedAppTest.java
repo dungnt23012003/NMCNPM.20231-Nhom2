@@ -8,6 +8,7 @@ import com.formdev.flatlaf.ui.FlatRoundBorder;
 import src.main.boundary.GUIConfig;
 import src.main.boundary.app.DefaultAppController;
 import src.main.boundary.hoatdong.HoatDongFeature;
+import src.main.boundary.hokhau.HoKhauFeature;
 import src.main.boundary.model.DefaultAppModel;
 import src.main.boundary.nhankhau.NhanKhauFeature;
 
@@ -40,7 +41,7 @@ public class FeaturedAppTest {
         DefaultAppModel model = new DefaultAppModel();
 
         // Your code here
-        model.addFeature(new HoKhauFeatureTest());
+        model.addFeature(new HoKhauFeature());
         model.addFeature(new NhanKhauFeature());
         model.addFeature(new HoatDongFeature());
 
