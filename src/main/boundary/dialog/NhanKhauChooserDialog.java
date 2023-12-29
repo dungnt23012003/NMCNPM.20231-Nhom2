@@ -5,6 +5,7 @@ import src.main.boundary.nhankhau.NhanKhauController;
 import src.main.boundary.nhankhau.NhanKhauModel;
 import src.main.boundary.utility.ComponentFactory;
 import src.main.control.HoKhauControl;
+import src.main.control.NhanKhauControl;
 import src.test.control.NhanKhauControlTestValue;
 
 import javax.swing.*;
@@ -15,14 +16,11 @@ import java.awt.*;
 import java.util.ArrayList;
 
 public class NhanKhauChooserDialog extends JDialog {
-    HoKhauControl control;
     NhanKhauController controller;
-
     ArrayList<NhanKhauAdapter> values;
     JLabel selectedLabel;
 
     public NhanKhauChooserDialog(ArrayList<NhanKhauAdapter> selectedList, HoKhauControl control, Component parent) {
-        this.control = control;
         values = selectedList;
 
         setupUI(parent);
@@ -32,7 +30,7 @@ public class NhanKhauChooserDialog extends JDialog {
         JPanel panel = new JPanel();
         panel.setLayout(new BoxLayout(panel, BoxLayout.PAGE_AXIS));
 
-        NhanKhauModel model = new NhanKhauModel(new NhanKhauControlTestValue());
+        NhanKhauModel model = new NhanKhauModel(new NhanKhauControl());
         controller = new NhanKhauController(model, new NhanKhauChooserRenderer(this));
         panel.add(controller.getView());
 
@@ -50,7 +48,7 @@ public class NhanKhauChooserDialog extends JDialog {
 
         setContentPane(panel);
         setModal(true);
-        setSize(new Dimension(750, 570));
+        setSize(new Dimension(750, 580));
         setResizable(false);
         setLocationRelativeTo(parent);
         setVisible(true);
