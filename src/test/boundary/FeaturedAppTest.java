@@ -1,12 +1,9 @@
 package src.test.boundary;
 
 import com.formdev.flatlaf.FlatIntelliJLaf;
-import com.formdev.flatlaf.ui.FlatEmptyBorder;
-import com.formdev.flatlaf.ui.FlatLineBorder;
-import com.formdev.flatlaf.ui.FlatRootPaneUI;
-import com.formdev.flatlaf.ui.FlatRoundBorder;
 import src.main.boundary.GUIConfig;
 import src.main.boundary.app.DefaultAppController;
+import src.main.boundary.cosovatchat.CoSoVatChatFeature;
 import src.main.boundary.hoatdong.HoatDongFeature;
 import src.main.boundary.hokhau.HoKhauFeature;
 import src.main.boundary.model.DefaultAppModel;
@@ -14,7 +11,6 @@ import src.main.boundary.nhankhau.NhanKhauFeature;
 
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
-import javax.swing.plaf.ToolTipUI;
 import java.awt.*;
 
 public class FeaturedAppTest {
@@ -44,6 +40,7 @@ public class FeaturedAppTest {
         model.addFeature(new HoKhauFeature());
         model.addFeature(new NhanKhauFeature());
         model.addFeature(new HoatDongFeature());
+        model.addFeature(new CoSoVatChatFeature());
 
         DefaultAppController controller = new DefaultAppController(model);
 

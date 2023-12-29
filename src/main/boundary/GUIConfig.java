@@ -34,6 +34,5 @@ public interface GUIConfig {
     ImageIcon CloseIcon = new ImageIcon(Objects.requireNonNull(Main.class.getResource("resources/icons/close.png")));
     ImageIcon HoatDongIcon = new ImageIcon(Objects.requireNonNull(Main.class.getResource("resources/icons/activity.png")));
     ImageIcon CoSoVatChatIcon = new ImageIcon(Objects.requireNonNull(Main.class.getResource("resources/icons/co_so_vat_chat.png")));
-
-    SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
+    ImageIcon PhongBanIcon = new ImageIcon(Objects.requireNonNull(Main.class.getResource("resources/icons/phong_ban.png")));
 }

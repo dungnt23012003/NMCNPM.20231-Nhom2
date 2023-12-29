@@ -60,11 +60,12 @@ public class HoatDongAdapter implements GalleryItem, MultiListRenderable {
         phongBanSuDung.setTitle("Danh sách phòng ban sử dụng");
 
         for (PhongBan phongBan : hoatDong.phongbanSuDung) {
-            CSVCSuDung.addComponent(ComponentFactory.createFormComponent(phongBan.maPhongBan, ""));
+            phongBanSuDung.addComponent(ComponentFactory.createFormComponent(phongBan.maPhongBan, ""));
         }
 
         list.add(thongTinChungList);
         list.add(CSVCSuDung);
+        list.add(phongBanSuDung);
 
         return list;
     }
