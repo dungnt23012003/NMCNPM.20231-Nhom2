@@ -78,6 +78,7 @@ public class NhanKhauControl {
             System.out.println(sql);
             Connection connection = connect_to_sql_server();
             connection.createStatement().execute(sql);
+            this.view.refreshUI();
             connection.close();
         }
         catch (Exception e){
@@ -210,7 +211,6 @@ public class NhanKhauControl {
         catch (Exception e){
             System.out.println(e.getMessage());
         }
-
     }
 
     public void setView(NhanKhauView view) {

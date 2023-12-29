@@ -1,5 +1,6 @@
 package src.main.control;
 
+import src.main.boundary.hokhau.HoKhauView;
 import src.main.entity.HoKhau;
 import src.main.entity.NhanKhau;
 
@@ -12,6 +13,8 @@ import java.util.ArrayList;
 import java.util.Calendar;
 
 public class HoKhauControl {
+
+    public HoKhauView view;
     public static Connection connect_to_sql_server() throws SQLException, ClassNotFoundException {
         Class.forName("com.microsoft.sqlserver.jdbc.SQLServerDriver");
         String url = "jdbc:sqlserver://LAPTOP-OBVO3M5Q\\CSDL:1433;databaseName=QUAN_LY_NHAN_KHAU;integratedSecurity=true;encrypt=true;trustServerCertificate=true";
@@ -252,6 +255,10 @@ public class HoKhauControl {
             System.out.println(e.getMessage());
         }
 
+    }
+
+    public void setView(HoKhauView view){
+        this.view = view;
     }
 
 }

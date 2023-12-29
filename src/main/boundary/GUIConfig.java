@@ -28,7 +28,7 @@ public interface GUIConfig {
     ImageIcon AddIcon = new ImageIcon(Objects.requireNonNull(Main.class.getResource("resources/icons/create.png")));
     ImageIcon DeleteIcon = new ImageIcon(Objects.requireNonNull(Main.class.getResource("resources/icons/delete.png")));
     ImageIcon SearchIcon = new ImageIcon(Objects.requireNonNull(Main.class.getResource("resources/icons/search.png")));
-    ImageIcon settingIcon = new ImageIcon(Objects.requireNonNull(Main.class.getResource("resources/icons/setting.png")));
+    ImageIcon SettingIcon = new ImageIcon(Objects.requireNonNull(Main.class.getResource("resources/icons/setting.png")));
     ImageIcon HoKhauIcon = new ImageIcon(Objects.requireNonNull(Main.class.getResource("resources/icons/book.png")));
     ImageIcon NhanKhauIcon = new ImageIcon(Objects.requireNonNull(Main.class.getResource("resources/icons/person.png")));
     ImageIcon AddNhanKhauIcon = new ImageIcon(Objects.requireNonNull(Main.class.getResource("resources/icons/add_person.png")));

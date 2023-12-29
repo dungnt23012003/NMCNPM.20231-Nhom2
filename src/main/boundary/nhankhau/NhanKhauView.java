@@ -42,7 +42,7 @@ public class NhanKhauView extends FeatureView {
         return dialog.getValue();
     }
 
-    public void updateUI() {
+    public void refreshUI() {
         model.galleryController.updateSideList();
     }
 }
