@@ -4,7 +4,6 @@ import src.main.Main;
 
 import javax.swing.*;
 import java.awt.*;
-import java.sql.Connection;
 import java.text.SimpleDateFormat;
 import java.util.Objects;
 
@@ -33,6 +32,8 @@ public interface GUIConfig {
     ImageIcon NhanKhauIcon = new ImageIcon(Objects.requireNonNull(Main.class.getResource("resources/icons/person.png")));
     ImageIcon AddNhanKhauIcon = new ImageIcon(Objects.requireNonNull(Main.class.getResource("resources/icons/add_person.png")));
     ImageIcon CloseIcon = new ImageIcon(Objects.requireNonNull(Main.class.getResource("resources/icons/close.png")));
+    ImageIcon HoatDongIcon = new ImageIcon(Objects.requireNonNull(Main.class.getResource("resources/icons/activity.png")));
+    ImageIcon CoSoVatChatIcon = new ImageIcon(Objects.requireNonNull(Main.class.getResource("resources/icons/co_so_vat_chat.png")));
 
     SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
 }

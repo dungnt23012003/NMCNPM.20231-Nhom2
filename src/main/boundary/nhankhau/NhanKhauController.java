@@ -42,15 +42,15 @@ public class NhanKhauController {
     }
 
     public void delete(NhanKhauAdapter nhanKhauAdapter) {
-        int current_index = model.galleryController.getView().getSelectedIndex();
+//        int current_index = model.galleryController.getView().getSelectedIndex();
 
         model.control.delete(nhanKhauAdapter.nhanKhau);
-        model.getCurrentListModel().removeElement(nhanKhauAdapter);
-
-        if (current_index == model.getCurrentListModel().size())
-            --current_index;
-
-        model.galleryController.getView().setSelectedIndex(current_index);
+//        model.getCurrentListModel().removeElement(nhanKhauAdapter);
+//
+//        if (current_index == model.getCurrentListModel().size())
+//            --current_index;
+//
+//        model.galleryController.getView().setSelectedIndex(current_index);
     }
 
     public NhanKhauView getView() {

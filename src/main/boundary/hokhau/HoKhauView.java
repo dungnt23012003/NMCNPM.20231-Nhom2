@@ -20,4 +20,8 @@ public class HoKhauView extends FeatureView {
         model.galleryController.getView().setRenderer(new HoKhauRenderer(controller));
         add(model.galleryController.getView());
     }
+
+    public void refreshUI() {
+        model.galleryController.updateSideList();
+    }
 }
