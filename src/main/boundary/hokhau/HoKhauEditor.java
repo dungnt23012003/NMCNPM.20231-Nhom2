@@ -65,7 +65,11 @@ public class HoKhauEditor extends EditorComponent implements MultiListRenderable
 
         JButton saveButton = ComponentFactory.createDefaultButton();
         saveButton.addActionListener(e -> {
-            controller.model.control.update(item.hoKhau, getValue().hoKhau);
+            if (item.isNew) {
+                controller.model.control.add(getValue().hoKhau);
+            } else {
+                controller.model.control.update(item.hoKhau, getValue().hoKhau);
+            }
             clickWhenCanceled.doClick();
         });
         saveButton.setText("Lưu");
