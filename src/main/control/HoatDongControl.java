@@ -165,8 +165,14 @@ public class HoatDongControl {
         System.out.println(sql);
         statement.execute(sql);
 
-        String ngayBatDau = newItem.ngayBatDau.substring(6, 10) + "-" + newItem.ngayBatDau.substring(3, 5) + "-" + newItem.ngayBatDau.substring(0, 2);
-        String ngayKetThuc = newItem.ngayKetThuc.substring(6, 10) + "-" + newItem.ngayKetThuc.substring(3, 5) + "-" + newItem.ngayKetThuc.substring(0, 2);
+        String ngayBatDau = "";
+        if(!newItem.ngayBatDau.equals("")){
+            ngayBatDau = newItem.ngayBatDau.substring(6, 10) + "-" + newItem.ngayBatDau.substring(3, 5) + "-" + newItem.ngayBatDau.substring(0, 2);
+        }
+        String ngayKetThuc = "";
+        if(!newItem.ngayKetThuc.equals("")){
+            ngayKetThuc = newItem.ngayKetThuc.substring(6, 10) + "-" + newItem.ngayKetThuc.substring(3, 5) + "-" + newItem.ngayKetThuc.substring(0, 2);
+        }
         sql = String.format("update hoat_dong set ma_hoat_dong = N'%s', cccd_nk_dang_ki = '%s', ngay_bd = '%s', ngay_kt = '%s' where ma_hoat_dong = '%s';",newItem.maHoatDong, newItem.cccdNguoiDangKi, ngayBatDau, ngayKetThuc, oldItem.maHoatDong);
         System.out.println(sql);
         statement.execute(sql);
