@@ -79,7 +79,7 @@ public class HoatDongEditor extends EditorComponent implements MultiListRenderab
         thongTinChungList.setTitle("Thông tin");
 
         maHoatDongEditor = EditorComponentFactory.createEditFormComponent("Mã hoạt động", item.hoatDong.maHoatDong);
-        cccdNguoiDangKyEditor = EditorComponentFactory.createEditFormComponent("Mã hoạt động", item.hoatDong.cccdNguoiDangKi);
+        cccdNguoiDangKyEditor = EditorComponentFactory.createEditFormComponent("CCCD người đăng kí", item.hoatDong.cccdNguoiDangKi);
 
         thongTinChungList.addComponent(maHoatDongEditor);
         thongTinChungList.addComponent(cccdNguoiDangKyEditor);
