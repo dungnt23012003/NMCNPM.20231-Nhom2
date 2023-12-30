@@ -6,17 +6,10 @@ import src.main.entity.*;
 
 import java.sql.*;
 import java.util.ArrayList;
-
+import static src.main.control.ConnectionConfig.connect_to_sql_server;
 public class HoatDongControl {
     public HoatDongView view;
-    public static Connection connect_to_sql_server() throws SQLException, ClassNotFoundException {
-        Class.forName("com.microsoft.sqlserver.jdbc.SQLServerDriver");
-        String url = "jdbc:sqlserver://LAPTOP-OBVO3M5Q\\CSDL:1433;databaseName=QUAN_LY_NHAN_KHAU;integratedSecurity=true;encrypt=true;trustServerCertificate=true";
-        String username = "nmcnpm_user";
-        String password = "nmcnpm2023";
-        Connection connection = DriverManager.getConnection(url, username, password);
-        return connection;
-    }
+
     public ArrayList<HoatDong> getList() {
         ArrayList<HoatDong> list = new ArrayList<HoatDong>();
 

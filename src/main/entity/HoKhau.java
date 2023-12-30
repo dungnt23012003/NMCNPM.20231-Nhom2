@@ -6,7 +6,7 @@ import java.util.Date;
 
 public class HoKhau {
     public String maHoKhau;
-    public NhanKhau chuHo;
+    public NhanKhau chuHo = new NhanKhau();
     public String khuVuc;
     public String diaChi;
     public String ngayLap;

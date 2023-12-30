@@ -6,15 +6,35 @@ import src.main.entity.HoatDong;
 import java.sql.*;
 import java.util.ArrayList;
 
+
+import static src.main.control.ConnectionConfig.connect_to_sql_server;
+
 public class CoSoVatChatControl {
-    public static Connection connect_to_sql_server() throws SQLException, ClassNotFoundException {
-        Class.forName("com.microsoft.sqlserver.jdbc.SQLServerDriver");
-        String url = "jdbc:sqlserver://LAPTOP-OBVO3M5Q\\CSDL:1433;databaseName=QUAN_LY_NHAN_KHAU;integratedSecurity=true;encrypt=true;trustServerCertificate=true";
-        String username = "nmcnpm_user";
-        String password = "nmcnpm2023";
-        Connection connection = DriverManager.getConnection(url, username, password);
-        return connection;
+
+    public ArrayList<CoSoVatChat> searchCoSoVatChat(String dieuKien) {
+        ArrayList<CoSoVatChat> list = new ArrayList<>();
+        try{
+            Connection connection = connect_to_sql_server();
+            Statement statement = connection.createStatement();
+
+            String sql = String.format("select * from co_so_vat_chat where ma_csvc like '%%%s%%'", dieuKien);
+            System.out.println(sql);
+            ResultSet resultSet = statement.executeQuery(sql);
+            while(resultSet.next()){
+                CoSoVatChat coSoVatChatTmp = new CoSoVatChat();
+                coSoVatChatTmp.maCSVC = resultSet.getString(1);
+                coSoVatChatTmp.soLuong = resultSet.getInt(2);
+                list.add(coSoVatChatTmp);
+            }
+            connection.close();
+        }
+        catch (Exception e){
+            System.out.println(e.getMessage());
+        }
+
+        return list;
     }
+
     public void add(CoSoVatChat item) {
         try{
             Connection connection = connect_to_sql_server();
