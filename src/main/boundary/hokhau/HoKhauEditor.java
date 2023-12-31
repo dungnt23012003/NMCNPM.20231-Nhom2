@@ -226,6 +226,7 @@ public class HoKhauEditor extends EditorComponent implements MultiListRenderable
         }
 
         public void setChuHo(NhanKhauEditorComponent item) {
+        if (currentChuHoEditor != null) {
             int previous_chu_ho_index = 0;
             for (int i = 0; i < nhanKhauEditors.size(); ++i) {
                 if (((NhanKhauAdapter)nhanKhauEditors.get(i).getValue()).getNhanKhau().CCCD.equals(((NhanKhauAdapter)currentChuHoEditor.getValue()).getNhanKhau().CCCD)) {
@@ -235,9 +236,10 @@ public class HoKhauEditor extends EditorComponent implements MultiListRenderable
                 previous_chu_ho_index = -1;
             }
             if (previous_chu_ho_index != -1) {
-            NhanKhauAdapter adapter = (NhanKhauAdapter) currentChuHoEditor.getValue();
-            adapter.setChuHo(false);
-            nhanKhauEditors.set(previous_chu_ho_index, EditorComponentFactory.createNhanKhauEditorComponent(adapter, this));
+                NhanKhauAdapter adapter = (NhanKhauAdapter) currentChuHoEditor.getValue();
+                adapter.setChuHo(false);
+                nhanKhauEditors.set(previous_chu_ho_index, EditorComponentFactory.createNhanKhauEditorComponent(adapter, this));
+            }
         }
 
         NhanKhauAdapter adapter = (NhanKhauAdapter) item.getValue();
