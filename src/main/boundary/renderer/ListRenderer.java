@@ -4,8 +4,10 @@ import com.formdev.flatlaf.ui.FlatLineBorder;
 import src.main.boundary.GUIConfig;
 import src.main.boundary.list.ListRenderable;
 import src.main.boundary.list.ListSeparator;
+import src.main.boundary.utility.ColorUtility;
 
 import javax.swing.*;
+import javax.swing.border.LineBorder;
 import java.awt.*;
 import java.util.ArrayList;
 
@@ -14,6 +16,7 @@ public class ListRenderer {
     int titleListSpacing = 5;
     int listArc = 10;
     Insets listInsets = new Insets(10, 10, 10, 10);
+    boolean isScrollPaneWrapped = false;
 
     public void setListArc(int listArc) {
         this.listArc = listArc;
@@ -29,6 +32,10 @@ public class ListRenderer {
 
     public void setTitleListSpacing(int titleListSpacing) {
         this.titleListSpacing = titleListSpacing;
+    }
+
+    public void setScrollPaneWrapped(boolean scrollPaneWrapped) {
+        isScrollPaneWrapped = scrollPaneWrapped;
     }
 
     public Component getRenderedComponent(ListRenderable list) {
@@ -64,6 +71,22 @@ public class ListRenderer {
             listPanel.add(Box.createVerticalStrut(listComponentSpacing));
         }
         listPanel.add(componentList.get(componentList.size() - 1));
+
+        if (isScrollPaneWrapped) {
+            JPanel listPanelWrapper = new JPanel();
+            listPanelWrapper.setLayout(new BoxLayout(listPanelWrapper, BoxLayout.PAGE_AXIS));
+            listPanelWrapper.setBackground(GUIConfig.FeatureViewColor);
+            listPanelWrapper.add(listPanel);
+
+            JScrollPane scrollPane = new JScrollPane(listPanelWrapper);
+            scrollPane.setBorder(BorderFactory.createEmptyBorder());
+            scrollPane.getVerticalScrollBar().setBackground(ColorUtility.darken(GUIConfig.FeatureViewColor, 1.4));
+            scrollPane.getVerticalScrollBar().setUnitIncrement(8);
+            scrollPane.setAlignmentX(0.0f);
+
+            component.add(scrollPane);
+            return component;
+        }
 
         component.add(listPanel);
 

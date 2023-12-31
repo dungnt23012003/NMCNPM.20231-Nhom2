@@ -5,7 +5,7 @@ import java.util.ArrayList;
 
 public class DefaultRenderableList implements ListRenderable{
     String title = "";
-    ArrayList<Component> componentList = new ArrayList<>();
+    protected ArrayList<Component> componentList = new ArrayList<>();
 
     public void addComponent(Component component) {
         componentList.add(component);

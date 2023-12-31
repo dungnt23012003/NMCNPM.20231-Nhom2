@@ -1,7 +1,7 @@
 package src.test.boundary;
 
 import com.formdev.flatlaf.FlatIntelliJLaf;
-import src.main.boundary.menubar.MenuBarDeleteButton;
+import src.main.boundary.menubar.ConfirmDeleteButton;
 
 import javax.swing.*;
 import java.awt.*;
@@ -25,7 +25,7 @@ public class MenuBarDeleteButtonTest {
 
         JPanel panel = new JPanel();
 
-        panel.add(new MenuBarDeleteButton(new ActionListener() {
+        panel.add(new ConfirmDeleteButton(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 System.out.println("Hello");

@@ -1,40 +1,69 @@
 package src.main.boundary.cosovatchat;
 
+import src.main.boundary.GUIConfig;
 import src.main.boundary.feature.FeatureView;
+import src.main.boundary.list.DefaultRenderableList;
+import src.main.boundary.list.ListRenderable;
+import src.main.boundary.menubar.MenuBar;
 import src.main.boundary.renderer.ListRenderer;
-import src.main.boundary.renderer.MultiListRenderer;
-import src.main.boundary.utility.ComponentFactory;
 import src.main.control.CoSoVatChatControl;
-import src.main.control.PhongBanControl;
 import src.main.entity.CoSoVatChat;
 
 import javax.swing.*;
-import javax.swing.border.EmptyBorder;
 import java.awt.*;
+import java.util.ArrayList;
 
 public class CoSoVatChatView extends FeatureView {
-    CoSoVatChatControl coSoVatChatControl;
-    PhongBanControl phongBanControl;
+    CoSoVatChatControl control;
+    MenuBar menuBar;
+    ListRenderer renderer = new ListRenderer();
+    DefaultRenderableList currentComponentList;
+    Component list;
 
-    public CoSoVatChatView() {
-        coSoVatChatControl = new CoSoVatChatControl();
-        phongBanControl = new PhongBanControl();
+    public CoSoVatChatView(CoSoVatChatControl control) {
+        this.control = control;
 
-        setupUI();
+        setLayout(new BoxLayout(this, BoxLayout.PAGE_AXIS));
+        setAlignmentY(0.0f);
+
+        menuBar = new MenuBar();
+        menuBar.setAlignmentX(0.0f);
+        menuBar.addButton(GUIConfig.AddIcon, e -> addButtonClicked());
+
+        renderer.setScrollPaneWrapped(true);
+
+        setupRenderUI();
     }
 
-    public void setupUI() {
-        setLayout(new BoxLayout(this, BoxLayout.LINE_AXIS));
-        setBorder(new EmptyBorder(20, 20, 20, 20));
+    // View section
 
-        ListRenderer renderer = new ListRenderer();
-        Component coSoVatChatView = renderer.getRenderedComponent(new CoSoVatChatListAdapter(coSoVatChatControl.getList()));
-        ((JComponent) coSoVatChatView).setAlignmentY(0);
-        add(coSoVatChatView);
-        add(Box.createRigidArea(new Dimension(20, 0)));
+    private void setupRenderUI() {
+        add(menuBar);
+        add(Box.createVerticalStrut(10));
 
-        Component phongBan = renderer.getRenderedComponent(new PhongBanListAdapter(phongBanControl.getList()));
-        ((JComponent) phongBan).setAlignmentY(0);
-        add(phongBan);
+        currentComponentList = new CoSoVatChatListAdapter(control.getList(), control);
+
+        list = renderer.getRenderedComponent(currentComponentList);
+        add(list);
+    }
+
+    // Controller section
+    public void addButtonClicked() {
+        DefaultRenderableList addedComponentList = currentComponentList;
+        addedComponentList.getComponentList().add(0, new CoSoVatChatComponent(new CoSoVatChat(), control, true, this));
+
+        removeAll();
+        add(menuBar);
+        add(Box.createVerticalStrut(10));
+
+        list = renderer.getRenderedComponent(addedComponentList);
+        add(list);
+        revalidate();
+    }
+
+    public void cancelButtonClicked() {
+        removeAll();
+        setupRenderUI();
+        revalidate();
     }
 }

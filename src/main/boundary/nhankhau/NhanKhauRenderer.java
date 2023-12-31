@@ -3,7 +3,7 @@ package src.main.boundary.nhankhau;
 import src.main.boundary.GUIConfig;
 import src.main.boundary.feature.FeatureView;
 import src.main.boundary.menubar.MenuBar;
-import src.main.boundary.menubar.MenuBarDeleteButton;
+import src.main.boundary.menubar.ConfirmDeleteButton;
 import src.main.boundary.renderer.EntityRenderer;
 import src.main.boundary.renderer.MultiListRenderer;
 import src.main.boundary.renderer.Renderable;
@@ -59,7 +59,7 @@ public class NhanKhauRenderer implements EntityRenderer, ActionListener, ListSel
             settingButton.addActionListener(this);
             menuBar.add(settingButton);
 
-            deleteButton = new MenuBarDeleteButton(e -> controller.delete(castedItem));
+            deleteButton = new ConfirmDeleteButton(e -> controller.delete(castedItem));
             menuBar.add(deleteButton);
 
             subPanel = new JPanel(new CardLayout());

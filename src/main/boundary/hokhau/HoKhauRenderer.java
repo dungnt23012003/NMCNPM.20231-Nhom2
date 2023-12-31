@@ -3,7 +3,7 @@ package src.main.boundary.hokhau;
 import src.main.boundary.GUIConfig;
 import src.main.boundary.feature.FeatureView;
 import src.main.boundary.menubar.MenuBar;
-import src.main.boundary.menubar.MenuBarDeleteButton;
+import src.main.boundary.menubar.ConfirmDeleteButton;
 import src.main.boundary.renderer.EntityRenderer;
 import src.main.boundary.renderer.MultiListRenderer;
 import src.main.boundary.renderer.Renderable;
@@ -50,7 +50,7 @@ public class HoKhauRenderer implements EntityRenderer, ActionListener, ListSelec
             settingButton.setIcon(GUIConfig.SettingIcon);
             settingButton.addActionListener(this);
             menuBar.add(settingButton);
-            menuBar.add(new MenuBarDeleteButton(e -> controller.delete(castedItem)));
+            menuBar.add(new ConfirmDeleteButton(e -> controller.delete(castedItem)));
 
             subPanel = new JPanel(new CardLayout());
             subPanel.setAlignmentX(0.0f);

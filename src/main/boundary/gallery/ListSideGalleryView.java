@@ -57,7 +57,7 @@ public class ListSideGalleryView extends FeatureView implements ListSelectionLis
 
         JScrollPane scrollPane = new JScrollPane(sideList);
         scrollPane.setBorder(null);
-        scrollPane.getVerticalScrollBar().setBackground(ColorUtility.darken(GUIConfig.SideBarColor, 1.5));
+        scrollPane.getVerticalScrollBar().setBackground(ColorUtility.darken(GUIConfig.SideBarColor, 1.4));
         sidebar.add(scrollPane);
 
         mainView = new JPanel();

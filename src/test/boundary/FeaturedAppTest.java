@@ -3,7 +3,7 @@ package src.test.boundary;
 import com.formdev.flatlaf.FlatIntelliJLaf;
 import src.main.boundary.GUIConfig;
 import src.main.boundary.app.DefaultAppController;
-import src.main.boundary.cosovatchat.CoSoVatChatFeature;
+import src.main.boundary.cosovatchat.QuanLyCoSoVatChatFeature;
 import src.main.boundary.hoatdong.HoatDongFeature;
 import src.main.boundary.hokhau.HoKhauFeature;
 import src.main.boundary.model.DefaultAppModel;
@@ -26,6 +26,8 @@ public class FeaturedAppTest {
         UIManager.put("List.selectionArc", 10);
         UIManager.put("Button.disabledBackground", GUIConfig.MenuBarBackground);
 
+        UIManager.put("OptionPane.messageFont", GUIConfig.DefaultFont);
+
         // New UI Key
         UIManager.put("ToolTip.background", GUIConfig.FeatureViewColor);
         UIManager.put("ToolTip.font", GUIConfig.DefaultFont);
@@ -40,7 +42,7 @@ public class FeaturedAppTest {
         model.addFeature(new HoKhauFeature());
         model.addFeature(new NhanKhauFeature());
         model.addFeature(new HoatDongFeature());
-        model.addFeature(new CoSoVatChatFeature());
+        model.addFeature(new QuanLyCoSoVatChatFeature());
 
         DefaultAppController controller = new DefaultAppController(model);
 

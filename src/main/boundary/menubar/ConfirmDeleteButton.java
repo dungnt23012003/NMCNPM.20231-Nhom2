@@ -8,10 +8,10 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-public class MenuBarDeleteButton extends JButton implements ActionListener {
+public class ConfirmDeleteButton extends JButton implements ActionListener {
     ActionListener listener;
 
-    public MenuBarDeleteButton(ActionListener listener) {
+    public ConfirmDeleteButton(ActionListener listener) {
         setBackground(GUIConfig.MenuBarBackground);
         setIcon(GUIConfig.DeleteIcon);
         setMargin(new Insets(5, 5, 5, 5));

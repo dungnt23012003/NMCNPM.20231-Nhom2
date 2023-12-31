@@ -10,7 +10,7 @@ import javax.swing.*;
 import java.awt.*;
 
 public class EditorComponentFactory {
-    public static EditorComponent createEditFormComponent(String field, String value) {
+    public static FormEditorComponent createEditFormComponent(String field, String value) {
         FormEditorComponent editorComponent = new FormEditorComponent();
         editorComponent.setLayout(new BoxLayout(editorComponent, BoxLayout.LINE_AXIS));
         editorComponent.setBackground(new Color(0, 0, 0, 0));
@@ -22,18 +22,9 @@ public class EditorComponentFactory {
         editorComponent.add(Box.createRigidArea(new Dimension(GUIConfig.FormMinSpace, 0)));
         editorComponent.add(Box.createHorizontalGlue());
 
-        JTextField valueField = new JTextField();
-        valueField.setBorder(new FlatLineBorder(new Insets(0, 0, 0, 0), GUIConfig.ListSeparatorColor, 1.25f, 10));
-        valueField.putClientProperty("JTextField.padding", new Insets(0, 7, 0, 0));
-
-        valueField.setColumns(45);
-        valueField.setMaximumSize(new Dimension(400, GUIConfig.ListLabelHeight));
-
+        JTextField valueField = ComponentFactory.createEditorTextField();
         valueField.setText(value);
 
-        valueField.setBackground(GUIConfig.MyListBackground);
-        valueField.setForeground(GUIConfig.FormValueColor);
-        valueField.setFont(GUIConfig.DefaultFont);
         editorComponent.add(valueField);
         editorComponent.setTextField(valueField);
 
@@ -63,6 +54,22 @@ public class EditorComponentFactory {
         closeButton.setIcon(GUIConfig.CloseIcon);
         closeButton.addActionListener(e -> editor.removeNhanKhau(item));
         editorComponent.add(closeButton);
+
+        return editorComponent;
+    }
+
+    public static PairEditorComponent createPairEditorComponent(Pair pair) {
+        PairEditorComponent editorComponent = new PairEditorComponent(
+                ComponentFactory.createEditorTextField(),
+                ComponentFactory.createEditorTextField()
+        );
+
+        editorComponent.firstField.setText(pair.first.toString());
+        editorComponent.firstField.setForeground(Color.BLACK);
+        editorComponent.firstField.putClientProperty("JTextField.placeholderText", "Tên cơ sở vật chất");;
+
+        editorComponent.secondField.setText(pair.second.toString());
+        editorComponent.secondField.putClientProperty("JTextField.placeholderText", "Số lượng");
 
         return editorComponent;
     }

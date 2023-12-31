@@ -24,6 +24,11 @@ public class PhongBanListAdapter implements ListRenderable {
     public ArrayList<Component> getComponentList() {
         ArrayList<Component> components = new ArrayList<>();
 
+        if (list.isEmpty()) {
+            components.add(ComponentFactory.createFormComponent("Không có phòng ban nào.", ""));
+            return components;
+        }
+
         for (PhongBan phongBan : list) {
             components.add(ComponentFactory.createFormComponent(phongBan.maPhongBan, ""));
         }

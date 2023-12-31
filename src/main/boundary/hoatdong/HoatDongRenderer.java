@@ -3,7 +3,7 @@ package src.main.boundary.hoatdong;
 import src.main.boundary.GUIConfig;
 import src.main.boundary.feature.FeatureView;
 import src.main.boundary.menubar.MenuBar;
-import src.main.boundary.menubar.MenuBarDeleteButton;
+import src.main.boundary.menubar.ConfirmDeleteButton;
 import src.main.boundary.renderer.EntityRenderer;
 import src.main.boundary.renderer.MultiListRenderer;
 import src.main.boundary.renderer.Renderable;
@@ -50,7 +50,7 @@ public class HoatDongRenderer implements EntityRenderer, ListSelectionListener, 
             settingButton.setIcon(GUIConfig.SettingIcon);
             settingButton.addActionListener(this);
             menuBar.add(settingButton);
-            menuBar.add(new MenuBarDeleteButton(e -> controller.delete(castedItem)));
+            menuBar.add(new ConfirmDeleteButton(e -> controller.delete(castedItem)));
 
             subPanel = new JPanel(new CardLayout());
             subPanel.setAlignmentX(0.0f);
@@ -61,7 +61,7 @@ public class HoatDongRenderer implements EntityRenderer, ListSelectionListener, 
             renderedComponent.add(subPanel);
             controller.model.galleryController.getView().getSideList().addListSelectionListener(this);
         } else {
-            renderedComponent.add(ComponentFactory.createLabel("Không có hộ khẩu nào được chọn."));
+            renderedComponent.add(ComponentFactory.createLabel("Không có hoạt động nào được chọn."));
         }
 
         return renderedComponent;
