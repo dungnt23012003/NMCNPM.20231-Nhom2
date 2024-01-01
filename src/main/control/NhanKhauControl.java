@@ -1,6 +1,7 @@
 package src.main.control;
 
 //import src.main.boundary.nhankhau.NhanKhauModel;
+import src.main.boundary.hokhau.HoKhauView;
 import src.main.boundary.nhankhau.NhanKhauView;
 import src.main.entity.HoKhau;
 import src.main.entity.NhanKhau;
@@ -10,7 +11,7 @@ import java.util.ArrayList;
 
 import static src.main.control.ConnectionConfig.connect_to_sql_server;
 public class NhanKhauControl {
-    NhanKhauView view;
+    public NhanKhauView view;
 
     public ArrayList<NhanKhau> searchNhanKhau(String dieuKien){
         ArrayList<NhanKhau> dsNhanKhau = new ArrayList<NhanKhau>();
@@ -201,6 +202,7 @@ public class NhanKhauControl {
             sql = sql + "'" + entity.CCCD + "'" + ";";
             System.out.println(sql);
             statement.execute(sql);
+            this.view.showErrorMessage("Xóa nhân khẩu thành công");
             this.view.refreshUI();
             connection.close();
         }
@@ -277,5 +279,6 @@ public class NhanKhauControl {
     public void setView(NhanKhauView view) {
         this.view = view;
     }
+
 
 }

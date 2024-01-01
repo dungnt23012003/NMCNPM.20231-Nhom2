@@ -48,8 +48,7 @@ public class HoatDongControl {
                     hoatDongTmp.ngayKetThuc = "";
                 }
 
-                String timPhongBan = "select * from hd_Phongban where ma_hoat_dong = ";
-                timPhongBan = timPhongBan + hoatDongTmp.maHoatDong + ";";
+                String timPhongBan = String.format("select * from hd_Phongban where ma_hoat_dong = N'%s'",hoatDongTmp.maHoatDong);
                 System.out.println(timPhongBan);
 
                 Statement statement1 = connection.createStatement();
@@ -61,8 +60,7 @@ public class HoatDongControl {
                     hoatDongTmp.phongbanSuDung.add(phongBanTmp);
                 }
 
-                String timCSVC = "select * from hd_csvc where ma_hoat_dong = ";
-                timCSVC = timCSVC + hoatDongTmp.maHoatDong + ";";
+                String timCSVC = String.format("select * from hd_csvc where ma_hoat_dong = N'%s'", hoatDongTmp.maHoatDong);
                 System.out.println(timCSVC);
 
                 Statement statement2 = connection.createStatement();
@@ -70,8 +68,8 @@ public class HoatDongControl {
 
                 while(coSoVatChat.next()){
                     CoSoVatChat coSoVatChatTmp = new CoSoVatChat();
-                    coSoVatChatTmp.maCSVC = coSoVatChat.getString(1);
-                    coSoVatChatTmp.soLuong = coSoVatChat.getInt(2);
+                    coSoVatChatTmp.maCSVC = coSoVatChat.getString(2);
+                    coSoVatChatTmp.soLuong = coSoVatChat.getInt(3);
                     hoatDongTmp.csvcSuDung.add(coSoVatChatTmp);
                 }
                 list.add(hoatDongTmp);
@@ -88,55 +86,177 @@ public class HoatDongControl {
 
     public void add(HoatDong item) {
         try{
-            String sql = "insert into hoat_dong values(";
-            sql = sql + "'" + item.maHoatDong + "'" + ", ";
-            sql = sql + "'" + item.cccdNguoiDangKi + "'" + ", ";
-
-            String day = "";
-            String month = "";
-            String year = "";
-            if(!item.ngayBatDau.equals("")){
-                 day = item.ngayBatDau.substring(0,2);
-                 month = item.ngayBatDau.substring(3,5);
-                 year = item.ngayBatDau.substring(6,10);
-            }
-
-            sql = sql + "'" + year + "-" + month + "-" + day + "'" + ", ";
-
-            day = "";
-            month = "";
-            year = "";
-            if(!item.ngayBatDau.equals("")){
-                day = item.ngayKetThuc.substring(0,2);
-                month = item.ngayKetThuc.substring(3,5);
-                year = item.ngayKetThuc.substring(6,10);
-            }
-
-            sql = sql + "'" + year + "-" + month + "-" + day + "'" + ");";
-            System.out.println(sql);
             Connection connection = connect_to_sql_server();
             Statement statement = connection.createStatement();
-            statement.execute(sql);
+            String announcement = "Không thể thêm hoạt động này vì thiếu cơ sở vật chất và phòng ban sau:<br/>";
 
-            for(CoSoVatChat x: item.csvcSuDung){
-                sql = "insert into hd_csvc values(";
-                sql = sql + "N'" + item.maHoatDong + "'" + ", ";
-                sql = sql + "N'" + x.maCSVC + "'" + ", ";
-                sql = sql +  x.soLuong +  ");";
-                System.out.println(sql);
-                statement.execute(sql);
+            for(CoSoVatChat coSoVatChat: item.csvcSuDung){
+
+                String day = "";
+                String month = "";
+                String year = "";
+                if(!item.ngayBatDau.equals("")){
+                    day = item.ngayBatDau.substring(0,2);
+                    month = item.ngayBatDau.substring(3,5);
+                    year = item.ngayBatDau.substring(6,10);
+                }
+
+                String date = String.format("select DATEDIFF(DD, GETDATE(), '%s-%s-%s')", year, month, day);
+                int day_bd = statement.executeQuery(date).getInt(1);
+
+                day = "";
+                month = "";
+                year = "";
+                if(!item.ngayKetThuc.equals("")){
+                    day = item.ngayKetThuc.substring(0,2);
+                    month = item.ngayKetThuc.substring(3,5);
+                    year = item.ngayKetThuc.substring(6,10);
+                }
+                date = String.format("select DATEDIFF(DD, GETDATE(), '%s-%s-%s')", year, month, day);
+                int day_kt = statement.executeQuery(date).getInt(1);
+
+                String checkBeforeUpdate = String.format("select hoat_dong.ma_hoat_dong, DATEDIFF(DD, GETDATE(), ngay_kt), so_luong, so_luong_su_dung\n" +
+                        "from hoat_dong\n" +
+                        "join hd_csvc on hoat_dong.ma_hoat_dong = hd_csvc.ma_hoat_dong\n" +
+                        "join co_so_vat_chat on co_so_vat_chat.ma_csvc = hd_csvc.ma_csvc\n" +
+                        "where co_so_vat_chat.ma_csvc = N'%s' and DATEDIFF(DD, GETDATE(), ngay_kt) >= 0", coSoVatChat.maCSVC);
+                System.out.println(checkBeforeUpdate);
+                ResultSet rs = statement.executeQuery(checkBeforeUpdate);
+
+                int latestDay = 0;
+                int slCSVCMax = 0;
+                while(rs.next()){
+                    if(latestDay>rs.getInt(2)){
+                        latestDay = rs.getInt(2);
+                    }
+                }
+                if(latestDay>day_kt){
+                    latestDay = day_kt;
+                }
+                int[] slCSVCSuDungCurrent = new int[latestDay+1];
+                for(int x=0; x<= latestDay; x++){
+                    slCSVCSuDungCurrent[x] = 0;
+                }
+                checkBeforeUpdate = String.format("select hoat_dong.ma_hoat_dong, DATEDIFF(DD, GETDATE(), ngay_kt), so_luong, so_luong_su_dung, DATEDIFF(DD, GETDATE(), ngay_bd)\n" +
+                        "from hoat_dong\n" +
+                        "join hd_csvc on hoat_dong.ma_hoat_dong = hd_csvc.ma_hoat_dong\n" +
+                        "join co_so_vat_chat on co_so_vat_chat.ma_csvc = hd_csvc.ma_csvc\n" +
+                        "where co_so_vat_chat.ma_csvc = N'%s' and DATEDIFF(DD, GETDATE(), ngay_kt) >= 0", coSoVatChat.maCSVC);
+                System.out.println(checkBeforeUpdate);
+                rs = statement.executeQuery(checkBeforeUpdate);
+
+                while(rs.next()){
+                    slCSVCMax = rs.getInt(3);
+                    if(rs.getInt(5) > 0){
+                        for(int x=rs.getInt(5); x<= rs.getInt(2); x++){
+                            slCSVCSuDungCurrent[x] = slCSVCSuDungCurrent[x] + rs.getInt(4);
+                        }
+                    }
+                    else{
+                        for(int x=0; x<= rs.getInt(2); x++){
+                            slCSVCSuDungCurrent[x] = slCSVCSuDungCurrent[x] + rs.getInt(4);
+                        }
+                    }
+
+                }
+
+
+                int slThieu = 0;
+                for(int y=day_bd;y<=day_kt;y++){
+                    if(slCSVCSuDungCurrent[y] + coSoVatChat.soLuong - slCSVCMax > slThieu){
+                        slThieu = slCSVCSuDungCurrent[y] - slCSVCMax;
+                    }
+                }
+
+                if(slThieu > 0){
+                    announcement = announcement + coSoVatChat.maCSVC + ": " + slThieu + ".<br/>";
+                }
             }
 
-            for(PhongBan x: item.phongbanSuDung){
-                sql = "insert into hd_phongban values(";
-                sql = sql + "N'" + item.maHoatDong + "'" + ", ";
-                sql = sql + "N'" + x.maPhongBan + "'" + "); ";
-                System.out.println(sql);
-                statement.execute(sql);
+            for(PhongBan phongBan:item.phongbanSuDung){
+                String day = "";
+                String month = "";
+                String year = "";
+                if(!item.ngayBatDau.equals("")){
+                    day = item.ngayBatDau.substring(0,2);
+                    month = item.ngayBatDau.substring(3,5);
+                    year = item.ngayBatDau.substring(6,10);
+                }
+                String date_ngaybd = String.format("'%s-%s-%s'", year, month, day);
+
+                day = "";
+                month = "";
+                year = "";
+                if(!item.ngayKetThuc.equals("")){
+                    day = item.ngayKetThuc.substring(0,2);
+                    month = item.ngayKetThuc.substring(3,5);
+                    year = item.ngayKetThuc.substring(6,10);
+                }
+                String date_ngaykt = String.format("'%s-%s-%s'", year, month, day);
+
+                String checkBeforeUpdate = String.format("select hd_phongban.ma_phong_ban\n" +
+                        "from hoat_dong\n" +
+                        "join hd_phongban on hoat_dong.ma_hoat_dong = hd_phongban.ma_hoat_dong\n" +
+                        "where hd_phongban.ma_phong_ban = '%s' and (hoat_dong.ngay_kt >= %s and hoat_dong.ngay_kt <= %s) or (hoat_dong.ngay_bd >= %s and hoat_dong.ngay_bd <= %s)", phongBan.maPhongBan, date_ngaybd, date_ngaykt, date_ngaybd, date_ngaykt );
+                System.out.println(checkBeforeUpdate);
+                ResultSet rs = statement.executeQuery(checkBeforeUpdate);
+
+                while(rs.next()){
+                    announcement = announcement + phongBan.maPhongBan + ".<br/>";
+                }
             }
 
+            if(!announcement.equals("Không thể thêm hoạt động này vì thiếu cơ sở vật chất và phòng ban sau:<br/>")){
+                System.out.println(announcement);
+            }
+            else{
+                String sql = "insert into hoat_dong values(";
+                sql = sql + "'" + item.maHoatDong + "'" + ", ";
+                sql = sql + "'" + item.cccdNguoiDangKi + "'" + ", ";
 
+                String day = "";
+                String month = "";
+                String year = "";
+                if(!item.ngayBatDau.equals("")){
+                    day = item.ngayBatDau.substring(0,2);
+                    month = item.ngayBatDau.substring(3,5);
+                    year = item.ngayBatDau.substring(6,10);
+                }
 
+                sql = sql + "'" + year + "-" + month + "-" + day + "'" + ", ";
+
+                day = "";
+                month = "";
+                year = "";
+                if(!item.ngayKetThuc.equals("")){
+                    day = item.ngayKetThuc.substring(0,2);
+                    month = item.ngayKetThuc.substring(3,5);
+                    year = item.ngayKetThuc.substring(6,10);
+                }
+
+                sql = sql + "'" + year + "-" + month + "-" + day + "'" + ");";
+                System.out.println(sql);
+                statement.execute(sql);
+
+                for(CoSoVatChat x: item.csvcSuDung){
+                    sql = "insert into hd_csvc values(";
+                    sql = sql + "N'" + item.maHoatDong + "'" + ", ";
+                    sql = sql + "N'" + x.maCSVC + "'" + ", ";
+                    sql = sql +  x.soLuong +  ");";
+                    System.out.println(sql);
+                    statement.execute(sql);
+                }
+
+                for(PhongBan x: item.phongbanSuDung){
+                    sql = "insert into hd_phongban values(";
+                    sql = sql + "N'" + item.maHoatDong + "'" + ", ";
+                    sql = sql + "N'" + x.maPhongBan + "'" + "); ";
+                    System.out.println(sql);
+                    statement.execute(sql);
+                }
+            }
+
+            view.refreshUI();
             connection.close();
         }
         catch (Exception e){
@@ -181,7 +301,7 @@ public class HoatDongControl {
             System.out.println(sql);
             statement.execute(sql);
         }
-
+        view.refreshUI();
         connection.close();
         }
         catch (Exception e){
@@ -205,9 +325,8 @@ public class HoatDongControl {
         sql = String.format("delete from hoat_dong where ma_hoat_dong = %s;", item.maHoatDong);
         System.out.println(sql);
         statement.execute(sql);
-
+            view.refreshUI();
         connection.close();
-
         }
         catch (Exception e){
             System.out.println(e.getMessage());

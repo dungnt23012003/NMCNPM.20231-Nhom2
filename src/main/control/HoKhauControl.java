@@ -139,8 +139,7 @@ public class HoKhauControl {
                 //Lấy mã hộ khẩu
                 hoKhauTmp.maHoKhau = dsHK.getString(1);
                 //Tìm chủ hộ trong danh sách nhân khẩu
-                String timChuHo = "select * from nhan_khau where cccd = ";
-                timChuHo = timChuHo + dsHK.getString(2) + ";";
+                String timChuHo = String.format("select * from nhan_khau where cccd = '%s'",dsHK.getString(2));
                 System.out.println(timChuHo);
                 hoKhauTmp.khuVuc = dsHK.getString(3);
                 hoKhauTmp.diaChi = dsHK.getString(4);
@@ -158,30 +157,32 @@ public class HoKhauControl {
                 ResultSet chuHo = statement1.executeQuery(timChuHo);
                 //Lưu thông tin chủ hộ vào nhân khẩu tạm thời
 
-                chuHo.next();
+                while(chuHo.next()){
+                    NhanKhau nhanKhauTmp = new NhanKhau();
+                    nhanKhauTmp.CCCD = chuHo.getString(1);
+                    nhanKhauTmp.hoTen = chuHo.getString(2);
+                    nhanKhauTmp.namSinh = chuHo.getString(3);
+                    if (nhanKhauTmp.namSinh!=null){
+                        String year = nhanKhauTmp.namSinh.substring(0,4);
+                        String month = nhanKhauTmp.namSinh.substring(5,7);
+                        String day = nhanKhauTmp.namSinh.substring(8,10);
+                        nhanKhauTmp.namSinh = day + "-" + month + "-" + year;
+                    }
+                    else{
+                        nhanKhauTmp.namSinh = "";
+                    }
+                    nhanKhauTmp.gioiTinh = chuHo.getString(4);
+                    nhanKhauTmp.nguyenQuan = chuHo.getString(5);
+                    nhanKhauTmp.danToc = chuHo.getString(6);
+                    nhanKhauTmp.tonGiao = chuHo.getString(7);
+                    nhanKhauTmp.quocTich = chuHo.getString(8);
+                    nhanKhauTmp.noiThuongTru = chuHo.getString(9);
 
-                NhanKhau nhanKhauTmp = new NhanKhau();
-                nhanKhauTmp.CCCD = chuHo.getString(1);
-                nhanKhauTmp.hoTen = chuHo.getString(2);
-                nhanKhauTmp.namSinh = chuHo.getString(3);
-                if (nhanKhauTmp.namSinh!=null){
-                    String year = nhanKhauTmp.namSinh.substring(0,4);
-                    String month = nhanKhauTmp.namSinh.substring(5,7);
-                    String day = nhanKhauTmp.namSinh.substring(8,10);
-                    nhanKhauTmp.namSinh = day + "-" + month + "-" + year;
+                    //lưu chủ hộ của hộ khẩu tạm thời
+                    hoKhauTmp.chuHo = nhanKhauTmp;
                 }
-                else{
-                    nhanKhauTmp.namSinh = "";
-                }
-                nhanKhauTmp.gioiTinh = chuHo.getString(4);
-                nhanKhauTmp.nguyenQuan = chuHo.getString(5);
-                nhanKhauTmp.danToc = chuHo.getString(6);
-                nhanKhauTmp.tonGiao = chuHo.getString(7);
-                nhanKhauTmp.quocTich = chuHo.getString(8);
-                nhanKhauTmp.noiThuongTru = chuHo.getString(9);
 
-                //lưu chủ hộ của hộ khẩu tạm thời
-                hoKhauTmp.chuHo = nhanKhauTmp;
+
                 //tìm danh sách nhân khẩu trong hộ khẩu
                 String timNhanKhauTrongHoKhau = "select * from nhan_khau inner join hk_nk on nhan_khau.cccd = hk_nk.cccd_nhan_khau where  hk_nk.ma_ho_khau = ";
                 timNhanKhauTrongHoKhau = timNhanKhauTrongHoKhau + hoKhauTmp.maHoKhau + ";";
