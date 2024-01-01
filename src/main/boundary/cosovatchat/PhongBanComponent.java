@@ -4,27 +4,25 @@ import src.main.boundary.GUIConfig;
 import src.main.boundary.editor.*;
 import src.main.boundary.menubar.ConfirmDeleteButton;
 import src.main.boundary.utility.ComponentFactory;
-import src.main.control.CoSoVatChatControl;
-import src.main.entity.CoSoVatChat;
+import src.main.control.PhongBanControl;
+import src.main.entity.PhongBan;
 
-import javax.sound.sampled.Line;
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
-import javax.swing.border.LineBorder;
 import java.awt.*;
 
-public class CoSoVatChatComponent extends JPanel {
-    CoSoVatChatControl control;
-    CoSoVatChat item;
+public class PhongBanComponent extends JPanel {
+    PhongBanControl control;
+    PhongBan item;
     PairEditorComponent editorComponent;
-    CoSoVatChatView parent;
+    PhongBanView parent;
     boolean isNew;
 
-    public CoSoVatChatComponent(CoSoVatChat item, CoSoVatChatControl control) {
+    public PhongBanComponent(PhongBan item, PhongBanControl control) {
         this(item, control, false, null);
     }
 
-    public CoSoVatChatComponent(CoSoVatChat item, CoSoVatChatControl control, boolean isNew, CoSoVatChatView parent) {
+    public PhongBanComponent(PhongBan item, PhongBanControl control, boolean isNew, PhongBanView parent) {
         this.control = control;
         this.item = item;
         this.parent = parent;
@@ -42,7 +40,7 @@ public class CoSoVatChatComponent extends JPanel {
 
     // View
     private void setupRenderUI() {
-        add(ComponentFactory.createFormComponent(item.maCSVC, String.valueOf(item.soLuong)));
+        add(ComponentFactory.createFormComponent(item.maPhongBan, ""));
         add(Box.createRigidArea(new Dimension(10, 0)));
 
         JButton settingButton = ComponentFactory.createStickyMenuBarButton();
@@ -56,20 +54,12 @@ public class CoSoVatChatComponent extends JPanel {
     }
 
     private void setupEditorUI() {
-        editorComponent = EditorComponentFactory.createPairEditorComponent(new Pair(item.maCSVC, item.soLuong));
-        editorComponent.setBorder(new EmptyBorder(4, 0, 3, 0));
+        editorComponent = EditorComponentFactory.createPairEditorComponent(new Pair(item.maPhongBan, ""));
+        editorComponent.setBorder(new EmptyBorder(7, 0, 7, 0));
 
-        if (!isNew) {
-            editorComponent.firstField.setBorder(BorderFactory.createEmptyBorder());
-            editorComponent.firstField.setEditable(false);
-            editorComponent.firstField.putClientProperty("JTextField.padding", new Insets(0, 0, 0, 0));
-        } else {
-            editorComponent.secondField.setText("");
-        }
         editorComponent.firstField.setColumns(20);
-        editorComponent.secondField.setColumns(10);
-        editorComponent.firstField.putClientProperty("JTextField.placeholderText", "Tên cơ sở vật chất");;
-        editorComponent.secondField.putClientProperty("JTextField.placeholderText", "Số lượng");
+        editorComponent.secondField.setVisible(false);
+        editorComponent.firstField.putClientProperty("JTextField.placeholderText", "Tên phòng ban");;
 
         add(editorComponent);
         add(Box.createRigidArea(new Dimension(10, 0)));
@@ -86,12 +76,11 @@ public class CoSoVatChatComponent extends JPanel {
     }
 
     // Model
-    public CoSoVatChat getValue() {
-        CoSoVatChat result = new CoSoVatChat();
-        result.maCSVC = editorComponent.firstField.getText();
-        result.soLuong = Integer.parseInt(editorComponent.secondField.getText());
+    public PhongBan getValue() {
+        PhongBan phongBan = new PhongBan();
+        phongBan.maPhongBan = editorComponent.firstField.getText();
 
-        return result;
+        return phongBan;
     }
 
     // Controller

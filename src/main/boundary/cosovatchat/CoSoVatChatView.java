@@ -36,7 +36,6 @@ public class CoSoVatChatView extends FeatureView {
     }
 
     // View section
-
     private void setupRenderUI() {
         add(menuBar);
         add(Box.createVerticalStrut(10));
