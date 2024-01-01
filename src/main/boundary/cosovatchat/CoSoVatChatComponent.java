@@ -57,7 +57,7 @@ public class CoSoVatChatComponent extends JPanel {
 
     private void setupEditorUI(boolean isNew) {
         editorComponent = EditorComponentFactory.createPairEditorComponent(new Pair(item.maCSVC, item.soLuong));
-        editorComponent.setBorder(new EmptyBorder(4, 0, 3, 0));
+        editorComponent.setBorder(new EmptyBorder(7, 0, 7, 0));
 
         if (!isNew) {
             editorComponent.firstField.setBorder(BorderFactory.createEmptyBorder());
