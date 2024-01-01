@@ -54,6 +54,7 @@ public class CoSoVatChatView extends FeatureView {
 
     // Controller section
     public void addButtonClicked() {
+        cancelButtonClicked();
         DefaultRenderableList addedComponentList = currentComponentList;
         addedComponentList.getComponentList().add(0, new CoSoVatChatComponent(new CoSoVatChat(), control, true, this));
 
