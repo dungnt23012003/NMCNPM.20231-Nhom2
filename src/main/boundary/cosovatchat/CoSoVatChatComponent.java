@@ -18,6 +18,7 @@ public class CoSoVatChatComponent extends JPanel {
     CoSoVatChat item;
     PairEditorComponent editorComponent;
     CoSoVatChatView parent;
+    boolean isNew = false;
 
     public CoSoVatChatComponent(CoSoVatChat item, CoSoVatChatControl control) {
         this(item, control, false, null);
@@ -27,6 +28,7 @@ public class CoSoVatChatComponent extends JPanel {
         this.control = control;
         this.item = item;
         this.parent = parent;
+        this.isNew = isNew;
 
         setLayout(new BoxLayout(this, BoxLayout.LINE_AXIS));
         setBackground(GUIConfig.SideBarColor);
@@ -55,7 +57,6 @@ public class CoSoVatChatComponent extends JPanel {
 
     private void setupEditorUI(boolean isNew) {
         editorComponent = EditorComponentFactory.createPairEditorComponent(new Pair(item.maCSVC, item.soLuong));
-//        editorComponent.setMinimumSize(new Dimension(-1, 50));
         editorComponent.setBorder(new EmptyBorder(4, 0, 3, 0));
 
         if (!isNew) {
@@ -82,6 +83,15 @@ public class CoSoVatChatComponent extends JPanel {
         add(saveButton);
     }
 
+    // Model
+    public CoSoVatChat getValue() {
+        CoSoVatChat result = new CoSoVatChat();
+        result.maCSVC = editorComponent.firstField.getText();
+        result.soLuong = Integer.parseInt(editorComponent.secondField.getText());
+
+        return result;
+    }
+
     // Controller
     public void deleteButtonClicked() {
         control.delete(item);
@@ -105,6 +115,11 @@ public class CoSoVatChatComponent extends JPanel {
     }
 
     public void saveButtonClicked() {
+        if (isNew) {
+            control.add(getValue());
+        } else {
+            control.update(item, getValue());
+        }
         cancelButtonClicked();
     }
 }
