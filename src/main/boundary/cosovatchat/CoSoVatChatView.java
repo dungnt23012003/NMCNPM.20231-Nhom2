@@ -47,6 +47,12 @@ public class CoSoVatChatView extends FeatureView {
         add(list);
     }
 
+    public void refreshUI() {
+        removeAll();
+        setupRenderUI();
+        revalidate();
+    }
+
     // Controller section
     public void addButtonClicked() {
         DefaultRenderableList addedComponentList = currentComponentList;
@@ -62,8 +68,6 @@ public class CoSoVatChatView extends FeatureView {
     }
 
     public void cancelButtonClicked() {
-        removeAll();
-        setupRenderUI();
-        revalidate();
+        refreshUI();
     }
 }

@@ -1,9 +1,7 @@
 package src.main.control;
 
 //import src.main.boundary.nhankhau.NhanKhauModel;
-import src.main.boundary.hokhau.HoKhauView;
 import src.main.boundary.nhankhau.NhanKhauView;
-import src.main.entity.HoKhau;
 import src.main.entity.NhanKhau;
 
 import java.sql.*;
@@ -202,7 +200,7 @@ public class NhanKhauControl {
             sql = sql + "'" + entity.CCCD + "'" + ";";
             System.out.println(sql);
             statement.execute(sql);
-            this.view.showErrorMessage("Xóa nhân khẩu thành công");
+            this.view.showMessage("Xóa nhân khẩu thành công");
             this.view.refreshUI();
             connection.close();
         }

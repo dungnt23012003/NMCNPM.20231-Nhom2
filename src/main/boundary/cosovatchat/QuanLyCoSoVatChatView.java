@@ -26,12 +26,14 @@ public class QuanLyCoSoVatChatView extends FeatureView {
         setLayout(new GridLayout(0, 2));
         setBorder(new EmptyBorder(10, 10, 10, 10));
 
-        FeatureView coSoVatChatView = new CoSoVatChatView(new CoSoVatChatControlTestValue());
+        CoSoVatChatView coSoVatChatView = new CoSoVatChatView(new CoSoVatChatControlTestValue());
         coSoVatChatView.setBorder(new EmptyBorder(10, 10, 10, 10));
         add(coSoVatChatView);
+        coSoVatChatControl.setView(coSoVatChatView);
 
-        FeatureView phongBanView = new PhongBanView(new PhongBanControl());
+        PhongBanView phongBanView = new PhongBanView(new PhongBanControl());
         phongBanView.setBorder(new EmptyBorder(10, 10, 10, 10));
         add(phongBanView);
+        phongBanControl.setPhongBanView(phongBanView);
     }
 }

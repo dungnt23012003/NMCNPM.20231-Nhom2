@@ -11,6 +11,7 @@ public class HoatDongController {
         this.model = model;
 
         view = new HoatDongView(this, model);
+        model.control.setView(view);
         view.setupUI();
     }
 

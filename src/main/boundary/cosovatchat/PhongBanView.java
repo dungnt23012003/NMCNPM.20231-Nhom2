@@ -23,6 +23,7 @@ public class PhongBanView extends FeatureView {
         setupUI();
     }
 
+    // View
     public void setupUI() {
         setLayout(new BoxLayout(this, BoxLayout.PAGE_AXIS));
         setAlignmentY(0.0f);
@@ -42,6 +43,11 @@ public class PhongBanView extends FeatureView {
         add(list);
     }
 
+    public void refreshUI() {
+
+    }
+
+    // Controller
     public void addButtonClicked() {
 
     }

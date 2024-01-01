@@ -19,4 +19,8 @@ public class HoatDongView extends FeatureView {
         model.galleryController.getView().setRenderer(new HoatDongRenderer(controller));
         add(model.galleryController.getView());
     }
+
+    public void refreshUI() {
+        model.galleryController.updateSideList();
+    }
 }
