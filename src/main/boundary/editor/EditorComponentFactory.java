@@ -66,10 +66,8 @@ public class EditorComponentFactory {
 
         editorComponent.firstField.setText(pair.first.toString());
         editorComponent.firstField.setForeground(Color.BLACK);
-        editorComponent.firstField.putClientProperty("JTextField.placeholderText", "Tên cơ sở vật chất");;
 
         editorComponent.secondField.setText(pair.second.toString());
-        editorComponent.secondField.putClientProperty("JTextField.placeholderText", "Số lượng");
 
         return editorComponent;
     }
