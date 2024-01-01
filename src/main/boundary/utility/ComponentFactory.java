@@ -76,7 +76,7 @@ public class ComponentFactory {
         valueField.putClientProperty("JTextField.padding", new Insets(0, 7, 0, 0));
 
         valueField.setColumns(45);
-        valueField.setMaximumSize(new Dimension(400, GUIConfig.ListLabelHeight));
+        valueField.setPreferredSize(new Dimension(400, GUIConfig.ListLabelHeight));
 
         valueField.setBackground(GUIConfig.MyListBackground);
         valueField.setForeground(GUIConfig.FormValueColor);
