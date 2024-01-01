@@ -47,6 +47,7 @@ public class CoSoVatChatControl {
             System.out.println(sql);
             statement.execute(sql);
             view.refreshUI();
+            view.showMessage("Thêm cơ sở vật chất thành công.");
             connection.close();
         }
         catch (Exception e){
@@ -112,8 +113,8 @@ public class CoSoVatChatControl {
             }
 
             if(!announcement.equals("Chỉnh sửa số lượng cơ sở vật chất này khiến những hoạt động sau không đủ cơ sở vật chất sử dụng:<br/>")){
-                //view.showErrorMessage(announcement);
-                System.out.println(announcement);
+                view.showMessage("<html>" + announcement + "</html>");
+
             }
             else{
                 String sql = String.format("select * from hd_csvc where ma_csvc = N'%s';", old_item.maCSVC);
@@ -144,6 +145,7 @@ public class CoSoVatChatControl {
                     statement.execute(sql);
                 }
                 view.refreshUI();
+                view.showMessage("Chỉnh sửa cơ sở vật chất thành công.");
             }
 
 
@@ -212,8 +214,7 @@ public class CoSoVatChatControl {
                 view.refreshUI();
             }
             else{
-                //view.showErrorMessage(announcement);
-                System.out.println(announcement);
+                view.showMessage("Xóa cơ sở vật chất thành công.");
             }
 
 

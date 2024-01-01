@@ -109,6 +109,7 @@ public class NhanKhauControl {
             Connection connection = connect_to_sql_server();
             connection.createStatement().execute(sql);
             this.view.refreshUI();
+            view.showMessage("Thêm nhân khẩu thành công.");
             connection.close();
         }
         catch (Exception e){
@@ -200,8 +201,8 @@ public class NhanKhauControl {
             sql = sql + "'" + entity.CCCD + "'" + ";";
             System.out.println(sql);
             statement.execute(sql);
-            this.view.showMessage("Xóa nhân khẩu thành công");
             this.view.refreshUI();
+            this.view.showMessage("Xóa nhân khẩu thành công.");
             connection.close();
         }
         catch (Exception e){
@@ -228,6 +229,7 @@ public class NhanKhauControl {
             Connection connection = connect_to_sql_server();
             connection.createStatement().execute(sql);
             this.view.refreshUI();
+            view.showMessage("Chỉnh sửa nhân khẩu thành công.");
             connection.close();
         }
         catch (Exception e){

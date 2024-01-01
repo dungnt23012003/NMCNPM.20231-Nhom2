@@ -62,6 +62,7 @@ public class PhongBanControl {
             String sql = String.format("insert into phongban values (N'%s')", item.maPhongBan);
             statement.execute(sql);
             phongBanView.refreshUI();
+            phongBanView.showMessage("Thêm phòng ban thành công.");
             connection.close();
         }
         catch (Exception e){
@@ -98,8 +99,9 @@ public class PhongBanControl {
 
                 sql = String.format("delete from phongban where ma_phong_ban = N'%s';", item.maPhongBan);
                 System.out.println(sql);
-                phongBanView.refreshUI();
                 statement.execute(sql);
+                phongBanView.refreshUI();
+                phongBanView.showMessage("Xóa phòng ban thành công.");
             }
 
 
@@ -140,6 +142,7 @@ public class PhongBanControl {
                 statement.execute(sql);
             }
             phongBanView.refreshUI();
+            phongBanView.showMessage("Chỉnh sửa phòng ban thành công.");
             connection.close();
         }
         catch (Exception e){

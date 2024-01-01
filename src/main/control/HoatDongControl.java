@@ -254,9 +254,11 @@ public class HoatDongControl {
                     System.out.println(sql);
                     statement.execute(sql);
                 }
+                view.refreshUI();
+                view.showMessage("Thêm hoạt động thành công.");
             }
 
-            view.refreshUI();
+
             connection.close();
         }
         catch (Exception e){
@@ -269,7 +271,7 @@ public class HoatDongControl {
         try{
         Connection connection = connect_to_sql_server();
         Statement statement = connection.createStatement();
-
+        //xóa hoạt động cũ
         String sql = String.format("delete from hd_csvc where ma_hoat_dong = %s;", oldItem.maHoatDong);
         System.out.println(sql);
         statement.execute(sql);
@@ -278,30 +280,227 @@ public class HoatDongControl {
         System.out.println(sql);
         statement.execute(sql);
 
-        String ngayBatDau = "";
-        if(!newItem.ngayBatDau.equals("")){
-            ngayBatDau = newItem.ngayBatDau.substring(6, 10) + "-" + newItem.ngayBatDau.substring(3, 5) + "-" + newItem.ngayBatDau.substring(0, 2);
-        }
-        String ngayKetThuc = "";
-        if(!newItem.ngayKetThuc.equals("")){
-            ngayKetThuc = newItem.ngayKetThuc.substring(6, 10) + "-" + newItem.ngayKetThuc.substring(3, 5) + "-" + newItem.ngayKetThuc.substring(0, 2);
-        }
-        sql = String.format("update hoat_dong set ma_hoat_dong = N'%s', cccd_nk_dang_ki = '%s', ngay_bd = '%s', ngay_kt = '%s' where ma_hoat_dong = '%s';",newItem.maHoatDong, newItem.cccdNguoiDangKi, ngayBatDau, ngayKetThuc, oldItem.maHoatDong);
+        sql = String.format("delete from hoat_dong where ma_hoat_dong = %s;", oldItem.maHoatDong);
         System.out.println(sql);
         statement.execute(sql);
+        //thử thêm hoạt động mới
+            String announcement = "Không thể chỉnh sửa hoạt động này vì thiếu cơ sở vật chất và phòng ban sau:<br/>";
 
-        for(CoSoVatChat x: newItem.csvcSuDung){
-            sql = String.format("insert into hd_csvc values(N'%s', %d)", x.maCSVC, x.soLuong);
-            System.out.println(sql);
-            statement.execute(sql);
-        }
+            for(CoSoVatChat coSoVatChat: newItem.csvcSuDung){
 
-        for(PhongBan x: newItem.phongbanSuDung){
-            sql = String.format("insert into hd_phongban values(N'%s')", x.maPhongBan);
-            System.out.println(sql);
-            statement.execute(sql);
-        }
-        view.refreshUI();
+                String day = "";
+                String month = "";
+                String year = "";
+                if(!newItem.ngayBatDau.equals("")){
+                    day = newItem.ngayBatDau.substring(0,2);
+                    month = newItem.ngayBatDau.substring(3,5);
+                    year = newItem.ngayBatDau.substring(6,10);
+                }
+
+                String date = String.format("select DATEDIFF(DD, GETDATE(), '%s-%s-%s')", year, month, day);
+                int day_bd = statement.executeQuery(date).getInt(1);
+
+                day = "";
+                month = "";
+                year = "";
+                if(!newItem.ngayKetThuc.equals("")){
+                    day = newItem.ngayKetThuc.substring(0,2);
+                    month = newItem.ngayKetThuc.substring(3,5);
+                    year = newItem.ngayKetThuc.substring(6,10);
+                }
+                date = String.format("select DATEDIFF(DD, GETDATE(), '%s-%s-%s')", year, month, day);
+                int day_kt = statement.executeQuery(date).getInt(1);
+
+                String checkBeforeUpdate = String.format("select hoat_dong.ma_hoat_dong, DATEDIFF(DD, GETDATE(), ngay_kt), so_luong, so_luong_su_dung\n" +
+                        "from hoat_dong\n" +
+                        "join hd_csvc on hoat_dong.ma_hoat_dong = hd_csvc.ma_hoat_dong\n" +
+                        "join co_so_vat_chat on co_so_vat_chat.ma_csvc = hd_csvc.ma_csvc\n" +
+                        "where co_so_vat_chat.ma_csvc = N'%s' and DATEDIFF(DD, GETDATE(), ngay_kt) >= 0", coSoVatChat.maCSVC);
+                System.out.println(checkBeforeUpdate);
+                ResultSet rs = statement.executeQuery(checkBeforeUpdate);
+
+                int latestDay = 0;
+                int slCSVCMax = 0;
+                while(rs.next()){
+                    if(latestDay>rs.getInt(2)){
+                        latestDay = rs.getInt(2);
+                    }
+                }
+                if(latestDay>day_kt){
+                    latestDay = day_kt;
+                }
+                int[] slCSVCSuDungCurrent = new int[latestDay+1];
+                for(int x=0; x<= latestDay; x++){
+                    slCSVCSuDungCurrent[x] = 0;
+                }
+                checkBeforeUpdate = String.format("select hoat_dong.ma_hoat_dong, DATEDIFF(DD, GETDATE(), ngay_kt), so_luong, so_luong_su_dung, DATEDIFF(DD, GETDATE(), ngay_bd)\n" +
+                        "from hoat_dong\n" +
+                        "join hd_csvc on hoat_dong.ma_hoat_dong = hd_csvc.ma_hoat_dong\n" +
+                        "join co_so_vat_chat on co_so_vat_chat.ma_csvc = hd_csvc.ma_csvc\n" +
+                        "where co_so_vat_chat.ma_csvc = N'%s' and DATEDIFF(DD, GETDATE(), ngay_kt) >= 0", coSoVatChat.maCSVC);
+                System.out.println(checkBeforeUpdate);
+                rs = statement.executeQuery(checkBeforeUpdate);
+
+                while(rs.next()){
+                    slCSVCMax = rs.getInt(3);
+                    if(rs.getInt(5) > 0){
+                        for(int x=rs.getInt(5); x<= rs.getInt(2); x++){
+                            slCSVCSuDungCurrent[x] = slCSVCSuDungCurrent[x] + rs.getInt(4);
+                        }
+                    }
+                    else{
+                        for(int x=0; x<= rs.getInt(2); x++){
+                            slCSVCSuDungCurrent[x] = slCSVCSuDungCurrent[x] + rs.getInt(4);
+                        }
+                    }
+
+                }
+
+
+                int slThieu = 0;
+                for(int y=day_bd;y<=day_kt;y++){
+                    if(slCSVCSuDungCurrent[y] + coSoVatChat.soLuong - slCSVCMax > slThieu){
+                        slThieu = slCSVCSuDungCurrent[y] - slCSVCMax;
+                    }
+                }
+
+                if(slThieu > 0){
+                    announcement = announcement + coSoVatChat.maCSVC + ": " + slThieu + ".<br/>";
+                }
+            }
+
+
+            for(PhongBan phongBan:newItem.phongbanSuDung){
+                String day = "";
+                String month = "";
+                String year = "";
+                if(!newItem.ngayBatDau.equals("")){
+                    day = newItem.ngayBatDau.substring(0,2);
+                    month = newItem.ngayBatDau.substring(3,5);
+                    year = newItem.ngayBatDau.substring(6,10);
+                }
+                String date_ngaybd = String.format("'%s-%s-%s'", year, month, day);
+
+                day = "";
+                month = "";
+                year = "";
+                if(!newItem.ngayKetThuc.equals("")){
+                    day = newItem.ngayKetThuc.substring(0,2);
+                    month = newItem.ngayKetThuc.substring(3,5);
+                    year = newItem.ngayKetThuc.substring(6,10);
+                }
+                String date_ngaykt = String.format("'%s-%s-%s'", year, month, day);
+
+                String checkBeforeUpdate = String.format("select hd_phongban.ma_phong_ban\n" +
+                        "from hoat_dong\n" +
+                        "join hd_phongban on hoat_dong.ma_hoat_dong = hd_phongban.ma_hoat_dong\n" +
+                        "where hd_phongban.ma_phong_ban = '%s' and (hoat_dong.ngay_kt >= %s and hoat_dong.ngay_kt <= %s) or (hoat_dong.ngay_bd >= %s and hoat_dong.ngay_bd <= %s)", phongBan.maPhongBan, date_ngaybd, date_ngaykt, date_ngaybd, date_ngaykt );
+                System.out.println(checkBeforeUpdate);
+                ResultSet rs = statement.executeQuery(checkBeforeUpdate);
+
+                while(rs.next()){
+                    announcement = announcement + phongBan.maPhongBan + ".<br/>";
+                }
+            }
+            //nếu không thêm được quay về cái cũ
+            if(!announcement.equals("Không thể chỉnh sửa hoạt động này vì thiếu cơ sở vật chất và phòng ban sau:<br/>")){
+                sql = "insert into hoat_dong values(";
+                sql = sql + "'" + oldItem.maHoatDong + "'" + ", ";
+                sql = sql + "'" + oldItem.cccdNguoiDangKi + "'" + ", ";
+
+                String day = "";
+                String month = "";
+                String year = "";
+                if(!oldItem.ngayBatDau.equals("")){
+                    day = oldItem.ngayBatDau.substring(0,2);
+                    month = oldItem.ngayBatDau.substring(3,5);
+                    year = oldItem.ngayBatDau.substring(6,10);
+                }
+
+                sql = sql + "'" + year + "-" + month + "-" + day + "'" + ", ";
+
+                day = "";
+                month = "";
+                year = "";
+                if(!oldItem.ngayKetThuc.equals("")){
+                    day = oldItem.ngayKetThuc.substring(0,2);
+                    month = oldItem.ngayKetThuc.substring(3,5);
+                    year = oldItem.ngayKetThuc.substring(6,10);
+                }
+
+                sql = sql + "'" + year + "-" + month + "-" + day + "'" + ");";
+                System.out.println(sql);
+                statement.execute(sql);
+
+                for(CoSoVatChat x: oldItem.csvcSuDung){
+                    sql = "insert into hd_csvc values(";
+                    sql = sql + "N'" + oldItem.maHoatDong + "'" + ", ";
+                    sql = sql + "N'" + x.maCSVC + "'" + ", ";
+                    sql = sql +  x.soLuong +  ");";
+                    System.out.println(sql);
+                    statement.execute(sql);
+                }
+
+                for(PhongBan x: oldItem.phongbanSuDung){
+                    sql = "insert into hd_phongban values(";
+                    sql = sql + "N'" + oldItem.maHoatDong + "'" + ", ";
+                    sql = sql + "N'" + x.maPhongBan + "'" + "); ";
+                    System.out.println(sql);
+                    statement.execute(sql);
+                }
+                view.showMessage("<html>" + announcement + "</html>");
+            }
+            //nếu được thêm cái mới
+            else{
+                sql = "insert into hoat_dong values(";
+                sql = sql + "'" + newItem.maHoatDong + "'" + ", ";
+                sql = sql + "'" + newItem.cccdNguoiDangKi + "'" + ", ";
+
+                String day = "";
+                String month = "";
+                String year = "";
+                if(!newItem.ngayBatDau.equals("")){
+                    day = newItem.ngayBatDau.substring(0,2);
+                    month = newItem.ngayBatDau.substring(3,5);
+                    year = newItem.ngayBatDau.substring(6,10);
+                }
+
+                sql = sql + "'" + year + "-" + month + "-" + day + "'" + ", ";
+
+                day = "";
+                month = "";
+                year = "";
+                if(!newItem.ngayKetThuc.equals("")){
+                    day = newItem.ngayKetThuc.substring(0,2);
+                    month = newItem.ngayKetThuc.substring(3,5);
+                    year = newItem.ngayKetThuc.substring(6,10);
+                }
+
+                sql = sql + "'" + year + "-" + month + "-" + day + "'" + ");";
+                System.out.println(sql);
+                statement.execute(sql);
+
+                for(CoSoVatChat x: newItem.csvcSuDung){
+                    sql = "insert into hd_csvc values(";
+                    sql = sql + "N'" + newItem.maHoatDong + "'" + ", ";
+                    sql = sql + "N'" + x.maCSVC + "'" + ", ";
+                    sql = sql +  x.soLuong +  ");";
+                    System.out.println(sql);
+                    statement.execute(sql);
+                }
+
+                for(PhongBan x: newItem.phongbanSuDung){
+                    sql = "insert into hd_phongban values(";
+                    sql = sql + "N'" + newItem.maHoatDong + "'" + ", ";
+                    sql = sql + "N'" + x.maPhongBan + "'" + "); ";
+                    System.out.println(sql);
+                    statement.execute(sql);
+                }
+                view.refreshUI();
+                view.showMessage("Chỉnh sửa hoạt động thành công.");
+            }
+
+
         connection.close();
         }
         catch (Exception e){
@@ -325,7 +524,8 @@ public class HoatDongControl {
         sql = String.format("delete from hoat_dong where ma_hoat_dong = %s;", item.maHoatDong);
         System.out.println(sql);
         statement.execute(sql);
-            view.refreshUI();
+        view.refreshUI();
+        view.showMessage("Xóa hoạt động thành công.");
         connection.close();
         }
         catch (Exception e){

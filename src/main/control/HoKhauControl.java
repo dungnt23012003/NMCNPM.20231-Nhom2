@@ -296,6 +296,7 @@ public class HoKhauControl {
                 statement.execute(sql);
             }
             this.view.refreshUI();
+            this.view.showMessage("Thêm hộ khẩu thành công.");
             connection.close();
         }
         catch (Exception e){
@@ -315,6 +316,7 @@ public class HoKhauControl {
             sql = sql + entity.maHoKhau;
             connection.createStatement().execute(sql);
             this.view.refreshUI();
+            this.view.showMessage("Xóa hộ khẩu thành công.");
             connection.close();
         }
         catch (Exception e){
@@ -355,6 +357,7 @@ public class HoKhauControl {
             }
 
             this.view.refreshUI();
+            this.view.showMessage("Chỉnh sửa hộ khẩu thành công.");
             connection.close();
         }
         catch (Exception e){
