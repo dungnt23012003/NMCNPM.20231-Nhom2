@@ -5,6 +5,7 @@ import src.main.boundary.renderer.ListRenderer;
 import src.main.control.CoSoVatChatControl;
 import src.main.control.PhongBanControl;
 import src.test.control.CoSoVatChatControlTestValue;
+import src.test.control.PhongBanControlTestValue;
 
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
