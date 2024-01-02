@@ -17,6 +17,7 @@ public class CoSoVatChatView extends FeatureView {
     CoSoVatChatControl control;
     MenuBar menuBar;
     ListRenderer renderer = new ListRenderer();
+    ArrayList<CoSoVatChat> currentList;
     DefaultRenderableList currentComponentList;
     Component list;
 
@@ -40,7 +41,8 @@ public class CoSoVatChatView extends FeatureView {
         add(menuBar);
         add(Box.createVerticalStrut(10));
 
-        currentComponentList = new CoSoVatChatListAdapter(control.getList(), control);
+        currentList = control.getList();
+        currentComponentList = new CoSoVatChatListAdapter(currentList, control);
 
         list = renderer.getRenderedComponent(currentComponentList);
         add(list);
@@ -55,19 +57,27 @@ public class CoSoVatChatView extends FeatureView {
     // Controller section
     public void addButtonClicked() {
         cancelButtonClicked();
-        DefaultRenderableList addedComponentList = currentComponentList;
-        addedComponentList.getComponentList().add(0, new CoSoVatChatComponent(new CoSoVatChat(), control, true, this));
+        if (currentList.isEmpty()) {
+            currentComponentList.getComponentList().clear();
+        }
+        currentComponentList.getComponentList().add(0, new CoSoVatChatComponent(new CoSoVatChat(), control, true, this));
 
         removeAll();
         add(menuBar);
         add(Box.createVerticalStrut(10));
 
-        list = renderer.getRenderedComponent(addedComponentList);
+        list = renderer.getRenderedComponent(currentComponentList);
         add(list);
         revalidate();
     }
 
     public void cancelButtonClicked() {
-        refreshUI();
+        removeAll();
+        add(menuBar);
+        add(Box.createVerticalStrut(10));
+
+        list = renderer.getRenderedComponent(new CoSoVatChatListAdapter(currentList, control));
+        add(list);
+        revalidate();
     }
 }
