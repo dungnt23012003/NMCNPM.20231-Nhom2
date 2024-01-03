@@ -201,8 +201,11 @@ public class HoatDongEditor extends EditorComponent implements MultiListRenderab
     }
 
     public void refreshUI() {
+        HoatDongAdapter temp = getValue();
+
         removeAll();
         setupUI();
+        setValue(temp);
         revalidate();
         repaint();
     }
@@ -230,6 +233,9 @@ public class HoatDongEditor extends EditorComponent implements MultiListRenderab
     @Override
     public void clearValue() {
         maHoatDongEditor.clearValue();
+        cccdNguoiDangKyEditor.clearValue();
+        ngayBatDauEditor.clearValue();
+        ngayKetThucEditor.clearValue();
     }
 
     @Override
@@ -248,5 +254,12 @@ public class HoatDongEditor extends EditorComponent implements MultiListRenderab
     public void changedUpdate(DocumentEvent e) {}
 
     @Override
-    public void setValue(Object value) {}
+    public void setValue(Object value) {
+        if (value instanceof HoatDongAdapter castedValue) {
+            maHoatDongEditor.setValue(castedValue.hoatDong.maHoatDong);
+            cccdNguoiDangKyEditor.setValue(castedValue.hoatDong.cccdNguoiDangKi);
+            ngayBatDauEditor.setValue(castedValue.hoatDong.ngayBatDau);
+            ngayKetThucEditor.setValue(castedValue.hoatDong.ngayKetThuc);
+        }
+    }
 }
