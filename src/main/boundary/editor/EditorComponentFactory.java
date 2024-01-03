@@ -12,7 +12,9 @@ import src.main.boundary.utility.ComponentFactory;
 import src.main.entity.CoSoVatChat;
 import src.main.entity.PhongBan;
 
+import javax.sound.sampled.Line;
 import javax.swing.*;
+import javax.swing.border.LineBorder;
 import java.awt.*;
 
 public class EditorComponentFactory {
@@ -106,10 +108,20 @@ public class EditorComponentFactory {
         editorComponent.add(label);
         editorComponent.add(Box.createHorizontalGlue());
 
+        JTextField inputField = ComponentFactory.createEditorTextField();
+        inputField.setText(String.valueOf(item.soLuong));
+        inputField.setColumns(10);
+        editorComponent.add(inputField);
+
+//        JLabel maxValueLabel = ComponentFactory.createLabel("/" + item.soLuong);
+//        editorComponent.add(maxValueLabel);
+
         JButton closeButton = ComponentFactory.createMenuBarButton();
         closeButton.setIcon(GUIConfig.CloseIcon);
         closeButton.addActionListener(e -> editor.removeCoSoVatChat(item));
         editorComponent.add(closeButton);
+
+        editorComponent.setInputField(inputField);
 
         return editorComponent;
     }
