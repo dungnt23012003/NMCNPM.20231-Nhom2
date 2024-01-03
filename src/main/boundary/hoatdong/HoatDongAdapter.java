@@ -48,9 +48,11 @@ public class HoatDongAdapter implements GalleryItem, MultiListRenderable {
 
         thongTinChungList.addComponent(ComponentFactory.createFormComponent("Mã hoạt động", hoatDong.maHoatDong));
         thongTinChungList.addComponent(ComponentFactory.createFormComponent("CCCD của người đăng ký", hoatDong.cccdNguoiDangKi));
+        thongTinChungList.addComponent(ComponentFactory.createFormComponent("Ngày bắt đầu", getHoatDong().ngayBatDau));
+        thongTinChungList.addComponent(ComponentFactory.createFormComponent("Ngày kết thúc", getHoatDong().ngayKetThuc));
 
         DefaultRenderableList CSVCSuDung = new DefaultRenderableList();
-        CSVCSuDung.setTitle("Danh sách cơ sở vật chất");
+        CSVCSuDung.setTitle("Danh sách cơ sở vật chất sử dụng");
 
         for (CoSoVatChat coSoVatChat : hoatDong.csvcSuDung) {
             CSVCSuDung.addComponent(ComponentFactory.createFormComponent(coSoVatChat.maCSVC, String.valueOf(coSoVatChat.soLuong)));

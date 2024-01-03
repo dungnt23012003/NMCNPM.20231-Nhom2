@@ -50,10 +50,10 @@ public class CoSoVatChatControlTestValue extends CoSoVatChatControl {
         return list;
     }
 
-    private CoSoVatChat createDummyCoSoVatChat() {
+    public static CoSoVatChat createDummyCoSoVatChat() {
         CoSoVatChat item1 = new CoSoVatChat();
-        item1.maCSVC = "Bàn";
-        item1.soLuong = 10;
+        item1.maCSVC = String.valueOf(item1.hashCode());
+        item1.soLuong = HoatDongControlTestValue.randBetween(1, 20);
         return item1;
     }
 }

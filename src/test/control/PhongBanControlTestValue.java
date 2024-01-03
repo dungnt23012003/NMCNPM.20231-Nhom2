@@ -4,23 +4,26 @@ import src.main.boundary.cosovatchat.PhongBanView;
 import src.main.control.PhongBanControl;
 import src.main.entity.PhongBan;
 
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 
 public class PhongBanControlTestValue extends PhongBanControl {
-    @Override
-    public ArrayList<PhongBan> getList() {
-        ArrayList<PhongBan> result = new ArrayList<>();
+    static ArrayList<PhongBan> phongBans = new ArrayList<>();
 
+    public PhongBanControlTestValue() {
         for (int i = 0; i < 20; ++i) {
-            result.add(createDummyPhongBan());
+            phongBans.add(createDummyPhongBan());
         }
-
-        return result;
     }
 
-    private PhongBan createDummyPhongBan() {
+    @Override
+    public ArrayList<PhongBan> getList() {
+        return phongBans;
+    }
+
+    public static PhongBan createDummyPhongBan() {
         PhongBan phongBan = new PhongBan();
-        phongBan.maPhongBan = phongBan.toString();
+        phongBan.maPhongBan = String.valueOf(phongBan.hashCode());
 
         return phongBan;
     }

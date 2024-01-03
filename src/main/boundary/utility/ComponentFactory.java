@@ -72,6 +72,7 @@ public class ComponentFactory {
 
     public static JTextField createEditorTextField() {
         JTextField valueField = new JTextField();
+        valueField.setSelectionColor(GUIConfig.ListSelectionBackground);
         valueField.setBorder(new FlatLineBorder(new Insets(0, 0, 0, 0), GUIConfig.ListSeparatorColor, 1.25f, 10));
         valueField.putClientProperty("JTextField.padding", new Insets(0, 7, 0, 0));
 

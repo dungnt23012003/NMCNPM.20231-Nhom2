@@ -15,5 +15,6 @@ public class SearchField extends JTextField {
         putClientProperty("JTextField.placeholderText", "Search...");
         putClientProperty("JTextField.padding", new Insets(0, 2, 0, 0));
         setMargin(new Insets(5, 10, 5, 0));
+        setSelectionColor(GUIConfig.ListSelectionBackground);
     }
 }

@@ -7,6 +7,7 @@ import src.main.boundary.hokhau.HoKhauModel;
 import src.main.control.HoKhauControl;
 import src.main.control.HoatDongControl;
 import src.main.entity.HoatDong;
+import src.test.control.HoatDongControlTestValue;
 
 public class HoatDongFeature extends Feature {
     public HoatDongFeature() {

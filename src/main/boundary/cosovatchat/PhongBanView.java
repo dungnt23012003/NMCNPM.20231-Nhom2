@@ -13,12 +13,13 @@ import src.main.entity.PhongBan;
 
 import javax.swing.*;
 import java.awt.*;
+import java.util.ArrayList;
 
 public class PhongBanView extends FeatureView {
     PhongBanControl control;
     MenuBar menuBar;
-    JButton settingButton;
     ListRenderer renderer = new ListRenderer();
+    ArrayList<PhongBan> currentList;
     Component list;
     DefaultRenderableList currentComponentList;
 
@@ -42,7 +43,9 @@ public class PhongBanView extends FeatureView {
         add(menuBar);
         add(Box.createVerticalStrut(10));
 
-        currentComponentList = new PhongBanListAdapter(control.getList(), control);
+        currentList = control.getList();
+        currentComponentList = new PhongBanListAdapter(currentList, control);
+
         list = renderer.getRenderedComponent(currentComponentList);
         add(list);
     }
@@ -55,19 +58,33 @@ public class PhongBanView extends FeatureView {
 
     // Controller
     public void addButtonClicked() {
-        DefaultRenderableList addedComponentList = currentComponentList;
-        addedComponentList.getComponentList().add(0, new PhongBanComponent(new PhongBan(), control, true, this));
+        cancelButtonClicked();
+        if (currentList.isEmpty()) {
+            currentComponentList.getComponentList().clear();
+        }
+        currentComponentList.getComponentList().add(0, new PhongBanComponent(new PhongBan(), control, true, this));
 
         removeAll();
         add(menuBar);
         add(Box.createVerticalStrut(10));
 
-        list = renderer.getRenderedComponent(addedComponentList);
+        list = renderer.getRenderedComponent(currentComponentList);
         add(list);
         revalidate();
     }
 
     public void cancelButtonClicked() {
-        refreshUI();
+        removeAll();
+        add(menuBar);
+        add(Box.createVerticalStrut(10));
+
+        list = renderer.getRenderedComponent(new PhongBanListAdapter(currentList, control));
+        add(list);
+        revalidate();
+    }
+
+    // Getter
+    public MenuBar getMenuBar() {
+        return menuBar;
     }
 }
