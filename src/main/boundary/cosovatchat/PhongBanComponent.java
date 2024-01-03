@@ -55,7 +55,7 @@ public class PhongBanComponent extends JPanel {
 
     private void setupEditorUI() {
         editorComponent = EditorComponentFactory.createPairEditorComponent(new Pair(item.maPhongBan, ""));
-        editorComponent.setBorder(new EmptyBorder(7, 0, 7, 0));
+        editorComponent.setBorder(new EmptyBorder(4, 0, 3, 0));
 
         editorComponent.firstField.setColumns(20);
         editorComponent.secondField.setVisible(false);

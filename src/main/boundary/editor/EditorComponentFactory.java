@@ -2,9 +2,15 @@ package src.main.boundary.editor;
 
 import com.formdev.flatlaf.ui.FlatLineBorder;
 import src.main.boundary.GUIConfig;
+import src.main.boundary.cosovatchat.CoSoVatChatEditorComponent;
+import src.main.boundary.cosovatchat.PhongBanEditorComponent;
+import src.main.boundary.cosovatchat.PhongBanView;
+import src.main.boundary.hoatdong.HoatDongEditor;
 import src.main.boundary.hokhau.HoKhauEditor;
 import src.main.boundary.nhankhau.NhanKhauAdapter;
 import src.main.boundary.utility.ComponentFactory;
+import src.main.entity.CoSoVatChat;
+import src.main.entity.PhongBan;
 
 import javax.swing.*;
 import java.awt.*;
@@ -68,6 +74,42 @@ public class EditorComponentFactory {
         editorComponent.firstField.setForeground(Color.BLACK);
 
         editorComponent.secondField.setText(pair.second.toString());
+
+        return editorComponent;
+    }
+
+    public static PhongBanEditorComponent createPhongBanEditorComponent(PhongBan item, HoatDongEditor editor) {
+        PhongBanEditorComponent editorComponent = new PhongBanEditorComponent(item);
+        editorComponent.setBackground(GUIConfig.MyListBackground);
+        editorComponent.setLayout(new BoxLayout(editorComponent, BoxLayout.LINE_AXIS));
+
+        JLabel label = ComponentFactory.createLabel(item.maPhongBan);
+
+        editorComponent.add(label);
+        editorComponent.add(Box.createHorizontalGlue());
+
+        JButton closeButton = ComponentFactory.createMenuBarButton();
+        closeButton.setIcon(GUIConfig.CloseIcon);
+        closeButton.addActionListener(e -> editor.removePhongBan(item));
+        editorComponent.add(closeButton);
+
+        return editorComponent;
+    }
+
+    public static CoSoVatChatEditorComponent createCoSoVatChatEditorComponent(CoSoVatChat item, HoatDongEditor editor) {
+        CoSoVatChatEditorComponent editorComponent = new CoSoVatChatEditorComponent(item);
+        editorComponent.setBackground(GUIConfig.MyListBackground);
+        editorComponent.setLayout(new BoxLayout(editorComponent, BoxLayout.LINE_AXIS));
+
+        JLabel label = ComponentFactory.createLabel(item.maCSVC);
+
+        editorComponent.add(label);
+        editorComponent.add(Box.createHorizontalGlue());
+
+        JButton closeButton = ComponentFactory.createMenuBarButton();
+        closeButton.setIcon(GUIConfig.CloseIcon);
+        closeButton.addActionListener(e -> editor.removeCoSoVatChat(item));
+        editorComponent.add(closeButton);
 
         return editorComponent;
     }

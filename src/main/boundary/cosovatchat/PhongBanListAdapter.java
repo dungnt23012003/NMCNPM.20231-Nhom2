@@ -20,7 +20,7 @@ public class PhongBanListAdapter extends DefaultRenderableList {
         this.list = list;
 
         if (list.isEmpty()) {
-            addComponent(ComponentFactory.createFormComponent("Không có cơ sở vật chất nào.", ""));
+            addComponent(ComponentFactory.createFormComponent("Không có phòng ban nào.", ""));
         } else {
             for (PhongBan phongBan : list) {
                 addComponent(new PhongBanComponent(phongBan, control));

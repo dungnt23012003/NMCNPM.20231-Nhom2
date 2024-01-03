@@ -80,4 +80,9 @@ public class CoSoVatChatView extends FeatureView {
         add(list);
         revalidate();
     }
+
+    // Getter
+    public MenuBar getMenuBar() {
+        return menuBar;
+    }
 }

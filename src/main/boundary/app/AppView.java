@@ -41,6 +41,7 @@ public class AppView extends JPanel implements FeatureListener, FeatureListListe
         setLayout(new BoxLayout(this, BoxLayout.LINE_AXIS));
 
         sidebar = new BoxSidebar();
+        sidebar.setComponentSpacing(3);
         Border margin = new EmptyBorder(3, 3, 3, 3);
         Border border = new MatteBorder(0, 0, 0, 1, Color.LIGHT_GRAY);
         sidebar.setBorder(new CompoundBorder(border, margin));
