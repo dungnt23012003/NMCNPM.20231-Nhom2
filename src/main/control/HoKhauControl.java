@@ -277,8 +277,8 @@ public class HoKhauControl {
             String sql = "insert into ho_khau values(";
             sql = sql + "'" + entity.maHoKhau + "'" + ", ";
             sql = sql + "'" + entity.chuHo.CCCD + "'" + ", ";
-            sql = sql + "'" +  entity.khuVuc  + "'" + ", ";
-            sql = sql + "'" + entity.diaChi  + "'" + ", ";
+            sql = sql + "N'" +  entity.khuVuc  + "'" + ", ";
+            sql = sql + "N'" + entity.diaChi  + "'" + ", ";
             String day = entity.ngayLap.substring(0,2);
             String month = entity.ngayLap.substring(3,5);
             String year = entity.ngayLap.substring(6,10);
@@ -337,8 +337,8 @@ public class HoKhauControl {
 
             sql = "update ho_khau set ";
             sql = sql + "cccd_chu_ho = " + "'" + new_entity.chuHo.CCCD + "'" + ", ";
-            sql = sql + "khu_vuc = " + "'" + new_entity.khuVuc + "'" + ", ";
-            sql = sql + "dia_chi = " + "'" + new_entity.diaChi + "'" + ", ";
+            sql = sql + "khu_vuc = " + "N'" + new_entity.khuVuc + "'" + ", ";
+            sql = sql + "dia_chi = " + "N'" + new_entity.diaChi + "'" + ", ";
             String day = new_entity.ngayLap.substring(0,2);
             String month = new_entity.ngayLap.substring(3,5);
             String year = new_entity.ngayLap.substring(6,10);

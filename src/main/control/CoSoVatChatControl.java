@@ -43,7 +43,7 @@ public class CoSoVatChatControl {
             Connection connection = connect_to_sql_server();
             Statement statement = connection.createStatement();
 
-            String sql = String.format("insert into co_so_vat_chat value(N'%s', %d)", item.maCSVC, item.soLuong);
+            String sql = String.format("insert into co_so_vat_chat values(N'%s', %d)", item.maCSVC, item.soLuong);
             System.out.println(sql);
             statement.execute(sql);
             view.refreshUI();

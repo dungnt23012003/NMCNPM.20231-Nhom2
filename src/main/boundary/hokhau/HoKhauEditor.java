@@ -140,14 +140,16 @@ public class HoKhauEditor extends EditorComponent implements MultiListRenderable
             value.khuVuc = (String) khuVucEditor.getValue();
             value.diaChi = (String) diaChiEditor.getValue();
             value.ngayLap = (String) ngayLapEditor.getValue();
-            value.chuHo = ((NhanKhauAdapter) currentChuHoEditor.getValue()).getNhanKhau();
 
+            if (currentChuHoEditor != null) {
+                value.chuHo = ((NhanKhauAdapter) currentChuHoEditor.getValue()).getNhanKhau();
+            }
             for (EditorComponent component : nhanKhauEditors) {
                 value.listNhanKhau.add(((NhanKhauAdapter) component.getValue()).getNhanKhau());
             }
 
             if (!value.listNhanKhau.contains(value.chuHo)) {
-                value.chuHo = null;
+                value.chuHo.CCCD = "";
             }
 
             return new HoKhauAdapter(value);
@@ -214,9 +216,7 @@ public class HoKhauEditor extends EditorComponent implements MultiListRenderable
 
         public void refreshUI() {
             HoKhauAdapter previousValue = item;
-            try {
-                previousValue = getValue();
-            } catch (NullPointerException ignored) {}
+            previousValue = getValue();
 
             removeAll();
             setupUI();

@@ -21,7 +21,7 @@ public interface GUIConfig {
     Font DefaultFont = new Font("JetBrains Mono", Font.PLAIN, 13);
     Font ListTitleFont = new Font("JetBrains Mono", Font.BOLD, 13);
 
-    int FormMinSpace = 30;
+    int FormMinSpace = 50;
     int ListLabelHeight = 25;
 
     ImageIcon AddIcon = new ImageIcon(Objects.requireNonNull(Main.class.getResource("resources/icons/create.png")));

@@ -27,7 +27,7 @@ public class NhanKhauAdapter implements GalleryItem, MultiListRenderable {
     }
 
     public void resetString() {
-        string = String.valueOf(nhanKhau.CCCD);
+        string = String.valueOf(nhanKhau.hoTen);
     }
 
     public NhanKhau getNhanKhau() {
