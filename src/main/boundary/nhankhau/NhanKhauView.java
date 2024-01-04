@@ -33,6 +33,6 @@ public class NhanKhauView extends FeatureView {
     }
 
     public void refreshUI() {
-        model.galleryController.updateSideList();
+        model.galleryController.updateSideList("");
     }
 }

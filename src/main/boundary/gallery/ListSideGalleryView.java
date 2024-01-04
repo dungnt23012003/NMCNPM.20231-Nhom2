@@ -13,23 +13,30 @@ import src.main.boundary.utility.ColorUtility;
 
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
+import javax.swing.event.DocumentEvent;
+import javax.swing.event.DocumentListener;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 import java.awt.*;
 
 // TODO
-public class ListSideGalleryView extends FeatureView implements ListSelectionListener {
+public class ListSideGalleryView extends FeatureView implements ListSelectionListener, DocumentListener {
     ListSideGalleryController controller;
     GalleryModel model;
     EntityRenderer renderer = new DefaultEntityRenderer();
 
     Sidebar sidebar;
+    SearchField searchField;
     JPanel mainView;
     CustomJList<GalleryItem> sideList;
+    Timer timer;
 
     public ListSideGalleryView(ListSideGalleryController controller, GalleryModel model) {
         this.controller = controller;
         this.model = model;
+
+        timer = new Timer(GUIConfig.searchDelay, e -> controller.updateSideList(searchField.getText()));
+        timer.setRepeats(false);
     }
 
     public void setupUI() {
@@ -42,12 +49,13 @@ public class ListSideGalleryView extends FeatureView implements ListSelectionLis
         sidebar.setBorder(new EmptyBorder(10, 10, 10, 10));
         sidebar.setComponentSpacing(5);
 
-        SearchField textField = new SearchField();
-        textField.setBackground(ColorUtility.darken(GUIConfig.SideBarColor, 7));
-        textField.setMaximumSize(new Dimension(Integer.MAX_VALUE, 50));
-        textField.setFont(GUIConfig.DefaultFont);
+        searchField = new SearchField();
+        searchField.setBackground(ColorUtility.darken(GUIConfig.SideBarColor, 7));
+        searchField.setMaximumSize(new Dimension(Integer.MAX_VALUE, 50));
+        searchField.setFont(GUIConfig.DefaultFont);
+        searchField.getDocument().addDocumentListener(this);
 
-        sidebar.add(textField);
+        sidebar.add(searchField);
 
         sideList = new CustomJList<>(model.getNewListModel());
         sideList.setBackground(GUIConfig.SideBarColor);
@@ -97,14 +105,23 @@ public class ListSideGalleryView extends FeatureView implements ListSelectionLis
         return sideList;
     }
 
-    public void refreshSideBar() {
-        sideList.setModel(model.getNewListModel());
-    }
-
     @Override
     public void valueChanged(ListSelectionEvent e) {
         if (!e.getValueIsAdjusting()) {
             controller.setSelectedValue(sideList.getSelectedValue());
         }
     }
+
+    @Override
+    public void insertUpdate(DocumentEvent e) {
+        timer.restart();
+    }
+
+    @Override
+    public void removeUpdate(DocumentEvent e) {
+        timer.restart();
+    }
+
+    @Override
+    public void changedUpdate(DocumentEvent e) {}
 }

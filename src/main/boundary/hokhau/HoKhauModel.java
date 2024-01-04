@@ -8,6 +8,7 @@ import src.main.control.HoKhauControl;
 import src.main.entity.HoKhau;
 
 import javax.swing.*;
+import java.util.Objects;
 
 public class HoKhauModel implements GalleryModel {
     HoKhauControl control;
@@ -22,10 +23,21 @@ public class HoKhauModel implements GalleryModel {
 
     @Override
     public DefaultListModel<GalleryItem> getNewListModel() {
+        return getNewListModel("");
+    }
+
+    @Override
+    public DefaultListModel<GalleryItem> getNewListModel(String condition) {
         DefaultListModel<GalleryItem> listModel = new DefaultListModel<>();
 
-        for (HoKhau hoKhau : control.getList()) {
-            listModel.addElement(new HoKhauAdapter(hoKhau));
+        if (Objects.equals(condition, "")) {
+            for (HoKhau hoKhau : control.getList()) {
+                listModel.addElement(new HoKhauAdapter(hoKhau));
+            }
+        } else {
+            for (HoKhau hoKhau : control.searchHoKhau(condition)) {
+                listModel.addElement(new HoKhauAdapter(hoKhau));
+            }
         }
 
         currentListModel = listModel;

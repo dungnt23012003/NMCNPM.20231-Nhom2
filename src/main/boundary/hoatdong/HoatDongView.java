@@ -23,6 +23,6 @@ public class HoatDongView extends FeatureView {
     }
 
     public void refreshUI() {
-        model.galleryController.updateSideList();
+        model.galleryController.updateSideList("");
     }
 }

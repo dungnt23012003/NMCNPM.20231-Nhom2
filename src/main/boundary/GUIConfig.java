@@ -24,6 +24,8 @@ public interface GUIConfig {
     int FormMinSpace = 50;
     int ListLabelHeight = 25;
 
+    int searchDelay = 1000;
+
     ImageIcon AddIcon = new ImageIcon(Objects.requireNonNull(Main.class.getResource("resources/icons/create.png")));
     ImageIcon DeleteIcon = new ImageIcon(Objects.requireNonNull(Main.class.getResource("resources/icons/delete.png")));
     ImageIcon SearchIcon = new ImageIcon(Objects.requireNonNull(Main.class.getResource("resources/icons/search.png")));

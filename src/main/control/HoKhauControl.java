@@ -19,7 +19,7 @@ public class HoKhauControl {
     public ArrayList<HoKhau> searchHoKhau(String dieuKien) {
         ArrayList<HoKhau> dsHoKhau = new ArrayList<HoKhau>();
         try{
-            String sql = String.format("select ho_khau.ma_ho_khau, ho_khau.cccd_chu_ho, ho_khau.khu_vuc, ho_khau.dia_chi, ho_khau.ngay_lap from ho_khau join nhan_khau on ho_khau.cccd_chu_ho = nhan_khau.cccd where ma_ho_khau like '%%%s%%' or nhan_khau.ho_ten like '%%%s%%' ;", dieuKien, dieuKien);
+            String sql = String.format("select ho_khau.ma_ho_khau, ho_khau.cccd_chu_ho, ho_khau.khu_vuc, ho_khau.dia_chi, ho_khau.ngay_lap from ho_khau join nhan_khau on ho_khau.cccd_chu_ho = nhan_khau.cccd where ma_ho_khau like N'%%%s%%' or nhan_khau.ho_ten like N'%%%s%%' ;", dieuKien, dieuKien);
             System.out.println(sql);
 
             Connection connection = connect_to_sql_server();

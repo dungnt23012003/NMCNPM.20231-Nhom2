@@ -52,6 +52,11 @@ public class ListSideFeatureViewTest {
 
         ListSideGalleryController listSideGalleryController = new ListSideGalleryController(new GalleryModel() {
             @Override
+            public DefaultListModel<GalleryItem> getNewListModel(String condition) {
+                return null;
+            }
+
+            @Override
             public DefaultListModel<GalleryItem> getNewListModel() {
                 return new DefaultListModel<>();
             }

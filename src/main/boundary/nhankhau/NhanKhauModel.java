@@ -11,6 +11,7 @@ import src.main.entity.HoKhau;
 import src.main.entity.NhanKhau;
 
 import javax.swing.*;
+import java.util.Objects;
 
 public class NhanKhauModel implements GalleryModel {
     NhanKhauControl control;
@@ -25,10 +26,21 @@ public class NhanKhauModel implements GalleryModel {
 
     @Override
     public DefaultListModel<GalleryItem> getNewListModel() {
+        return getNewListModel("");
+    }
+
+    @Override
+    public DefaultListModel<GalleryItem> getNewListModel(String condition) {
         DefaultListModel<GalleryItem> listModel = new DefaultListModel<>();
 
-        for (NhanKhau nhanKhau : control.getList()) {
-            listModel.addElement(new NhanKhauAdapter(nhanKhau));
+        if (Objects.equals(condition, "")) {
+            for (NhanKhau nhanKhau : control.getList()) {
+                listModel.addElement(new NhanKhauAdapter(nhanKhau));
+            }
+        } else {
+            for (NhanKhau nhanKhau : control.searchNhanKhau(condition)) {
+                listModel.addElement(new NhanKhauAdapter(nhanKhau));
+            }
         }
 
         currentListModel = listModel;

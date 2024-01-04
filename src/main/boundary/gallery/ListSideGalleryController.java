@@ -26,8 +26,8 @@ public class ListSideGalleryController {
         return view;
     }
 
-    public void updateSideList() {
-        view.getSideList().setModel(model.getNewListModel());
+    public void updateSideList(String condition) {
+        view.getSideList().setModel(model.getNewListModel(condition));
     }
 
 //    public void setSelectSideList(NhanKhau item) {

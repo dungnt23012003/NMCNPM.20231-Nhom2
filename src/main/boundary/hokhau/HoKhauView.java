@@ -23,6 +23,6 @@ public class HoKhauView extends FeatureView {
     }
 
     public void refreshUI() {
-        model.galleryController.updateSideList();
+        model.galleryController.updateSideList("");
     }
 }

@@ -14,7 +14,7 @@ public class NhanKhauControl {
     public ArrayList<NhanKhau> searchNhanKhau(String dieuKien){
         ArrayList<NhanKhau> dsNhanKhau = new ArrayList<NhanKhau>();
         try{
-            String sql = String.format("select * from nhan_khau  where cccd like '%%%s%%' or ho_ten like '%%%s%%' order by cccd asc;", dieuKien, dieuKien);
+            String sql = String.format("select * from nhan_khau  where cccd like N'%%%s%%' or ho_ten like N'%%%s%%' order by cccd asc;", dieuKien, dieuKien);
             System.out.println(sql);
             Connection connection = connect_to_sql_server();
             ResultSet rs = connection.createStatement().executeQuery(sql);
