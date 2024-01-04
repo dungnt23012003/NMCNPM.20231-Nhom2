@@ -9,7 +9,79 @@ import java.util.ArrayList;
 import static src.main.control.ConnectionConfig.connect_to_sql_server;
 public class HoatDongControl {
     public HoatDongView view;
+    public ArrayList<HoatDong> searchHoatDong(String dieuKien){
+        ArrayList<HoatDong> list = new ArrayList<HoatDong>();
 
+        try{
+            Connection connection = connect_to_sql_server();
+            Statement statement = connection.createStatement();
+
+            String sql = String.format("select * from hoat_dong where ma_hoat_dong = N'%s' or (ngay_bd <= '%s' and '%s' <= ngay_kt) order by ngay_bd, ngay_kt;", dieuKien, dieuKien, dieuKien);
+            System.out.println(sql);
+            ResultSet dsHD = statement.executeQuery(sql);
+
+            while(dsHD.next()){
+                HoatDong hoatDongTmp = new HoatDong();
+                hoatDongTmp.maHoatDong = dsHD.getString(1);
+                hoatDongTmp.cccdNguoiDangKi = dsHD.getString(2);
+                hoatDongTmp.ngayBatDau = dsHD.getString(3);
+                hoatDongTmp.ngayKetThuc = dsHD.getString(4);
+
+                if (hoatDongTmp.ngayBatDau!=null){
+                    String year = hoatDongTmp.ngayBatDau.substring(0,4);
+                    String month = hoatDongTmp.ngayBatDau.substring(5,7);
+                    String day = hoatDongTmp.ngayBatDau.substring(8,10);
+                    hoatDongTmp.ngayBatDau = day + "-" + month + "-" + year;
+                }
+                else{
+                    hoatDongTmp.ngayBatDau = "";
+                }
+
+                if (hoatDongTmp.ngayKetThuc!=null){
+                    String year = hoatDongTmp.ngayKetThuc.substring(0,4);
+                    String month = hoatDongTmp.ngayKetThuc.substring(5,7);
+                    String day = hoatDongTmp.ngayKetThuc.substring(8,10);
+                    hoatDongTmp.ngayKetThuc = day + "-" + month + "-" + year;
+                }
+                else{
+                    hoatDongTmp.ngayKetThuc = "";
+                }
+
+                String timPhongBan = String.format("select * from hd_Phongban where ma_hoat_dong = N'%s'",hoatDongTmp.maHoatDong);
+                System.out.println(timPhongBan);
+
+                Statement statement1 = connection.createStatement();
+                ResultSet phongBan = statement1.executeQuery(timPhongBan);
+
+                while(phongBan.next()){
+                    PhongBan phongBanTmp = new PhongBan();
+                    phongBanTmp.maPhongBan = phongBan.getString(1);
+                    hoatDongTmp.phongbanSuDung.add(phongBanTmp);
+                }
+
+                String timCSVC = String.format("select * from hd_csvc where ma_hoat_dong = N'%s'", hoatDongTmp.maHoatDong);
+                System.out.println(timCSVC);
+
+                Statement statement2 = connection.createStatement();
+                ResultSet coSoVatChat = statement2.executeQuery(timCSVC);
+
+                while(coSoVatChat.next()){
+                    CoSoVatChat coSoVatChatTmp = new CoSoVatChat();
+                    coSoVatChatTmp.maCSVC = coSoVatChat.getString(2);
+                    coSoVatChatTmp.soLuong = coSoVatChat.getInt(3);
+                    hoatDongTmp.csvcSuDung.add(coSoVatChatTmp);
+                }
+                list.add(hoatDongTmp);
+            }
+            connection.close();
+
+        }
+        catch (Exception e){
+            e.printStackTrace();
+        }
+
+        return list;
+    }
     public ArrayList<HoatDong> getList() {
         ArrayList<HoatDong> list = new ArrayList<HoatDong>();
 
@@ -17,7 +89,7 @@ public class HoatDongControl {
             Connection connection = connect_to_sql_server();
             Statement statement = connection.createStatement();
 
-            String sql = "select * from hoat_dong;";
+            String sql = "select * from hoat_dong order by ngay_bd, ngay_kt;";
             System.out.println(sql);
             ResultSet dsHD = statement.executeQuery(sql);
 
