@@ -1,9 +1,11 @@
 package src.main.boundary.hoatdong;
 
+import src.main.boundary.GUIConfig;
 import src.main.boundary.gallery.GalleryItem;
 import src.main.boundary.gallery.GalleryModel;
 import src.main.boundary.gallery.ListSideGalleryController;
 import src.main.boundary.hokhau.HoKhauAdapter;
+import src.main.boundary.list.HoatDongCellRenderer;
 import src.main.boundary.nhankhau.NhanKhauAdapter;
 import src.main.control.HoKhauControl;
 import src.main.control.HoatDongControl;
@@ -22,7 +24,8 @@ public class HoatDongModel implements GalleryModel {
     public HoatDongModel(HoatDongControl control) {
         this.control = control;
 
-        galleryController = new ListSideGalleryController(this);
+        galleryController = new ListSideGalleryController(new HoatDongCellRenderer(), this);
+//        galleryController.getView().getSideList().setPrototypeCellValue(GUIConfig.HOAT_DONG_PROTOTYPE);
     }
 
     @Override

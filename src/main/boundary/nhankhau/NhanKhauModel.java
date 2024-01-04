@@ -1,10 +1,12 @@
 package src.main.boundary.nhankhau;
 
+import src.main.boundary.GUIConfig;
 import src.main.boundary.gallery.GalleryItem;
 import src.main.boundary.gallery.GalleryModel;
 import src.main.boundary.gallery.ListSideGalleryController;
 import src.main.boundary.gallery.ListSideGalleryModel;
 import src.main.boundary.hokhau.HoKhauAdapter;
+import src.main.boundary.list.NhanKhauCellRenderer;
 import src.main.control.HoKhauControl;
 import src.main.control.NhanKhauControl;
 import src.main.entity.HoKhau;
@@ -21,7 +23,8 @@ public class NhanKhauModel implements GalleryModel {
     public NhanKhauModel(NhanKhauControl control) {
         this.control = control;
 
-        galleryController = new ListSideGalleryController(this);
+        galleryController = new ListSideGalleryController(new NhanKhauCellRenderer(), this);
+        galleryController.getView().getSideList().setPrototypeCellValue(GUIConfig.NhanKhauPrototype);
     }
 
     @Override

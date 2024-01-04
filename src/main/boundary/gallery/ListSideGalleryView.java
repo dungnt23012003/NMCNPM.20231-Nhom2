@@ -31,12 +31,24 @@ public class ListSideGalleryView extends FeatureView implements ListSelectionLis
     CustomJList<GalleryItem> sideList;
     Timer timer;
 
+    ListCellRenderer<GalleryItem> listCellRenderer = new CustomListCellRenderer<>();
+
     public ListSideGalleryView(ListSideGalleryController controller, GalleryModel model) {
         this.controller = controller;
         this.model = model;
 
         timer = new Timer(GUIConfig.searchDelay, e -> controller.updateSideList(searchField.getText()));
         timer.setRepeats(false);
+    }
+
+    public ListSideGalleryView(ListCellRenderer<GalleryItem> listCellRenderer, ListSideGalleryController controller, GalleryModel model) {
+        this.controller = controller;
+        this.model = model;
+
+        timer = new Timer(GUIConfig.searchDelay, e -> controller.updateSideList(searchField.getText()));
+        timer.setRepeats(false);
+
+        this.listCellRenderer = listCellRenderer;
     }
 
     public void setupUI() {
@@ -61,7 +73,7 @@ public class ListSideGalleryView extends FeatureView implements ListSelectionLis
         sideList.setBackground(GUIConfig.SideBarColor);
         sideList.setSelectedIndex(0);
         sideList.addListSelectionListener(this);
-        sideList.setCellRenderer(new CustomListCellRenderer<>());
+        sideList.setCellRenderer(listCellRenderer);
 
         JScrollPane scrollPane = new JScrollPane(sideList);
         scrollPane.setBorder(null);

@@ -1,9 +1,11 @@
 package src.main.boundary.hokhau;
 
+import src.main.boundary.GUIConfig;
 import src.main.boundary.gallery.GalleryItem;
 import src.main.boundary.gallery.GalleryModel;
 import src.main.boundary.gallery.ListSideGalleryController;
 import src.main.boundary.gallery.ListSideGalleryModel;
+import src.main.boundary.list.HoKhauCellRenderer;
 import src.main.control.HoKhauControl;
 import src.main.entity.HoKhau;
 
@@ -18,7 +20,8 @@ public class HoKhauModel implements GalleryModel {
     public HoKhauModel(HoKhauControl control) {
         this.control = control;
 
-        galleryController = new ListSideGalleryController(this);
+        galleryController = new ListSideGalleryController(new HoKhauCellRenderer(), this);
+        galleryController.getView().getSideList().setPrototypeCellValue(GUIConfig.HoKhauPrototype);
     }
 
     @Override

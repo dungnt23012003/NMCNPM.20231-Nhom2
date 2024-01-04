@@ -2,6 +2,8 @@ package src.main.boundary.gallery;
 
 import src.main.entity.NhanKhau;
 
+import javax.swing.*;
+
 // TODO
 public class ListSideGalleryController {
     GalleryModel model;
@@ -11,6 +13,13 @@ public class ListSideGalleryController {
         this.model = model;
 
         view = new ListSideGalleryView(this, model);
+        view.setupUI();
+    }
+
+    public ListSideGalleryController(ListCellRenderer<GalleryItem> listCellRenderer, GalleryModel model) {
+        this.model = model;
+
+        view = new ListSideGalleryView(listCellRenderer, this, model);
         view.setupUI();
     }
 

@@ -9,7 +9,6 @@ public class CustomJList<E> extends JList<E> {
     public CustomJList(ListModel<E> model) {
         super(model);
 
-        setFixedCellHeight(32);
         setSelectionBackground(GUIConfig.ListSelectionBackground);
         setSelectionForeground(Color.WHITE);
         setFont(GUIConfig.DefaultFont);
