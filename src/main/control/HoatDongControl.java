@@ -102,7 +102,10 @@ public class HoatDongControl {
                 }
 
                 String date = String.format("select DATEDIFF(DD, GETDATE(), '%s-%s-%s')", year, month, day);
-                int day_bd = statement.executeQuery(date).getInt(1);
+                System.out.println(date);
+                ResultSet rs1 = statement.executeQuery(date);
+                rs1.next();
+                int day_bd = rs1.getInt(1);
 
                 day = "";
                 month = "";
@@ -113,7 +116,10 @@ public class HoatDongControl {
                     year = item.ngayKetThuc.substring(6,10);
                 }
                 date = String.format("select DATEDIFF(DD, GETDATE(), '%s-%s-%s')", year, month, day);
-                int day_kt = statement.executeQuery(date).getInt(1);
+                System.out.println(date);
+                rs1 = statement.executeQuery(date);
+                rs1.next();
+                int day_kt = rs1.getInt(1);
 
                 String checkBeforeUpdate = String.format("select hoat_dong.ma_hoat_dong, DATEDIFF(DD, GETDATE(), ngay_kt), so_luong, so_luong_su_dung\n" +
                         "from hoat_dong\n" +
@@ -126,11 +132,11 @@ public class HoatDongControl {
                 int latestDay = 0;
                 int slCSVCMax = 0;
                 while(rs.next()){
-                    if(latestDay>rs.getInt(2)){
+                    if(latestDay<rs.getInt(2)){
                         latestDay = rs.getInt(2);
                     }
                 }
-                if(latestDay>day_kt){
+                if(latestDay<day_kt){
                     latestDay = day_kt;
                 }
                 int[] slCSVCSuDungCurrent = new int[latestDay+1];
@@ -162,9 +168,18 @@ public class HoatDongControl {
 
 
                 int slThieu = 0;
-                for(int y=day_bd;y<=day_kt;y++){
-                    if(slCSVCSuDungCurrent[y] + coSoVatChat.soLuong - slCSVCMax > slThieu){
-                        slThieu = slCSVCSuDungCurrent[y] - slCSVCMax;
+                if(day_bd>0){
+                    for(int y=day_bd;y<=day_kt;y++){
+                        if(slCSVCSuDungCurrent[y] + coSoVatChat.soLuong - slCSVCMax > slThieu){
+                            slThieu = slCSVCSuDungCurrent[y] + coSoVatChat.soLuong - slCSVCMax;
+                        }
+                    }
+                }
+                else{
+                    for(int y=0;y<=day_kt;y++){
+                        if(slCSVCSuDungCurrent[y] + coSoVatChat.soLuong - slCSVCMax > slThieu){
+                            slThieu = slCSVCSuDungCurrent[y] + coSoVatChat.soLuong - slCSVCMax;
+                        }
                     }
                 }
 
@@ -207,11 +222,11 @@ public class HoatDongControl {
             }
 
             if(!announcement.equals("Không thể thêm hoạt động này vì thiếu cơ sở vật chất và phòng ban sau:<br/>")){
-                System.out.println(announcement);
+                view.showMessage("<html>" + announcement + "</html>");
             }
             else{
                 String sql = "insert into hoat_dong values(";
-                sql = sql + "'" + item.maHoatDong + "'" + ", ";
+                sql = sql + "N'" + item.maHoatDong + "'" + ", ";
                 sql = sql + "'" + item.cccdNguoiDangKi + "'" + ", ";
 
                 String day = "";
@@ -272,15 +287,15 @@ public class HoatDongControl {
         Connection connection = connect_to_sql_server();
         Statement statement = connection.createStatement();
         //xóa hoạt động cũ
-        String sql = String.format("delete from hd_csvc where ma_hoat_dong = %s;", oldItem.maHoatDong);
+        String sql = String.format("delete from hd_csvc where ma_hoat_dong = N'%s';", oldItem.maHoatDong);
         System.out.println(sql);
         statement.execute(sql);
 
-        sql = String.format("delete from hd_phongban where ma_hoat_dong = %s;", oldItem.maHoatDong);
+        sql = String.format("delete from hd_phongban where ma_hoat_dong = N'%s';", oldItem.maHoatDong);
         System.out.println(sql);
         statement.execute(sql);
 
-        sql = String.format("delete from hoat_dong where ma_hoat_dong = %s;", oldItem.maHoatDong);
+        sql = String.format("delete from hoat_dong where ma_hoat_dong = N'%s';", oldItem.maHoatDong);
         System.out.println(sql);
         statement.execute(sql);
         //thử thêm hoạt động mới
@@ -298,7 +313,9 @@ public class HoatDongControl {
                 }
 
                 String date = String.format("select DATEDIFF(DD, GETDATE(), '%s-%s-%s')", year, month, day);
-                int day_bd = statement.executeQuery(date).getInt(1);
+                ResultSet rs1 = statement.executeQuery(date);
+                rs1.next();
+                int day_bd = rs1.getInt(1);
 
                 day = "";
                 month = "";
@@ -309,7 +326,9 @@ public class HoatDongControl {
                     year = newItem.ngayKetThuc.substring(6,10);
                 }
                 date = String.format("select DATEDIFF(DD, GETDATE(), '%s-%s-%s')", year, month, day);
-                int day_kt = statement.executeQuery(date).getInt(1);
+                rs1 = statement.executeQuery(date);
+                rs1.next();
+                int day_kt = rs1.getInt(1);
 
                 String checkBeforeUpdate = String.format("select hoat_dong.ma_hoat_dong, DATEDIFF(DD, GETDATE(), ngay_kt), so_luong, so_luong_su_dung\n" +
                         "from hoat_dong\n" +
@@ -322,11 +341,11 @@ public class HoatDongControl {
                 int latestDay = 0;
                 int slCSVCMax = 0;
                 while(rs.next()){
-                    if(latestDay>rs.getInt(2)){
+                    if(latestDay<rs.getInt(2)){
                         latestDay = rs.getInt(2);
                     }
                 }
-                if(latestDay>day_kt){
+                if(latestDay<day_kt){
                     latestDay = day_kt;
                 }
                 int[] slCSVCSuDungCurrent = new int[latestDay+1];
@@ -358,11 +377,21 @@ public class HoatDongControl {
 
 
                 int slThieu = 0;
-                for(int y=day_bd;y<=day_kt;y++){
-                    if(slCSVCSuDungCurrent[y] + coSoVatChat.soLuong - slCSVCMax > slThieu){
-                        slThieu = slCSVCSuDungCurrent[y] - slCSVCMax;
+                if(day_bd>0){
+                    for(int y=day_bd;y<=day_kt;y++){
+                        if(slCSVCSuDungCurrent[y] + coSoVatChat.soLuong - slCSVCMax > slThieu){
+                            slThieu = slCSVCSuDungCurrent[y] + coSoVatChat.soLuong - slCSVCMax;
+                        }
                     }
                 }
+                else{
+                    for(int y=0;y<=day_kt;y++){
+                        if(slCSVCSuDungCurrent[y] + coSoVatChat.soLuong - slCSVCMax > slThieu){
+                            slThieu = slCSVCSuDungCurrent[y] + coSoVatChat.soLuong - slCSVCMax;
+                        }
+                    }
+                }
+
 
                 if(slThieu > 0){
                     announcement = announcement + coSoVatChat.maCSVC + ": " + slThieu + ".<br/>";
@@ -405,7 +434,7 @@ public class HoatDongControl {
             //nếu không thêm được quay về cái cũ
             if(!announcement.equals("Không thể chỉnh sửa hoạt động này vì thiếu cơ sở vật chất và phòng ban sau:<br/>")){
                 sql = "insert into hoat_dong values(";
-                sql = sql + "'" + oldItem.maHoatDong + "'" + ", ";
+                sql = sql + "N'" + oldItem.maHoatDong + "'" + ", ";
                 sql = sql + "'" + oldItem.cccdNguoiDangKi + "'" + ", ";
 
                 String day = "";
@@ -453,7 +482,7 @@ public class HoatDongControl {
             //nếu được thêm cái mới
             else{
                 sql = "insert into hoat_dong values(";
-                sql = sql + "'" + newItem.maHoatDong + "'" + ", ";
+                sql = sql + "N'" + newItem.maHoatDong + "'" + ", ";
                 sql = sql + "'" + newItem.cccdNguoiDangKi + "'" + ", ";
 
                 String day = "";
@@ -513,15 +542,15 @@ public class HoatDongControl {
         Connection connection = connect_to_sql_server();
         Statement statement = connection.createStatement();
 
-        String sql = String.format("delete from hd_csvc where ma_hoat_dong = %s;", item.maHoatDong);
+        String sql = String.format("delete from hd_csvc where ma_hoat_dong = N'%s';", item.maHoatDong);
         System.out.println(sql);
         statement.execute(sql);
 
-        sql = String.format("delete from hd_phongban where ma_hoat_dong = %s;", item.maHoatDong);
+        sql = String.format("delete from hd_phongban where ma_hoat_dong = N'%s';", item.maHoatDong);
         System.out.println(sql);
         statement.execute(sql);
 
-        sql = String.format("delete from hoat_dong where ma_hoat_dong = %s;", item.maHoatDong);
+        sql = String.format("delete from hoat_dong where ma_hoat_dong = N'%s';", item.maHoatDong);
         System.out.println(sql);
         statement.execute(sql);
         view.refreshUI();
