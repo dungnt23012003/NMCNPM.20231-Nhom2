@@ -39,6 +39,14 @@ public class ComponentFactory {
         return label;
     }
 
+    public static JLabel createBoldLabel(String text) {
+        JLabel label = new JLabel(text);
+
+        label.setFont(GUIConfig.DefaultFont.deriveFont(Font.BOLD));
+
+        return label;
+    }
+
     public static JButton createDefaultButton() {
         JButton button = new JButton();
         button.setFont(GUIConfig.DefaultFont);
