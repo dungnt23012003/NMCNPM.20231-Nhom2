@@ -344,8 +344,6 @@ public class HoatDongControl {
                 view.refreshUI();
                 view.showMessage("Thêm hoạt động thành công.");
             }
-
-
             connection.close();
         }
         catch (Exception e){

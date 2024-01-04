@@ -2,12 +2,11 @@ package src.main.boundary.hoatdong;
 
 import src.main.boundary.GUIConfig;
 import src.main.boundary.cosovatchat.CoSoVatChatEditorComponent;
-import src.main.boundary.dialog.CoSoVatChatChooserDialog;
-import src.main.boundary.dialog.NhanKhauChooserDialog;
-import src.main.boundary.dialog.PhongBanChooserDialog;
+import src.main.boundary.dialog.*;
 import src.main.boundary.editor.EditorComponent;
 import src.main.boundary.editor.EditorComponentFactory;
 import src.main.boundary.editor.FormEditorComponent;
+import src.main.boundary.editor.NhanKhauEditorComponent;
 import src.main.boundary.hokhau.HoKhauAdapter;
 import src.main.boundary.list.DefaultRenderableList;
 import src.main.boundary.list.ListRenderable;
@@ -15,9 +14,11 @@ import src.main.boundary.list.MultiListRenderable;
 import src.main.boundary.nhankhau.NhanKhauAdapter;
 import src.main.boundary.renderer.MultiListRenderer;
 import src.main.boundary.utility.ComponentFactory;
+import src.main.control.NhanKhauControl;
 import src.main.control.PhongBanControl;
 import src.main.entity.CoSoVatChat;
 import src.main.entity.HoatDong;
+import src.main.entity.NhanKhau;
 import src.main.entity.PhongBan;
 import src.test.control.PhongBanControlTestValue;
 
@@ -34,9 +35,9 @@ public class HoatDongEditor extends EditorComponent implements MultiListRenderab
     JButton clickWhenCanceled;
 
     EditorComponent maHoatDongEditor;
-    EditorComponent cccdNguoiDangKyEditor;
     EditorComponent ngayBatDauEditor;
     EditorComponent ngayKetThucEditor;
+    NhanKhauEditorComponent nguoiDangKyEditorComponent;
     ArrayList<EditorComponent> coSoVatChatEditorComponents = new ArrayList<>();
     ArrayList<EditorComponent> phongBanEditorComponents = new ArrayList<>();
 
@@ -51,6 +52,11 @@ public class HoatDongEditor extends EditorComponent implements MultiListRenderab
 
         for (PhongBan phongBan : item.hoatDong.phongbanSuDung) {
             phongBanEditorComponents.add(EditorComponentFactory.createPhongBanEditorComponent(phongBan, this));
+        }
+
+        if (!item.hoatDong.cccdNguoiDangKi.isEmpty()) {
+            NhanKhau nhanKhauDangKy = (new NhanKhauControl()).getSingleNhanKhau(item.hoatDong.cccdNguoiDangKi);
+            nguoiDangKyEditorComponent = EditorComponentFactory.createNhanKhauEditorComponent(new NhanKhauAdapter(nhanKhauDangKy), this);
         }
 
         setupUI();
@@ -75,13 +81,18 @@ public class HoatDongEditor extends EditorComponent implements MultiListRenderab
 
         JButton saveButton = ComponentFactory.createDefaultButton();
         saveButton.addActionListener(e -> {
+            if (nguoiDangKyEditorComponent == null) {
+                JOptionPane.showMessageDialog(getRootPane(), "Chưa chọn người đăng ký");
+                return;
+            }
+
             if (item.isNew) {
                 controller.model.control.add(getValue().hoatDong);
             }
             else {
                 controller.model.control.update(item.hoatDong, getValue().hoatDong);
             }
-            clickWhenCanceled.doClick();
+//            clickWhenCanceled.doClick();
         });
         saveButton.setText("Lưu");
         buttonPanel.add(saveButton);
@@ -100,15 +111,35 @@ public class HoatDongEditor extends EditorComponent implements MultiListRenderab
         DefaultRenderableList thongTinChungList = new DefaultRenderableList();
         thongTinChungList.setTitle("Thông tin chung");
 
-        maHoatDongEditor = EditorComponentFactory.createEditFormComponent("Mã hoạt động", item.hoatDong.maHoatDong);
-        cccdNguoiDangKyEditor = EditorComponentFactory.createEditFormComponent("CCCD của người đăng kí", item.hoatDong.cccdNguoiDangKi);
+        maHoatDongEditor = EditorComponentFactory.createEditFormComponent("Tên hoạt động", item.hoatDong.maHoatDong);
         ngayBatDauEditor = EditorComponentFactory.createEditFormComponent("Ngày bắt đầu", item.hoatDong.ngayBatDau);
         ngayKetThucEditor = EditorComponentFactory.createEditFormComponent("Ngày kết thúc", item.hoatDong.ngayKetThuc);
 
         thongTinChungList.addComponent(maHoatDongEditor);
-        thongTinChungList.addComponent(cccdNguoiDangKyEditor);
         thongTinChungList.addComponent(ngayBatDauEditor);
         thongTinChungList.addComponent(ngayKetThucEditor);
+
+        // Người đăng ký
+        DefaultRenderableList nguoiDangKy = new DefaultRenderableList();
+        nguoiDangKy.setTitle("Người đăng ký");
+
+        if (nguoiDangKyEditorComponent == null) {
+            nguoiDangKy.addComponent(ComponentFactory.createFormComponent("Chưa chọn người đăng ký", ""));
+        } else {
+            nguoiDangKy.addComponent(nguoiDangKyEditorComponent);
+        }
+
+        JPanel setNhanKhauPanel = new JPanel();
+        setNhanKhauPanel.setBackground(GUIConfig.MyListBackground);
+        setNhanKhauPanel.setLayout(new BoxLayout(setNhanKhauPanel, BoxLayout.LINE_AXIS));
+        setNhanKhauPanel.add(Box.createHorizontalGlue());
+
+        JButton setNhanKhauButton = ComponentFactory.createDefaultButton();
+        setNhanKhauButton.setText("Đặt người đăng ký");
+        setNhanKhauPanel.add(setNhanKhauButton);
+        setNhanKhauButton.addActionListener(e -> setNguoiDangKy());
+
+        nguoiDangKy.addComponent(setNhanKhauPanel);
 
         // Danh sách cơ sở vật chất
         DefaultRenderableList coSoVatChatList = new DefaultRenderableList();
@@ -139,6 +170,7 @@ public class HoatDongEditor extends EditorComponent implements MultiListRenderab
         phongBanList.addComponent(themPhongBan);
 
         listRenderables.add(thongTinChungList);
+        listRenderables.add(nguoiDangKy);
         listRenderables.add(coSoVatChatList);
         listRenderables.add(phongBanList);
 
@@ -162,6 +194,17 @@ public class HoatDongEditor extends EditorComponent implements MultiListRenderab
         refreshUI();
 
         dialog.dispose();
+    }
+
+    public void setNguoiDangKy() {
+        SingleNhanKhauChooserDialog dialog = new SingleNhanKhauChooserDialog(getRootPane());
+
+        if (dialog.getValue() == null) {
+            nguoiDangKyEditorComponent = null;
+        } else {
+            nguoiDangKyEditorComponent = EditorComponentFactory.createNhanKhauEditorComponent(dialog.getValue(), this);
+        }
+        refreshUI();
     }
 
     public void removePhongBan(PhongBan item) {
@@ -215,7 +258,10 @@ public class HoatDongEditor extends EditorComponent implements MultiListRenderab
         HoatDong value = new HoatDong();
 
         value.maHoatDong = (String) maHoatDongEditor.getValue();
-        value.cccdNguoiDangKi = (String) cccdNguoiDangKyEditor.getValue();
+        try {
+            value.cccdNguoiDangKi = ((NhanKhauAdapter) nguoiDangKyEditorComponent.getValue()).getNhanKhau().CCCD;
+        } catch (NullPointerException e) {System.out.println("Người đăng ký rỗng khi getValue");}
+
         value.ngayBatDau = (String) ngayBatDauEditor.getValue();
         value.ngayKetThuc = (String) ngayKetThucEditor.getValue();
 
@@ -233,7 +279,6 @@ public class HoatDongEditor extends EditorComponent implements MultiListRenderab
     @Override
     public void clearValue() {
         maHoatDongEditor.clearValue();
-        cccdNguoiDangKyEditor.clearValue();
         ngayBatDauEditor.clearValue();
         ngayKetThucEditor.clearValue();
     }
@@ -257,7 +302,6 @@ public class HoatDongEditor extends EditorComponent implements MultiListRenderab
     public void setValue(Object value) {
         if (value instanceof HoatDongAdapter castedValue) {
             maHoatDongEditor.setValue(castedValue.hoatDong.maHoatDong);
-            cccdNguoiDangKyEditor.setValue(castedValue.hoatDong.cccdNguoiDangKi);
             ngayBatDauEditor.setValue(castedValue.hoatDong.ngayBatDau);
             ngayKetThucEditor.setValue(castedValue.hoatDong.ngayKetThuc);
         }

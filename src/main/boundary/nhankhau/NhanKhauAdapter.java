@@ -12,9 +12,16 @@ import java.util.ArrayList;
 public class NhanKhauAdapter implements GalleryItem, MultiListRenderable {
     NhanKhau nhanKhau;
     boolean isNew = false;
-    String string;
+    String string = "";
     boolean isChuHo = false;
 
+    public NhanKhauAdapter(String CCCD, String hoTen) {
+        nhanKhau = new NhanKhau();
+        nhanKhau.CCCD = CCCD;
+        nhanKhau.hoTen = hoTen;
+
+        resetString();
+    }
 
     public NhanKhauAdapter(NhanKhau nhanKhau) {
         this.nhanKhau = nhanKhau;
@@ -24,6 +31,8 @@ public class NhanKhauAdapter implements GalleryItem, MultiListRenderable {
     public NhanKhauAdapter(NhanKhau nhanKhau, boolean isNew) {
         this.nhanKhau = nhanKhau;
         this.isNew = isNew;
+
+        resetString();
     }
 
     public void resetString() {

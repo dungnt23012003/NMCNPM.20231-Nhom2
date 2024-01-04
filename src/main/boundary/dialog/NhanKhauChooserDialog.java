@@ -50,7 +50,7 @@ public class NhanKhauChooserDialog extends JDialog {
 
         setContentPane(panel);
         setModal(true);
-        setSize(new Dimension(750, 580));
+        setSize(new Dimension(1024, 580));
         setResizable(false);
         setLocationRelativeTo(parent);
         setVisible(true);

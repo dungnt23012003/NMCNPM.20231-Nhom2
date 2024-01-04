@@ -66,6 +66,20 @@ public class EditorComponentFactory {
         return editorComponent;
     }
 
+    public static NhanKhauEditorComponent createNhanKhauEditorComponent(NhanKhauAdapter item, HoatDongEditor editor) {
+        NhanKhauEditorComponent editorComponent = new NhanKhauEditorComponent(item);
+        editorComponent.setBackground(GUIConfig.MyListBackground);
+        editorComponent.setLayout(new BoxLayout(editorComponent, BoxLayout.LINE_AXIS));
+
+        JLabel label = ComponentFactory.createLabel(item.getNhanKhau().hoTen + (item.isChuHo() ? " (Chủ hộ)" : ""));
+        label.setMaximumSize(new Dimension(Integer.MAX_VALUE, GUIConfig.ListLabelHeight));
+
+        editorComponent.add(label);
+        editorComponent.add(Box.createHorizontalGlue());
+
+        return editorComponent;
+    }
+
     public static PairEditorComponent createPairEditorComponent(Pair pair) {
         PairEditorComponent editorComponent = new PairEditorComponent(
                 ComponentFactory.createEditorTextField(),

@@ -15,6 +15,12 @@ public class HoKhauAdapter implements GalleryItem, MultiListRenderable {
     boolean isNew = false;
     String string;
 
+    public HoKhauAdapter(String maHK) {
+        hoKhau = new HoKhau();
+        hoKhau.maHoKhau = maHK;
+        resetString();
+    }
+
     public HoKhauAdapter(HoKhau hoKhau) {
         this.hoKhau = hoKhau;
         resetString();
@@ -26,7 +32,11 @@ public class HoKhauAdapter implements GalleryItem, MultiListRenderable {
     }
 
     public void resetString() {
-        string = String.valueOf(hoKhau.maHoKhau);
+        if (getHoKhau().chuHo.CCCD.isEmpty()) {
+            string = "Không có chủ hộ";
+        } else {
+            string = String.valueOf(getHoKhau().chuHo.hoTen);
+        }
     }
 
     public HoKhau getHoKhau() {

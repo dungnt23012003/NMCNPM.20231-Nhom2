@@ -1,5 +1,6 @@
 package src.main.boundary.hokhau;
 
+import src.main.boundary.GUIConfig;
 import src.main.entity.HoKhau;
 
 public class HoKhauController {
