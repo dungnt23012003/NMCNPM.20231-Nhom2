@@ -4,6 +4,7 @@ import src.main.boundary.feature.FeatureView;
 import src.main.boundary.gallery.ListSideGalleryController;
 
 import javax.swing.*;
+import java.awt.*;
 
 public class HoKhauView extends FeatureView {
     HoKhauModel model;
@@ -15,7 +16,7 @@ public class HoKhauView extends FeatureView {
     }
 
     public void setupUI() {
-        setLayout(new BoxLayout(this, BoxLayout.PAGE_AXIS));
+        setLayout(new GridLayout(1, 0));
 
         model.galleryController.getView().setRenderer(new HoKhauRenderer(controller));
         add(model.galleryController.getView());

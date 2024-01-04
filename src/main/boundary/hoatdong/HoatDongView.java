@@ -3,6 +3,8 @@ package src.main.boundary.hoatdong;
 import src.main.boundary.feature.FeatureView;
 
 import javax.swing.*;
+import javax.swing.border.LineBorder;
+import java.awt.*;
 
 public class HoatDongView extends FeatureView {
     HoatDongModel model;
@@ -14,7 +16,7 @@ public class HoatDongView extends FeatureView {
     }
 
     public void setupUI() {
-        setLayout(new BoxLayout(this, BoxLayout.PAGE_AXIS));
+        setLayout(new GridLayout(1, 0));
 
         model.galleryController.getView().setRenderer(new HoatDongRenderer(controller));
         add(model.galleryController.getView());

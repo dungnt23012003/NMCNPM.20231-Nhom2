@@ -64,6 +64,15 @@ public class CoSoVatChatChooserDialog extends JDialog {
         DefaultRenderableList list = new DefaultRenderableList();
         list.setTitle("Danh sách cơ sở vật chất");
 
+        JPanel listHeader = new JPanel();
+        listHeader.setBackground(GUIConfig.MyListBackground);
+        listHeader.setLayout(new BoxLayout(listHeader, BoxLayout.LINE_AXIS));
+        listHeader.add(Box.createRigidArea(new Dimension(25, 0)));
+        listHeader.add(ComponentFactory.createBoldLabel("Tên cơ sở vật chất"));
+        listHeader.add(Box.createHorizontalGlue());
+        listHeader.add(ComponentFactory.createBoldLabel("Tổng số lượng"));
+        list.addComponent(listHeader);
+
         ArrayList<CoSoVatChat> coSoVatChats = control.getList();
         for (CoSoVatChat coSoVatChat : coSoVatChats) {
             list.addComponent(getCoSoVatChatChooserComponent(coSoVatChat));
@@ -93,6 +102,8 @@ public class CoSoVatChatChooserDialog extends JDialog {
 
         panel.add(checkBox);
         panel.add(Box.createHorizontalGlue());
+
+        panel.add(ComponentFactory.createLabel(String.valueOf(item.soLuong)));
 
         return panel;
     }

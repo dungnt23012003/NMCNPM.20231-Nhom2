@@ -7,6 +7,7 @@ import src.main.boundary.menubar.ConfirmDeleteButton;
 import src.main.boundary.renderer.EntityRenderer;
 import src.main.boundary.renderer.MultiListRenderer;
 import src.main.boundary.renderer.Renderable;
+import src.main.boundary.utility.ColorUtility;
 import src.main.boundary.utility.ComponentFactory;
 
 import javax.swing.*;
@@ -52,13 +53,20 @@ public class HoatDongRenderer implements EntityRenderer, ListSelectionListener, 
             menuBar.add(settingButton);
             menuBar.add(new ConfirmDeleteButton(e -> controller.delete(castedItem)));
 
-            subPanel = new JPanel(new CardLayout());
+            subPanel = new JPanel();
+            subPanel.setLayout(new BoxLayout(subPanel, BoxLayout.PAGE_AXIS));
             subPanel.setAlignmentX(0.0f);
 
             renderer = new MultiListRenderer();
             subPanel.add(renderer.getRenderedComponent(item));
 
-            renderedComponent.add(subPanel);
+            JScrollPane scrollPane = new JScrollPane(subPanel);
+            scrollPane.setBorder(BorderFactory.createEmptyBorder());
+            scrollPane.getVerticalScrollBar().setBackground(ColorUtility.darken(GUIConfig.FeatureViewColor, 1.4));
+            scrollPane.getVerticalScrollBar().setUnitIncrement(8);
+            scrollPane.setAlignmentX(0.0f);
+
+            renderedComponent.add(scrollPane);
             controller.model.galleryController.getView().getSideList().addListSelectionListener(this);
         } else {
             renderedComponent.add(ComponentFactory.createLabel("Không có hoạt động nào được chọn."));

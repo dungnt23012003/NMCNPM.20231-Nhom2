@@ -4,6 +4,7 @@ import src.main.boundary.dialog.ConfirmDialog;
 import src.main.boundary.feature.FeatureView;
 
 import javax.swing.*;
+import java.awt.*;
 
 public class NhanKhauView extends FeatureView {
     NhanKhauModel model;
@@ -17,7 +18,7 @@ public class NhanKhauView extends FeatureView {
     }
 
     public void setupUI() {
-        setLayout(new BoxLayout(this, BoxLayout.PAGE_AXIS));
+        setLayout(new GridLayout(1, 0));
 
         model.galleryController.getView().setRenderer(renderer);
         add(model.galleryController.getView());
