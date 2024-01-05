@@ -55,7 +55,7 @@ public class HoatDongControl {
 
                 while(phongBan.next()){
                     PhongBan phongBanTmp = new PhongBan();
-                    phongBanTmp.maPhongBan = phongBan.getString(1);
+                    phongBanTmp.maPhongBan = phongBan.getString(2);
                     hoatDongTmp.phongbanSuDung.add(phongBanTmp);
                 }
 
@@ -128,7 +128,7 @@ public class HoatDongControl {
 
                 while(phongBan.next()){
                     PhongBan phongBanTmp = new PhongBan();
-                    phongBanTmp.maPhongBan = phongBan.getString(1);
+                    phongBanTmp.maPhongBan = phongBan.getString(2);
                     hoatDongTmp.phongbanSuDung.add(phongBanTmp);
                 }
 
