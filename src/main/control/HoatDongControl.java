@@ -16,7 +16,7 @@ public class HoatDongControl {
             Connection connection = connect_to_sql_server();
             Statement statement = connection.createStatement();
 
-            String sql = String.format("select * from hoat_dong where ma_hoat_dong = N'%s' or (ngay_bd <= '%s' and '%s' <= ngay_kt) order by ngay_bd, ngay_kt;", dieuKien, dieuKien, dieuKien);
+            String sql = String.format("select * from hoat_dong where ma_hoat_dong = N'%s' order by ngay_bd, ngay_kt;", dieuKien);
             System.out.println(sql);
             ResultSet dsHD = statement.executeQuery(sql);
 
