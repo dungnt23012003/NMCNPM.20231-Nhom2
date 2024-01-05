@@ -194,15 +194,18 @@ public class NhanKhauControl {
                     sql = sql + "'" + entity.CCCD + "'" + ";";
                     System.out.println(sql);
                     statement.execute(sql);
+                    view.refreshUI();
                 }
             }
+            else{
+                sql = "delete from nhan_khau where cccd like ";
+                sql = sql + "'" + entity.CCCD + "'" + ";";
+                System.out.println(sql);
+                statement.execute(sql);
+                this.view.refreshUI();
+                this.view.showMessage("Xóa nhân khẩu thành công.");
+            }
 
-            sql = "delete from nhan_khau where cccd like ";
-            sql = sql + "'" + entity.CCCD + "'" + ";";
-            System.out.println(sql);
-            statement.execute(sql);
-            this.view.refreshUI();
-            this.view.showMessage("Xóa nhân khẩu thành công.");
             connection.close();
         }
         catch (Exception e){
