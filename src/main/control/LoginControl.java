@@ -34,9 +34,6 @@ public class LoginControl {
 
     public static void main(String[] args) {
         LoginControl loginControl = new LoginControl();
-        if(loginControl.login("nmcnpm2023.1", "nmcnpm2023.1")){
-            FeaturedAppTest.main();
-        }
 
     }
 }

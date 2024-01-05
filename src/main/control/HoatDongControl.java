@@ -203,6 +203,14 @@ public class HoatDongControl {
 
                 int latestDay = 0;
                 int slCSVCMax = 0;
+                String sqlne = String.format("select so_luong from co_so_vat_chat where ma_csvc = N'%s'", coSoVatChat.maCSVC);
+                Statement statement1 = connection.createStatement();
+                ResultSet rs10 = statement1.executeQuery(sqlne);
+                while(rs10.next()){
+                    slCSVCMax = rs10.getInt(1);
+                }
+                System.out.println("slmax" + slCSVCMax);
+
                 while(rs.next()){
                     if(latestDay<rs.getInt(2)){
                         latestDay = rs.getInt(2);
@@ -224,7 +232,6 @@ public class HoatDongControl {
                 rs = statement.executeQuery(checkBeforeUpdate);
 
                 while(rs.next()){
-                    slCSVCMax = rs.getInt(3);
                     if(rs.getInt(5) > 0){
                         for(int x=rs.getInt(5); x<= rs.getInt(2); x++){
                             slCSVCSuDungCurrent[x] = slCSVCSuDungCurrent[x] + rs.getInt(4);
@@ -245,13 +252,17 @@ public class HoatDongControl {
                         if(slCSVCSuDungCurrent[y] + coSoVatChat.soLuong - slCSVCMax > slThieu){
                             slThieu = slCSVCSuDungCurrent[y] + coSoVatChat.soLuong - slCSVCMax;
                         }
+
                     }
+
                 }
                 else{
                     for(int y=0;y<=day_kt;y++){
                         if(slCSVCSuDungCurrent[y] + coSoVatChat.soLuong - slCSVCMax > slThieu){
                             slThieu = slCSVCSuDungCurrent[y] + coSoVatChat.soLuong - slCSVCMax;
                         }
+                        System.out.println(slCSVCSuDungCurrent[y]);
+
                     }
                 }
 
@@ -410,6 +421,14 @@ public class HoatDongControl {
 
                 int latestDay = 0;
                 int slCSVCMax = 0;
+                String sqlne = String.format("select so_luong from co_so_vat_chat where ma_csvc = N'%s'", coSoVatChat.maCSVC);
+                Statement statement1 = connection.createStatement();
+                ResultSet rs10 = statement1.executeQuery(sqlne);
+                while(rs10.next()){
+                    slCSVCMax = rs10.getInt(1);
+                }
+                System.out.println("slmax" + slCSVCMax);
+
                 while(rs.next()){
                     if(latestDay<rs.getInt(2)){
                         latestDay = rs.getInt(2);

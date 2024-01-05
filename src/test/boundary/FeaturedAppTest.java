@@ -14,7 +14,7 @@ import javax.swing.border.EmptyBorder;
 import java.awt.*;
 
 public class FeaturedAppTest {
-    public static void main() {
+    public static void main(String[] args) {
         try {
             UIManager.setLookAndFeel(new FlatIntelliJLaf());
         } catch (Exception e) {
